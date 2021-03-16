@@ -20,6 +20,7 @@
 		51D179A2BAE19A04314C4296 /* libPods-fluent_buddy_app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296D03B0C41B074A17D71F82 /* libPods-fluent_buddy_app.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9B8DC06477E554F7F3594EB3 /* libPods-fluent_buddy_app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A63478B85A753E4582390F4E /* libPods-fluent_buddy_app-tvOSTests.a */; };
+		E95A11D42600555D00F28352 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E95A11D32600555D00F28352 /* Poppins-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		A63478B85A753E4582390F4E /* libPods-fluent_buddy_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fluent_buddy_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7D13D9E63C0DAFA96C18259 /* Pods-fluent_buddy_app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fluent_buddy_app-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-fluent_buddy_app-tvOSTests/Pods-fluent_buddy_app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D74F1A8845C38948DD97D0BE /* Pods-fluent_buddy_app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fluent_buddy_app-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-fluent_buddy_app-tvOS/Pods-fluent_buddy_app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E95A11D32600555D00F28352 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Regular.ttf"; path = "../../../../../../../../Downloads/Poppins/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -159,6 +161,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E95A11D22600552E00F28352 /* fonts */,
 				13B07FAE1A68108700A75B9A /* fluent_buddy_app */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* fluent_buddy_appTests */,
@@ -195,6 +198,14 @@
 				44C4CE7FE9490B39F5241916 /* Pods-fluent_buddy_app-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E95A11D22600552E00F28352 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E95A11D32600555D00F28352 /* Poppins-Regular.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,6 +351,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E95A11D42600555D00F28352 /* Poppins-Regular.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
