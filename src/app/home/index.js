@@ -1,17 +1,32 @@
-import React from 'react'
-import { ImageBackground, StyleSheet, View, Text } from 'react-native'
+import React, { useState } from 'react'
+import { ImageBackground, StyleSheet, View, Text, Button} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import Modal from 'react-native-modal'
 
 import background from '../../assets/home-background.jpg'
 
-const Home = ({}) => {
+const Home = () => {
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
+ 
     return (
         <ImageBackground source={background} style={styles.image}>
             <View style={styles.bottom}>
                 <View>
-                    <TouchableOpacity style={styles.btnSignUp}>
+                    <TouchableOpacity style={styles.btnSignUp} onPress={toggleModal}>
                         <Text style={styles.txtSignUp}>Registrarme</Text>
                     </TouchableOpacity>
+
+                    <Modal isVisible={isModalVisible}>
+                    <View style={{flex: 1}}>
+                        <Text>Hello!</Text>
+
+                        <Button title="Hide modal" onPress={toggleModal} />
+                    </View>
+                    </Modal>
                 </View>
                 <View>
                     <TouchableOpacity style={styles.btnSignIn}>
