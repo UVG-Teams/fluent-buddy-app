@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { ImageBackground, StyleSheet, View, Text, Button} from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { ImageBackground, StyleSheet, Dimensions, View, Text, Button} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Modal from 'react-native-modal'
 
@@ -7,10 +7,12 @@ import background from '../../assets/home-background.jpg'
 
 const Home = () => {
     const [isModalVisible, setModalVisible] = useState(false);
-
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
+    const deviceWidth = Dimensions.get("window").width;
+    const deviceHeight = Dimensions.get("window").height;
+    // useEffect(onLoad, [])
  
     return (
         <ImageBackground source={background} style={styles.image}>
@@ -20,12 +22,18 @@ const Home = () => {
                         <Text style={styles.txtSignUp}>Registrarme</Text>
                     </TouchableOpacity>
 
-                    <Modal isVisible={isModalVisible}>
-                    <View style={{flex: 1}}>
-                        <Text>Hello!</Text>
+                    <Modal 
+                        isVisible={isModalVisible} 
+                        style={styles.bottomModal}
+                        onBackdropPress={toggleModal}
+                        backdropOpacity={0} 
+                        deviceWidth={deviceWidth} 
+                        deviceHeight={deviceHeight}>
+                        <View style={styles.signUpModal}>
+                            <Text>Nueva Cuenta</Text>
 
-                        <Button title="Hide modal" onPress={toggleModal} />
-                    </View>
+                            {/* <Button title="Hide modal" onPress={toggleModal} /> */}
+                        </View>
                     </Modal>
                 </View>
                 <View>
@@ -87,5 +95,17 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Regular',
         textAlign: 'center',
     },
+
+    bottomModal: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+
+    signUpModal: {
+        backgroundColor: '#FFFFFF',
+        height: '58%',
+        borderRadius: 50
+    },
+
 })
 
