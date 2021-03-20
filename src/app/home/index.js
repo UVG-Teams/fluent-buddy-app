@@ -118,9 +118,9 @@ const Home = () => {
                         backdropOpacity={0} 
                         deviceWidth={deviceWidth} 
                         deviceHeight={deviceHeight}>
-                        <View style={styles.signUpModal}>
+                        <View style={styles.LogInModal}>
                             <View style={styles.viewTxtNewAccount}>
-                                <Text style={styles.txtNewAccount}>Bienvenido de vuelta</Text>
+                                <Text style={styles.txtWelcomeBack}>Bienvenido de vuelta</Text>
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Usuario</Text>
@@ -136,11 +136,19 @@ const Home = () => {
                                     <TextInput style={styles.inputs} />
                                 </View>
                             </View>
+                            <View>
+                                <Text style={styles.txtForgotPassword}>Olvidé mi contraseña</Text>
+                            </View>
                             <View style={styles.bottomSignUp}>
                                 <TouchableOpacity style={styles.btnSignUp}>
                                     <Text style={styles.txtSignUp}>Iniciar sesión</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o inicia sesión con</Text>
+                                <View style={{flexDirection: 'row', marginTop: 17}}>
+                                    <Image source={require('../../assets/google.png')} style={{width: 27, height: 27}}/>
+                                    <Image source={require('../../assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
+                                    <Image source={require('../../assets/twitter.png')} style={{width: 27, height: 27}}/>
+                                </View>
                             </View>
                         </View>
                     </Modal>
@@ -208,7 +216,16 @@ const styles = StyleSheet.create({
     signUpModal: {
         backgroundColor: '#FFFFFF',
         height: '65%',
-        // borderRadius: 50
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        paddingTop: 25,
+        paddingLeft: 38,
+        paddingRight: 38
+    },
+
+    LogInModal: {
+        backgroundColor: '#FFFFFF',
+        height: '63%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         paddingTop: 25,
@@ -219,6 +236,12 @@ const styles = StyleSheet.create({
     txtNewAccount: {
         fontFamily: 'Poppins-Bold',
         fontSize: 35,
+    },
+
+    txtWelcomeBack: {
+        fontFamily: 'Poppins-Bold',
+        fontSize: 35,
+        marginBottom: 30
     },
 
     viewTxtNewAccount: {
@@ -267,6 +290,13 @@ const styles = StyleSheet.create({
         height: 80,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+
+    txtForgotPassword: {
+        fontFamily: 'Poppins-Regular',
+        fontSize: 14,
+        color: '#3E885B',
+        textAlign: 'right'
     }
 
 
