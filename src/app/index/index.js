@@ -8,10 +8,10 @@ import { launchImageLibrary } from 'react-native-image-picker'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 
-import background from 'assets/home-background.jpg'
+import background from 'assets/index-background.jpg'
 
 
-const Home = () => {
+const Index = () => {
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
@@ -157,7 +157,7 @@ const Home = () => {
 }
 
 
-export default (Home)
+export default (Index)
 
 
 const styles = StyleSheet.create({

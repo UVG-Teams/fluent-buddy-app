@@ -3,9 +3,9 @@ import React from 'react'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 // import { connect } from 'react-redux'
 
-import Home from 'app_screens/home/index'
+import Index from 'app_screens/index/index'
 
-const App = () => <Home/>
+const App = () => <Index/>
 
 // export default connect(
 //     state => ({
