@@ -1,33 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image, Button} from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import Modal from 'react-native-modal'
+import React, { useState } from 'react'
 import { reduxForm, Field } from 'redux-form'
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
 
+import Modal from 'react-native-modal'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
-import { faLock } from '@fortawesome/free-solid-svg-icons'
-import { faCamera } from '@fortawesome/free-solid-svg-icons'
+import { launchImageLibrary } from 'react-native-image-picker'
+import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
+import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 
-import background from '../../assets/home-background.jpg'
+import background from 'assets/index-background.jpg'
 
-const Home = () => {
-    const [isModalVisible, setModalVisible] = useState(false);
+
+const Index = () => {
+    const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-    };
+        setModalVisible(!isModalVisible)
+    }
 
-    const [isModalVisible2, setModalVisible2] = useState(false);
+    const [isModalVisible2, setModalVisible2] = useState(false)
     const toggleModal2 = () => {
-        setModalVisible2(!isModalVisible2);
-    };
+        setModalVisible2(!isModalVisible2)
+    }
 
-    const [response, setResponse] = useState(null);
+    const [response, setResponse] = useState(null)
 
-    const deviceWidth = Dimensions.get("window").width;
-    const deviceHeight = Dimensions.get("window").height;
+    const deviceWidth = Dimensions.get("window").width
+    const deviceHeight = Dimensions.get("window").height
  
     return (
         <ImageBackground source={background} style={styles.image}>
@@ -60,8 +58,8 @@ const Home = () => {
                                                         maxHeight: 200,
                                                         maxWidth: 200,
                                                     },
-                                                    (response) => {
-                                                        setResponse(response);
+                                                    response => {
+                                                        setResponse(response)
                                                     },
                                                 )
                                             }>
@@ -158,7 +156,9 @@ const Home = () => {
     )
 }
 
-export default (Home)
+
+export default (Index)
+
 
 const styles = StyleSheet.create({
     image: {

@@ -1,4 +1,4 @@
-import * as types from '../types/auth'
+import * as types from 'state/types/auth'
 
 
 export const startLogin = (username, password) => ({

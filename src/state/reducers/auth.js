@@ -1,110 +1,110 @@
-import jwtDecode from 'jwt-decode';
-import { combineReducers } from 'redux';
+import jwtDecode from 'jwt-decode'
+import { combineReducers } from 'redux'
 
-import * as types from '../types/auth';
+import * as types from 'state/types/auth'
 
 
 const token = (state = null, action) => {
     switch(action.type) {
         case types.AUTHENTICATION_STARTED: {
-            return null;
+            return null
         }
         case types.AUTHENTICATION_COMPLETED: {
-            return action.payload.token;
+            return action.payload.token
         }
         case types.TOKEN_REFRESH_COMPLETED: {
-            return action.payload.newToken;
+            return action.payload.newToken
         }
         case types.AUTHENTICATION_FAILED: {
-            return null;
+            return null
         }
         case types.AUTHENTICATION_IDENTITY_CLEARED: {
-            return null;
+            return null
         }
     }
-    return state;
-};
+    return state
+}
 
 const isAuthenticating = (state = false, action) => {
     switch (action.type) {
         case types.AUTHENTICATION_STARTED: {
-            return true;
+            return true
         }
         case types.AUTHENTICATION_COMPLETED: {
-            return false;
+            return false
         }
         case types.AUTHENTICATION_FAILED: {
-            return false;
+            return false
         }
     }
-    return state;
-};
+    return state
+}
 
 const error = (state = null, action) => {
     switch (action.type) {
         case types.AUTHENTICATION_STARTED: {
-            return null;
+            return null
         }
         case types.AUTHENTICATION_COMPLETED: {
-            return null;
+            return null
         }
         case types.AUTHENTICATION_FAILED: {
-            return action.payload.error;
+            return action.payload.error
         }
     }
-    return state;
-};
+    return state
+}
 
 const decoded = (state = null, action) => {
     switch (action.type) {
         case types.AUTHENTICATION_STARTED: {
-            return null;
+            return null
         }
         case types.AUTHENTICATION_COMPLETED: {
-            return jwtDecode(action.payload.token);
+            return jwtDecode(action.payload.token)
         }
         case types.TOKEN_REFRESH_COMPLETED: {
-            return jwtDecode(action.payload.newToken);
+            return jwtDecode(action.payload.newToken)
         }
         case types.AUTHENTICATION_FAILED: {
-            return null;
+            return null
         }
         case types.AUTHENTICATION_IDENTITY_CLEARED: {
-            return null;
+            return null
         }
     }
-    return state;
-};
+    return state
+}
 
 const isRefreshing = (state = false, action) => {
     switch(action.type) {
         case types.TOKEN_REFRESH_STARTED: {
-            return true;
+            return true
         }
         case types.TOKEN_REFRESH_COMPLETED: {
-            return false;
+            return false
         }
         case types.TOKEN_REFRESH_FAILED: {
-            return false;
+            return false
         }
     }
-    return state;
-};
+    return state
+}
 
 const refreshingError = (state = null, action) => {
     switch(action.type) {
         case types.TOKEN_REFRESH_STARTED: {
-            return null;
+            return null
         }
         case types.TOKEN_REFRESH_COMPLETED: {
-            return null;
+            return null
         }
         case types.TOKEN_REFRESH_FAILED: {
-            return action.payload.error;
+            return action.payload.error
         }
     }
-    return state;
-};
+    return state
+}
 
 
 
@@ -115,15 +115,15 @@ const auth = combineReducers({
     decoded,
     isRefreshing,
     refreshingError,
-});
+})
 
-export default auth;
+export default auth
 
-export const getToken = state => state.token;
-export const getIsAuthenticating = state => state.isAuthenticating;
-export const getAuthenticatingError = state => state.error;
-export const getAuthUserID = state => state.decoded ? state.decoded.user_id : null;
-export const getAuthUsername = state => state.decoded ? state.decoded.username : null;
-export const getAuthExpiration = state => state.decoded ? state.decoded.exp : null;
-export const getIsRefreshingToken = state => state.isRefreshing;
-export const getRefreshingError = state => state.refreshingError;
+export const getToken = state => state.token
+export const getIsAuthenticating = state => state.isAuthenticating
+export const getAuthenticatingError = state => state.error
+export const getAuthUserID = state => state.decoded ? state.decoded.user_id : null
+export const getAuthUsername = state => state.decoded ? state.decoded.username : null
+export const getAuthExpiration = state => state.decoded ? state.decoded.exp : null
+export const getIsRefreshingToken = state => state.isRefreshing
+export const getRefreshingError = state => state.refreshingError
