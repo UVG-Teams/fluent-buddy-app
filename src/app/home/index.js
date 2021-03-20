@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image} from 'react-native'
+import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image, Button} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Modal from 'react-native-modal'
 import { reduxForm, Field } from 'redux-form'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -11,9 +12,6 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
 import background from '../../assets/home-background.jpg'
-import facebook from '../../assets/facebook.png'
-import google from '../../assets/google.png'
-import twitter from '../../assets/twitter.png'
 
 const Home = () => {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -25,6 +23,8 @@ const Home = () => {
     const toggleModal2 = () => {
         setModalVisible2(!isModalVisible2);
     };
+
+    const [response, setResponse] = useState(null);
 
     const deviceWidth = Dimensions.get("window").width;
     const deviceHeight = Dimensions.get("window").height;
@@ -49,11 +49,26 @@ const Home = () => {
                                 <View style={styles.viewTxtNewAccount}>
                                     <Text style={styles.txtNewAccount}>Nueva Cuenta</Text>
                                 </View>
-                                <View>
-                                    <View style={{backgroundColor: 'red', borderRadius: 35, width: 70, height:70}}>
-                                        <FontAwesomeIcon icon={faCamera} />
+                                <View style={{width: '40%', marginLeft: '10%', marginTop: '2%', alignItems: 'center'}}>
+                                    <View style={styles.uploadImage}>
+                                        <TouchableOpacity 
+                                            onPress={() =>
+                                                launchImageLibrary(
+                                                    {
+                                                        mediaType: 'photo',
+                                                        includeBase64: false,
+                                                        maxHeight: 200,
+                                                        maxWidth: 200,
+                                                    },
+                                                    (response) => {
+                                                        setResponse(response);
+                                                    },
+                                                )
+                                            }>
+                                                <FontAwesomeIcon icon={faCamera} size={25}/>
+                                        </TouchableOpacity>
                                     </View>
-                                    <Text>Subir foto</Text>
+                                    <Text style={styles.txtInputs}>Subir foto</Text>
                                 </View>
                             </View>
                             <View style={styles.inputsView}>
@@ -225,8 +240,6 @@ const styles = StyleSheet.create({
     },
 
     inputs: {
-        // borderWidth: 2,
-        // borderColor: 'black',
         width: '95%',
         fontFamily: 'Poppins-Regular',
         fontSize: 14,
@@ -244,6 +257,16 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Poppins-Regular',
         marginTop: 13
+    },
+
+    uploadImage: {
+        borderColor: '#3E885B',
+        borderWidth: 1,
+        borderRadius: 40,
+        width: 80,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 
 
