@@ -1,22 +1,157 @@
-import React from 'react'
-import { ImageBackground, StyleSheet, View, Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image, Button} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import Modal from 'react-native-modal'
+import { reduxForm, Field } from 'redux-form'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
+
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faLock } from '@fortawesome/free-solid-svg-icons'
+import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
 import background from '../../assets/home-background.jpg'
 
-const Home = ({}) => {
+const Home = () => {
+    const [isModalVisible, setModalVisible] = useState(false);
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
+
+    const [isModalVisible2, setModalVisible2] = useState(false);
+    const toggleModal2 = () => {
+        setModalVisible2(!isModalVisible2);
+    };
+
+    const [response, setResponse] = useState(null);
+
+    const deviceWidth = Dimensions.get("window").width;
+    const deviceHeight = Dimensions.get("window").height;
+ 
     return (
         <ImageBackground source={background} style={styles.image}>
             <View style={styles.bottom}>
                 <View>
-                    <TouchableOpacity style={styles.btnSignUp}>
+                    <TouchableOpacity style={styles.btnSignUp} onPress={toggleModal}>
                         <Text style={styles.txtSignUp}>Registrarme</Text>
                     </TouchableOpacity>
+
+                    <Modal 
+                        isVisible={isModalVisible} 
+                        style={styles.bottomModal}
+                        onBackdropPress={toggleModal}
+                        backdropOpacity={0} 
+                        deviceWidth={deviceWidth} 
+                        deviceHeight={deviceHeight}>
+                        <View style={styles.signUpModal}>
+                            <View style={{flexDirection:'row'}}>
+                                <View style={styles.viewTxtNewAccount}>
+                                    <Text style={styles.txtNewAccount}>Nueva Cuenta</Text>
+                                </View>
+                                <View style={{width: '40%', marginLeft: '10%', marginTop: '2%', alignItems: 'center'}}>
+                                    <View style={styles.uploadImage}>
+                                        <TouchableOpacity 
+                                            onPress={() =>
+                                                launchImageLibrary(
+                                                    {
+                                                        mediaType: 'photo',
+                                                        includeBase64: false,
+                                                        maxHeight: 200,
+                                                        maxWidth: 200,
+                                                    },
+                                                    (response) => {
+                                                        setResponse(response);
+                                                    },
+                                                )
+                                            }>
+                                                <FontAwesomeIcon icon={faCamera} size={25}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <Text style={styles.txtInputs}>Subir foto</Text>
+                                </View>
+                            </View>
+                            <View style={styles.inputsView}>
+                                <Text style={styles.txtInputs}>Email</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                    <FontAwesomeIcon icon={faEnvelope} />
+                                    <TextInput style={styles.inputs} />
+                                </View>
+                            </View>
+                            <View style={styles.inputsView}>
+                                <Text style={styles.txtInputs}>Usuario</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                    <FontAwesomeIcon icon={faUser} />
+                                    <TextInput style={styles.inputs} />
+                                </View>
+                            </View>
+                            <View style={styles.inputsView}>
+                                <Text style={styles.txtInputs}>Contraseña</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                    <FontAwesomeIcon icon={faLock} />
+                                    <TextInput style={styles.inputs} />
+                                </View>
+                            </View>
+                            <View style={styles.bottomSignUp}>
+                                <TouchableOpacity style={styles.btnSignUp}>
+                                    <Text style={styles.txtSignUp}>Registrarme</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.txtSignUpWith}>o regístrate con</Text>
+                                <View style={{flexDirection: 'row', marginTop: 17}}>
+                                    <Image source={require('../../assets/google.png')} style={{width: 27, height: 27}}/>
+                                    <Image source={require('../../assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
+                                    <Image source={require('../../assets/twitter.png')} style={{width: 27, height: 27}}/>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.btnSignIn}>
+                    <TouchableOpacity style={styles.btnSignIn} onPress={toggleModal2}>
                         <Text style={styles.txtSignIn}>Iniciar sesión</Text>
                     </TouchableOpacity>
+
+                    <Modal 
+                        isVisible={isModalVisible2} 
+                        style={styles.bottomModal}
+                        onBackdropPress={toggleModal2}
+                        backdropOpacity={0} 
+                        deviceWidth={deviceWidth} 
+                        deviceHeight={deviceHeight}>
+                        <View style={styles.LogInModal}>
+                            <View style={styles.viewTxtNewAccount}>
+                                <Text style={styles.txtWelcomeBack}>Bienvenido de vuelta</Text>
+                            </View>
+                            <View style={styles.inputsView}>
+                                <Text style={styles.txtInputs}>Usuario</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                    <FontAwesomeIcon icon={faUser} />
+                                    <TextInput style={styles.inputs} />
+                                </View>
+                            </View>
+                            <View style={styles.inputsView}>
+                                <Text style={styles.txtInputs}>Contraseña</Text>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                    <FontAwesomeIcon icon={faLock} />
+                                    <TextInput style={styles.inputs} />
+                                </View>
+                            </View>
+                            <View>
+                                <Text style={styles.txtForgotPassword}>Olvidé mi contraseña</Text>
+                            </View>
+                            <View style={styles.bottomSignUp}>
+                                <TouchableOpacity style={styles.btnSignUp}>
+                                    <Text style={styles.txtSignUp}>Iniciar sesión</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.txtSignUpWith}>o inicia sesión con</Text>
+                                <View style={{flexDirection: 'row', marginTop: 17}}>
+                                    <Image source={require('../../assets/google.png')} style={{width: 27, height: 27}}/>
+                                    <Image source={require('../../assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
+                                    <Image source={require('../../assets/twitter.png')} style={{width: 27, height: 27}}/>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
                 </View>
             </View>
         </ImageBackground>
@@ -72,5 +207,98 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Regular',
         textAlign: 'center',
     },
+
+    bottomModal: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+
+    signUpModal: {
+        backgroundColor: '#FFFFFF',
+        height: '65%',
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        paddingTop: 25,
+        paddingLeft: 38,
+        paddingRight: 38
+    },
+
+    LogInModal: {
+        backgroundColor: '#FFFFFF',
+        height: '63%',
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        paddingTop: 25,
+        paddingLeft: 38,
+        paddingRight: 38
+    },
+
+    txtNewAccount: {
+        fontFamily: 'Poppins-Bold',
+        fontSize: 35,
+    },
+
+    txtWelcomeBack: {
+        fontFamily: 'Poppins-Bold',
+        fontSize: 35,
+        marginBottom: 30
+    },
+
+    viewTxtNewAccount: {
+        width: '60%',
+        marginBottom: 17
+    },
+
+    txtInputs: {
+        color: '#000000',
+        opacity: 0.5,
+        fontSize: 14,
+        fontFamily: 'Poppins-Regular'
+    },
+
+    inputsView: {
+        borderBottomWidth: 2,
+        borderBottomColor: '#3E885B',
+        marginBottom: 28.5
+    },
+
+    inputs: {
+        width: '95%',
+        fontFamily: 'Poppins-Regular',
+        fontSize: 14,
+        paddingLeft: 5
+    },
+
+    bottomSignUp: {
+        alignItems: 'center',
+        marginTop: 33
+    },
+
+    txtSignUpWith: {
+        color: '#000000',
+        opacity: 0.5,
+        fontSize: 14,
+        fontFamily: 'Poppins-Regular',
+        marginTop: 13
+    },
+
+    uploadImage: {
+        borderColor: '#3E885B',
+        borderWidth: 1,
+        borderRadius: 40,
+        width: 80,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    txtForgotPassword: {
+        fontFamily: 'Poppins-Regular',
+        fontSize: 14,
+        color: '#3E885B',
+        textAlign: 'right'
+    }
+
+
 })
 

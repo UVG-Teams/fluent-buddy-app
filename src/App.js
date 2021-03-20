@@ -9,7 +9,7 @@ import {Text} from 'react-native'
 const App = () => {
     return (
         <>
-            <Home></Home>
+            <Home/>
         </>
    );
 };
