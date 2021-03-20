@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import devToolsEnhancer from 'remote-redux-devtools';
-import reducer from './tools/reducers';
-import mainSaga from './tools/sagas';
+import { createStore, applyMiddleware, compose } from 'redux'
+import createSagaMiddleware from 'redux-saga'
+import devToolsEnhancer from 'remote-redux-devtools'
+import reducer from 'state/reducers'
+import mainSaga from 'state/sagas'
 
 
 export const configureStore = () => {

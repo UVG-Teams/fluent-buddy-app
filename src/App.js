@@ -1,18 +1,11 @@
-import React from 'react';
+import React from 'react'
 // import { NavigationContainer } from '@react-navigation/native'
 // import { createDrawerNavigator } from '@react-navigation/drawer'
-// import {connect} from 'react-redux';
+// import { connect } from 'react-redux'
 
-import Home from './app/home/index'
-import {Text} from 'react-native'
+import Home from 'app_screens/home/index'
 
-const App = () => {
-    return (
-        <>
-            <Home/>
-        </>
-   );
-};
+const App = () => <Home/>
 
 // export default connect(
 //     state => ({
@@ -20,4 +13,4 @@ const App = () => {
 //     })
 // )(App)
 
-export default App;
+export default App
