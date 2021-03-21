@@ -10,9 +10,6 @@ import { layoutColors } from 'src/settings'
 
 
 const Home = () => {
-    const deviceWidth = Dimensions.get("window").width
-    const deviceHeight = Dimensions.get("window").height
-
     return (
         <ImageBackground style={styles.image}>
         </ImageBackground>

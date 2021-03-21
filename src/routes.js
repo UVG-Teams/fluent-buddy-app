@@ -10,7 +10,7 @@ export const routes = [
         component: Index,
         screenOptions: {
             headerTransparent: true,
-            title: ""
+            title: ''
         },
         authProtection: false,
         icon: null,
@@ -20,7 +20,7 @@ export const routes = [
         displayName: 'Inicio',
         component: Home,
         screenOptions: {
-            title: "HOME",
+            title: '',
             headerStyle: {
                 backgroundColor: layoutColors.color1
             }
