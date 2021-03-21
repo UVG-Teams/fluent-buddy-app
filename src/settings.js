@@ -19,9 +19,9 @@ export const colors = {
 }
 
 export const layoutColors = {
-    color1: colors.darkBlue1,
-    color2: colors.darkBlue2,
-    color3: colors.lightBlue,
+    color1: colors.darkGreen2,
+    color2: colors.darkGreen1,
+    color3: colors.lightGreen,
     shadow: '#161716',
     black: '#000000',
     white: '#FFFFFF',
