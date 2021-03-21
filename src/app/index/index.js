@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { reduxForm, Field } from 'redux-form'
+import { connect } from 'react-redux'
 
 import Modal from 'react-native-modal'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -8,10 +8,14 @@ import { launchImageLibrary } from 'react-native-image-picker'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 
+import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
+import * as actions from 'state/actions/auth'
 
 
-const Index = () => {
+const Index = ({
+    login
+}) => {
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => {
         setModalVisible(!isModalVisible)
@@ -26,7 +30,10 @@ const Index = () => {
 
     const deviceWidth = Dimensions.get("window").width
     const deviceHeight = Dimensions.get("window").height
- 
+
+    const [username, changeUsername] = useState('')
+    const [password, changePassword] = useState('')
+
     return (
         <ImageBackground source={background} style={styles.image}>
             <View style={styles.bottom}>
@@ -35,7 +42,7 @@ const Index = () => {
                         <Text style={styles.txtSignUp}>Registrarme</Text>
                     </TouchableOpacity>
 
-                    <Modal 
+                    <Modal
                         isVisible={isModalVisible} 
                         style={styles.bottomModal}
                         onBackdropPress={toggleModal}
@@ -96,9 +103,9 @@ const Index = () => {
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o regístrate con</Text>
                                 <View style={{flexDirection: 'row', marginTop: 17}}>
-                                    <Image source={require('../../assets/google.png')} style={{width: 27, height: 27}}/>
-                                    <Image source={require('../../assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
-                                    <Image source={require('../../assets/twitter.png')} style={{width: 27, height: 27}}/>
+                                    <Image source={require('assets/google.png')} style={{width: 27, height: 27}}/>
+                                    <Image source={require('assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
+                                    <Image source={require('assets/twitter.png')} style={{width: 27, height: 27}}/>
                                 </View>
                             </View>
                         </View>
@@ -109,7 +116,7 @@ const Index = () => {
                         <Text style={styles.txtSignIn}>Iniciar sesión</Text>
                     </TouchableOpacity>
 
-                    <Modal 
+                    <Modal
                         isVisible={isModalVisible2} 
                         style={styles.bottomModal}
                         onBackdropPress={toggleModal2}
@@ -124,28 +131,42 @@ const Index = () => {
                                 <Text style={styles.txtInputs}>Usuario</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <TextInput style={styles.inputs} />
+                                    <TextInput
+                                        style={styles.inputs}
+                                        value={ username }
+                                        onChangeText={ text => changeUsername(text) }
+                                        autoCapitalize='none'
+                                    />
                                 </View>
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Contraseña</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faLock} />
-                                    <TextInput style={styles.inputs} />
+                                    <TextInput
+                                        style={styles.inputs}
+                                        value={ password }
+                                        onChangeText={ text => changePassword(text) }
+                                        autoCapitalize='none'
+                                        secureTextEntry={ true }
+                                    />
                                 </View>
                             </View>
                             <View>
                                 <Text style={styles.txtForgotPassword}>Olvidé mi contraseña</Text>
                             </View>
                             <View style={styles.bottomSignUp}>
-                                <TouchableOpacity style={styles.btnSignUp}>
+                                <TouchableOpacity
+                                    onPress={ () => login(username, password) }
+                                    style={styles.btnSignUp}
+                                >
                                     <Text style={styles.txtSignUp}>Iniciar sesión</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o inicia sesión con</Text>
                                 <View style={{flexDirection: 'row', marginTop: 17}}>
-                                    <Image source={require('../../assets/google.png')} style={{width: 27, height: 27}}/>
-                                    <Image source={require('../../assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
-                                    <Image source={require('../../assets/twitter.png')} style={{width: 27, height: 27}}/>
+                                    <Image source={require('assets/google.png')} style={{width: 27, height: 27}}/>
+                                    <Image source={require('assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
+                                    <Image source={require('assets/twitter.png')} style={{width: 27, height: 27}}/>
                                 </View>
                             </View>
                         </View>
@@ -157,7 +178,14 @@ const Index = () => {
 }
 
 
-export default (Index)
+export default connect(
+    state => ({}),
+    dispatch => ({
+        login(username, password) {
+            dispatch(actions.startLogin(username, password))
+        }
+    })
+)(Index)
 
 
 const styles = StyleSheet.create({
@@ -174,8 +202,8 @@ const styles = StyleSheet.create({
     },
 
     btnSignUp: {
-        backgroundColor: '#3E885B',
-        shadowColor: '#161716',
+        backgroundColor: layoutColors.color1,
+        shadowColor: layoutColors.shadow,
         shadowOffset: {width: 0, height: 6},
         shadowOpacity: 0.6,
         borderRadius: 22,
@@ -184,7 +212,7 @@ const styles = StyleSheet.create({
     },
 
     txtSignUp: {
-        color: '#FFFFFF',
+        color: layoutColors.white,
         fontSize: 20,
         fontFamily: 'Poppins-Regular',
         textAlign: 'center',
@@ -192,8 +220,8 @@ const styles = StyleSheet.create({
 
     btnSignIn: {
         marginTop: 20,
-        backgroundColor: '#FFFFFF',
-        shadowColor: '#161716',
+        backgroundColor: layoutColors.white,
+        shadowColor: layoutColors.shadow,
         shadowOffset: {width: 0, height: 6},
         shadowOpacity: 0.6,
         borderRadius: 22,
@@ -202,7 +230,7 @@ const styles = StyleSheet.create({
     },
 
     txtSignIn: {
-        color: '#3E885B',
+        color: layoutColors.color1,
         fontSize: 20,
         fontFamily: 'Poppins-Regular',
         textAlign: 'center',
@@ -214,7 +242,7 @@ const styles = StyleSheet.create({
     },
 
     signUpModal: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: layoutColors.white,
         height: '65%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
@@ -224,7 +252,7 @@ const styles = StyleSheet.create({
     },
 
     LogInModal: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: layoutColors.white,
         height: '63%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
@@ -250,7 +278,7 @@ const styles = StyleSheet.create({
     },
 
     txtInputs: {
-        color: '#000000',
+        color: layoutColors.black,
         opacity: 0.5,
         fontSize: 14,
         fontFamily: 'Poppins-Regular'
@@ -258,7 +286,7 @@ const styles = StyleSheet.create({
 
     inputsView: {
         borderBottomWidth: 2,
-        borderBottomColor: '#3E885B',
+        borderBottomColor: layoutColors.color1,
         marginBottom: 28.5
     },
 
@@ -275,7 +303,7 @@ const styles = StyleSheet.create({
     },
 
     txtSignUpWith: {
-        color: '#000000',
+        color: layoutColors.black,
         opacity: 0.5,
         fontSize: 14,
         fontFamily: 'Poppins-Regular',
@@ -283,7 +311,7 @@ const styles = StyleSheet.create({
     },
 
     uploadImage: {
-        borderColor: '#3E885B',
+        borderColor: layoutColors.color1,
         borderWidth: 1,
         borderRadius: 40,
         width: 80,
@@ -295,10 +323,7 @@ const styles = StyleSheet.create({
     txtForgotPassword: {
         fontFamily: 'Poppins-Regular',
         fontSize: 14,
-        color: '#3E885B',
+        color: layoutColors.color1,
         textAlign: 'right'
     }
-
-
 })
-
