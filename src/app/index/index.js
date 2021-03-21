@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import Modal from 'react-native-modal'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+// import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
-import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 
 import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
@@ -182,6 +182,7 @@ export default connect(
     state => ({}),
     dispatch => ({
         login(username, password) {
+            console.log('LOGIN');
             dispatch(actions.startLogin(username, password))
         }
     })
