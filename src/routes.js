@@ -1,5 +1,6 @@
+import { layoutColors } from 'src/settings'
 import Index from 'app_screens/index'
-// import Home from 'app_screens/home'
+import Home from 'app_screens/home'
 
 
 export const routes = [
@@ -7,15 +8,24 @@ export const routes = [
         name: 'index',
         displayName: 'Index',
         component: Index,
-        screenOptions: { headerTransparent: true, title: "" },
+        screenOptions: {
+            headerTransparent: true,
+            title: ""
+        },
         authProtection: false,
-        icon: 'home',
+        icon: null,
     },
-    // {
-    //     name: 'home',
-    //     displayName: 'Inicio',
-    //     component: Home,
-    //     icon: 'home',
-    //     authProtection: true,
-    // },
+    {
+        name: 'home',
+        displayName: 'Inicio',
+        component: Home,
+        screenOptions: {
+            title: "HOME",
+            headerStyle: {
+                backgroundColor: layoutColors.color1
+            }
+        },
+        authProtection: true,
+        icon: null,
+    },
 ]
