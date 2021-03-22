@@ -182,7 +182,6 @@ export default connect(
     state => ({}),
     dispatch => ({
         login(username, password) {
-            console.log('LOGIN');
             dispatch(actions.startLogin(username, password))
         }
     })
