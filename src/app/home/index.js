@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
         width: 250,
         padding: 12,
         backgroundColor: layoutColors.color2,
-
         color: layoutColors.white,
         fontSize: 20,
         fontFamily: 'Poppins-Regular',
