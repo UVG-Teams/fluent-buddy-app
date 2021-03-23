@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: layoutColors.gray
     },
-
     buttonSignOut: {
         alignItems: 'center',
         marginTop: 33
