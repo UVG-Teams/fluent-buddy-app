@@ -11,10 +11,12 @@ import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, 
 import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
 import * as actions from 'state/actions/auth'
+import * as actionsSignUp from 'state/actions/signUp'
 
 
 const Index = ({
-    login
+    login,
+    signUp,
 }) => {
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => {
@@ -33,6 +35,7 @@ const Index = ({
 
     const [username, changeUsername] = useState('')
     const [password, changePassword] = useState('')
+    const [email, changeEmail] = useState('')
 
     return (
         <ImageBackground source={background} style={styles.image}>
@@ -80,25 +83,43 @@ const Index = ({
                                 <Text style={styles.txtInputs}>Email</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faEnvelope} />
-                                    <TextInput style={styles.inputs} />
+                                    <TextInput
+                                        style={styles.inputs}
+                                        value={ email }
+                                        onChangeText={ text => changeEmail(text) }
+                                        autoCapitalize='none'
+                                    />
                                 </View>
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Usuario</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <TextInput style={styles.inputs} />
+                                    <TextInput
+                                        style={styles.inputs}
+                                        value={ username }
+                                        onChangeText={ text => changeUsername(text) }
+                                        autoCapitalize='none'
+                                    />
                                 </View>
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Contraseña</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faLock} />
-                                    <TextInput style={styles.inputs} />
+                                    <TextInput
+                                        style={styles.inputs}
+                                        value={ password }
+                                        onChangeText={ text => changePassword(text) }
+                                        autoCapitalize='none'
+                                    />
                                 </View>
                             </View>
                             <View style={styles.bottomSignUp}>
-                                <TouchableOpacity style={styles.btnSignUp}>
+                                <TouchableOpacity
+                                    style={styles.btnSignUp}
+                                    onPress={ () => signUp(username, password, email) }
+                                >
                                     <Text style={styles.txtSignUp}>Registrarme</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o regístrate con</Text>
@@ -183,7 +204,10 @@ export default connect(
     dispatch => ({
         login(username, password) {
             dispatch(actions.startLogin(username, password))
-        }
+        },
+        signUp(username, password, email) {
+            dispatch(actionsSignUp.startSignUp(username, password, email))
+        },
     })
 )(Index)
 

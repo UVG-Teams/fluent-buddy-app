@@ -24,7 +24,7 @@ const Home = (props) => {
 export default connect(
     state => ({}),
     dispatch => ({
-        clearToken(){
+        clearToken() {
             dispatch(logout());
         }
     })
@@ -34,7 +34,7 @@ export default connect(
 const styles = StyleSheet.create({
     image: {
         flex: 1,
-        backgroundColor: layoutColors.gray,
+        backgroundColor: layoutColors.gray
     },
     buttonSignOut: {
         alignItems: 'center',
@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
         borderRadius: 22,
         width: 250,
         padding: 12,
-        backgroundColor: layoutColors.color1,
-        
+        backgroundColor: layoutColors.color2,
         color: layoutColors.white,
         fontSize: 20,
         fontFamily: 'Poppins-Regular',
