@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'
+import auth from '@react-native-firebase/auth'
 
 import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
@@ -14,9 +16,11 @@ import * as actions from 'state/actions/auth'
 import * as actionsSignUp from 'state/actions/signUp'
 
 
+
 const Index = ({
     login,
     signUp,
+    getInfoFromToken,
 }) => {
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => {
@@ -36,6 +40,25 @@ const Index = ({
     const [username, changeUsername] = useState('')
     const [password, changePassword] = useState('')
     const [email, changeEmail] = useState('')
+
+    const loginWithFacebook = () => {
+        // Attempt a login using the Facebook login dialog asking for default permissions.
+        LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+            login => {
+                if (login.isCancelled) {
+                    console.log('Login cancelled')
+                } else {
+                    AccessToken.getCurrentAccessToken().then(data => {
+                        const accessToken = data.accessToken.toString()
+                        getInfoFromToken(accessToken)
+                    })
+                }
+            },
+            error => {
+                console.log('Login fail with error: ' + error)
+            },
+        )
+    }
 
     return (
         <ImageBackground source={background} style={styles.image}>
@@ -125,7 +148,9 @@ const Index = ({
                                 <Text style={styles.txtSignUpWith}>o regístrate con</Text>
                                 <View style={{flexDirection: 'row', marginTop: 17}}>
                                     <Image source={require('assets/google.png')} style={{width: 27, height: 27}}/>
-                                    <Image source={require('assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
+                                    <TouchableOpacity onPress={ loginWithFacebook }>
+                                        <Image source={require('assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
+                                    </TouchableOpacity>
                                     <Image source={require('assets/twitter.png')} style={{width: 27, height: 27}}/>
                                 </View>
                             </View>
@@ -208,6 +233,29 @@ export default connect(
         signUp(username, password, email) {
             dispatch(actionsSignUp.startSignUp(username, password, email))
         },
+        getInfoFromToken(token) {
+            const PROFILE_REQUEST_PARAMS = {
+                fields: {
+                    string: 'id,name,email,first_name,last_name',
+                },
+            }
+            const profileRequest = new GraphRequest(
+                '/me',
+                { token, parameters: PROFILE_REQUEST_PARAMS },
+                (error, user) => {
+                    if (error) {
+                        console.log('Login info has error: ' + error)
+                    } else {
+                        console.log('Result:', user)
+                        const facebookCredential = auth.FacebookAuthProvider.credential(token)
+                        // Sign-in the user with the credential
+                        auth().signInWithCredential(facebookCredential)
+                        // this.setState({ userInfo: user })
+                    }
+                },
+            )
+            new GraphRequestManager().addRequest(profileRequest).start()
+        }
     })
 )(Index)
 
