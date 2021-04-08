@@ -135,6 +135,7 @@ const Index = ({
                                         value={ password }
                                         onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
+                                        secureTextEntry={ true }
                                     />
                                 </View>
                             </View>
@@ -236,7 +237,7 @@ export default connect(
         getInfoFromToken(token) {
             const PROFILE_REQUEST_PARAMS = {
                 fields: {
-                    string: 'id,name,email,first_name,last_name',
+                    string: 'id,name,email,first_name,last_name,picture,short_name',
                 },
             }
             const profileRequest = new GraphRequest(
