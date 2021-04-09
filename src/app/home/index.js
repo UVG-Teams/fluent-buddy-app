@@ -24,9 +24,14 @@ const Home = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.body}>
-                <View>
+                <View style={styles.bodyHeader}>
                     <Text style={styles.txtAllChats}>Todos los chats</Text>
-                    <FontAwesomeIcon icon={faSearch} />
+                    <FontAwesomeIcon icon={faSearch} size={18}/>                
+                </View>
+                <View>
+                    <Text>Hola</Text>
+                    {/* <Image source={require('assets/google.png')} style={{width: 27, height: 27}}/> */}
+                    {/* <View></View> */}
                 </View>
             </View>
             
@@ -78,9 +83,15 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
     },
+    bodyHeader: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 27,
+        paddingRight: 27,
+        paddingTop: 29
+    },
     txtAllChats: {
         fontSize: 18,
-        marginLeft: 27,
-        marginTop: 29
-    }
+    },
 })
