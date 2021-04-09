@@ -3,56 +3,84 @@ import { connect } from 'react-redux'
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
 
 
-const Home = (props) => {
-    const { clearToken } = props;
+const Home = () => {
     return (
-        <ImageBackground style={styles.image}>
-            <TouchableOpacity style={styles.buttonSignOut} onPress={() => clearToken()}>
-                <Text style={styles.txtSignOut}>Cerrar Sesión</Text>
-            </TouchableOpacity>
+        <ImageBackground style={styles.background}>
+            <View style={styles.tags}>
+                <TouchableOpacity style={styles.btnTagSelected}>
+                    <Text style={styles.txtTagSelected}>Chats</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btnTag}>
+                    <Text style={styles.txtTag}>Perfil</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btnTag}>
+                    <Text style={styles.txtTag}>Ajustes</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.body}>
+                <View>
+                    <Text style={styles.txtAllChats}>Todos los chats</Text>
+                    <FontAwesomeIcon icon={faSearch} />
+                </View>
+            </View>
+            
         </ImageBackground>
     )
 }
 
 
-export default connect(
-    state => ({}),
-    dispatch => ({
-        clearToken() {
-            dispatch(logout());
-        }
-    })
-)(Home)
+export default (Home)
 
 
 const styles = StyleSheet.create({
-    image: {
+    background: {
         flex: 1,
-        backgroundColor: layoutColors.gray
+        backgroundColor: layoutColors.seaGreen,
     },
-    buttonSignOut: {
-        alignItems: 'center',
-        marginTop: 33
+    tags: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 130,
+        paddingLeft: 30,
+        paddingRight: 30,
     },
-    txtSignOut: {
-        shadowColor: layoutColors.shadow,
-        shadowOffset: { width: 5, height: 6 },
-        shadowOpacity: 0.6,
-        elevation: 5,
-        zIndex: 5,
-        borderRadius: 22,
-        width: 250,
-        padding: 12,
-        backgroundColor: layoutColors.color2,
-        color: layoutColors.white,
-        fontSize: 20,
-        fontFamily: 'Poppins-Regular',
+    btnTagSelected: {
+        backgroundColor: layoutColors.teaGreen,
+        padding: 10,
+        borderRadius: 10,
+        width: 107
+    },
+    btnTag: {
+        padding: 10,
+        borderRadius: 10,
+        width: 107,
+        height: 47
+    },
+    txtTagSelected: {
+        fontSize: 18,
+        textAlign: 'center'
+    },
+    txtTag: {
+        fontSize: 18,
         textAlign: 'center',
+        color: layoutColors.white
     },
+    body: {
+        backgroundColor: layoutColors.white,
+        height: '78%',
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+    },
+    txtAllChats: {
+        fontSize: 18,
+        marginLeft: 27,
+        marginTop: 29
+    }
 })

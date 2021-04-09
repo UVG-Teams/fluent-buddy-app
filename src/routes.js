@@ -21,9 +21,10 @@ export const routes = [
         component: Home,
         screenOptions: {
             title: 'Fluent Buddy',
-            headerStyle: {
-                backgroundColor: layoutColors.seaGreen
-            }
+            // headerStyle: {
+            //     backgroundColor: layoutColors.seaGreen
+            // }
+            headerTransparent: true,
         },
         authProtection: true,
         icon: null,
