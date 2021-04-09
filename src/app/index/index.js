@@ -13,8 +13,6 @@ import auth from '@react-native-firebase/auth'
 import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
 import * as actions from 'state/actions/auth'
-import * as actionsSignUp from 'state/actions/signUp'
-
 
 
 const Index = ({
@@ -232,7 +230,7 @@ export default connect(
             dispatch(actions.startLogin(username, password))
         },
         signUp(username, password, email) {
-            dispatch(actionsSignUp.startSignUp(username, password, email))
+            dispatch(actions.startSignUp({ username, password, email, type: "normal" }))
         },
         getInfoFromToken(token) {
             const PROFILE_REQUEST_PARAMS = {
@@ -247,11 +245,10 @@ export default connect(
                     if (error) {
                         console.log('Login info has error: ' + error)
                     } else {
-                        console.log('Result:', user)
                         const facebookCredential = auth.FacebookAuthProvider.credential(token)
                         // Sign-in the user with the credential
                         auth().signInWithCredential(facebookCredential)
-                        // this.setState({ userInfo: user })
+                        dispatch(actions.startSignUp({ user, type: "third-party" }))
                     }
                 },
             )
