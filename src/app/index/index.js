@@ -7,14 +7,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import { Field, reduxForm, getFormValues } from 'redux-form';
 
 import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
 import * as actions from 'state/actions/auth'
 import * as actionsSignUp from 'state/actions/signUp'
 
+const FormInput = (props) => {
+    const {
+        input: { onChange, ...restInput },
+        meta: { error, ...restMeta },
+        style,
+        ...restProps
+    } = props;
+    return (
+        <TextInput
+            onChangeText={onChange}
+            {...restInput}
+            style={style}
+            {...restProps}
+        />
+    )
+}
 
 const Index = ({
+    handleSubmit,
     login,
     signUp,
 }) => {
@@ -83,10 +101,12 @@ const Index = ({
                                 <Text style={styles.txtInputs}>Email</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faEnvelope} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="signUpEmail"
                                         style={styles.inputs}
-                                        value={ email }
-                                        onChangeText={ text => changeEmail(text) }
+                                        // value={ email }
+                                        // onChangeText={ text => changeEmail(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -95,10 +115,12 @@ const Index = ({
                                 <Text style={styles.txtInputs}>Usuario</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="signUpUsername"
                                         style={styles.inputs}
-                                        value={ username }
-                                        onChangeText={ text => changeUsername(text) }
+                                        // value={ username }
+                                        // onChangeText={ text => changeUsername(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -107,10 +129,12 @@ const Index = ({
                                 <Text style={styles.txtInputs}>Contraseña</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faLock} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="signUpPassword"
                                         style={styles.inputs}
-                                        value={ password }
-                                        onChangeText={ text => changePassword(text) }
+                                        // value={ password }
+                                        // onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -118,7 +142,7 @@ const Index = ({
                             <View style={styles.bottomSignUp}>
                                 <TouchableOpacity
                                     style={styles.btnSignUp}
-                                    onPress={ () => signUp(username, password, email) }
+                                    onPress={ handleSubmit(signUp) }
                                 >
                                     <Text style={styles.txtSignUp}>Registrarme</Text>
                                 </TouchableOpacity>
@@ -152,10 +176,12 @@ const Index = ({
                                 <Text style={styles.txtInputs}>Usuario</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="username"
                                         style={styles.inputs}
-                                        value={ username }
-                                        onChangeText={ text => changeUsername(text) }
+                                        // value={ username }
+                                        // onChangeText={ text => changeUsername(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -164,10 +190,12 @@ const Index = ({
                                 <Text style={styles.txtInputs}>Contraseña</Text>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                                     <FontAwesomeIcon icon={faLock} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="password"
                                         style={styles.inputs}
-                                        value={ password }
-                                        onChangeText={ text => changePassword(text) }
+                                        // value={ password }
+                                        // onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
                                         secureTextEntry={ true }
                                     />
@@ -178,7 +206,7 @@ const Index = ({
                             </View>
                             <View style={styles.bottomSignUp}>
                                 <TouchableOpacity
-                                    onPress={ () => login(username, password) }
+                                    onPress={ handleSubmit(login) }
                                     style={styles.btnSignUp}
                                 >
                                     <Text style={styles.txtSignUp}>Iniciar sesión</Text>
@@ -199,18 +227,26 @@ const Index = ({
 }
 
 
-export default connect(
+const componentCore = connect(
     state => ({}),
     dispatch => ({
-        login(username, password) {
+        login(props) {
+            console.log(props)
+            const { username, password} = props;
             dispatch(actions.startLogin(username, password))
         },
-        signUp(username, password, email) {
-            dispatch(actionsSignUp.startSignUp(username, password, email))
+        signUp(props) {
+            const { signUpUsername, signUpPassword, signUpEmail } = props;
+            dispatch(actionsSignUp.startSignUp(signUpUsername, signUpPassword, signUpEmail))
         },
     })
 )(Index)
 
+const Component = reduxForm({
+    form: 'auth',
+})(componentCore)
+
+export default Component;
 
 const styles = StyleSheet.create({
     image: {
