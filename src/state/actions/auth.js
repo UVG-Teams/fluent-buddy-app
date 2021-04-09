@@ -33,3 +33,17 @@ export const failTokenRefresh = error => ({
     type: types.TOKEN_REFRESH_FAILED,
     payload: { error },
 })
+
+export const startSignUp = user => ({
+    type: types.SIGN_UP_STARTED,
+    payload: user,
+})
+
+export const completeSignUp = () => ({
+    type: types.SIGN_UP_COMPLETED,
+})
+
+export const failSignUp = error => ({
+    type: types.SIGN_UP_FAILED,
+    payload: { error },
+})

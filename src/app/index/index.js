@@ -3,25 +3,27 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import Modal from 'react-native-modal'
-// import { TouchableOpacity } from 'react-native-gesture-handler'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import auth from '@react-native-firebase/auth'
+import { Field, reduxForm, getFormValues } from 'redux-form'
 import { launchImageLibrary } from 'react-native-image-picker'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
+import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'
 import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
-import { Field, reduxForm, getFormValues } from 'redux-form';
 
 import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
 import * as actions from 'state/actions/auth'
-import * as actionsSignUp from 'state/actions/signUp'
 
-const FormInput = (props) => {
+
+const FormInput = props => {
     const {
         input: { onChange, ...restInput },
         meta: { error, ...restMeta },
         style,
         ...restProps
-    } = props;
+    } = props
+
     return (
         <TextInput
             onChangeText={onChange}
@@ -36,6 +38,7 @@ const Index = ({
     handleSubmit,
     login,
     signUp,
+    getInfoFromToken,
 }) => {
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => {
@@ -55,6 +58,25 @@ const Index = ({
     const [username, changeUsername] = useState('')
     const [password, changePassword] = useState('')
     const [email, changeEmail] = useState('')
+
+    const loginWithFacebook = () => {
+        // Attempt a login using the Facebook login dialog asking for default permissions.
+        LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+            login => {
+                if (login.isCancelled) {
+                    console.log('Login cancelled')
+                } else {
+                    AccessToken.getCurrentAccessToken().then(data => {
+                        const accessToken = data.accessToken.toString()
+                        getInfoFromToken(accessToken)
+                    })
+                }
+            },
+            error => {
+                console.log('Login fail with error: ' + error)
+            },
+        )
+    }
 
     return (
         <ImageBackground source={background} style={styles.image}>
@@ -137,6 +159,7 @@ const Index = ({
                                         // value={ password }
                                         // onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
+                                        secureTextEntry={ true }
                                     />
                                 </View>
                             </View>
@@ -150,7 +173,9 @@ const Index = ({
                                 <Text style={styles.txtSignUpWith}>o regístrate con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
                                     <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
-                                    <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                    <TouchableOpacity onPress={ loginWithFacebook }>
+                                        <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                    </TouchableOpacity>
                                     <Image source={require('assets/twitter.png')} style={{ width: 27, height: 27 }} />
                                 </View>
                             </View>
@@ -174,7 +199,7 @@ const Index = ({
                                 <Text style={styles.txtWelcomeBack}>Bienvenido de vuelta</Text>
                             </View>
                             <View style={styles.inputsView}>
-                                <Text style={styles.txtInputs}>Usuario</Text>
+                                <Text style={styles.txtInputs}>Email</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
                                     <FontAwesomeIcon icon={faUser} />
                                     <Field
@@ -237,8 +262,35 @@ const componentCore = connect(
         },
         signUp(props) {
             const { signUpUsername, signUpPassword, signUpEmail } = props;
-            dispatch(actionsSignUp.startSignUp(signUpUsername, signUpPassword, signUpEmail))
+            dispatch(actions.startSignUp({
+                username: signUpUsername,
+                password: signUpPassword,
+                email: signUpEmail,
+                type: "normal"
+            }))
         },
+        getInfoFromToken(token) {
+            const PROFILE_REQUEST_PARAMS = {
+                fields: {
+                    string: 'id,name,email,first_name,last_name,picture,short_name',
+                },
+            }
+            const profileRequest = new GraphRequest(
+                '/me',
+                { token, parameters: PROFILE_REQUEST_PARAMS },
+                (error, user) => {
+                    if (error) {
+                        console.log('Login info has error: ' + error)
+                    } else {
+                        const facebookCredential = auth.FacebookAuthProvider.credential(token)
+                        // Sign-in the user with the facebook credentials on Firebase
+                        auth().signInWithCredential(facebookCredential)
+                        dispatch(actions.startSignUp({ user, type: "third-party" }))
+                    }
+                },
+            )
+            new GraphRequestManager().addRequest(profileRequest).start()
+        }
     })
 )(Index)
 
