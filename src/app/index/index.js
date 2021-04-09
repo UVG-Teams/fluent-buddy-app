@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
@@ -7,14 +8,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import { Field, reduxForm, getFormValues } from 'redux-form';
 
 import { layoutColors } from 'src/settings'
 import background from 'assets/index-background.jpg'
 import * as actions from 'state/actions/auth'
 import * as actionsSignUp from 'state/actions/signUp'
 
+const FormInput = (props) => {
+    const {
+        input: { onChange, ...restInput },
+        meta: { error, ...restMeta },
+        style,
+        ...restProps
+    } = props;
+    return (
+        <TextInput
+            onChangeText={onChange}
+            {...restInput}
+            style={style}
+            {...restProps}
+        />
+    )
+}
 
 const Index = ({
+    handleSubmit,
     login,
     signUp,
 }) => {
@@ -46,20 +65,20 @@ const Index = ({
                     </TouchableOpacity>
 
                     <Modal
-                        isVisible={isModalVisible} 
+                        isVisible={isModalVisible}
                         style={styles.bottomModal}
                         onBackdropPress={toggleModal}
-                        backdropOpacity={0} 
-                        deviceWidth={deviceWidth} 
+                        backdropOpacity={0}
+                        deviceWidth={deviceWidth}
                         deviceHeight={deviceHeight}>
                         <View style={styles.signUpModal}>
-                            <View style={{flexDirection:'row'}}>
+                            <View style={{ flexDirection: 'row' }}>
                                 <View style={styles.viewTxtNewAccount}>
                                     <Text style={styles.txtNewAccount}>Nueva Cuenta</Text>
                                 </View>
-                                <View style={{width: '40%', marginLeft: '10%', marginTop: '2%', alignItems: 'center'}}>
+                                <View style={{ width: '40%', marginLeft: '10%', marginTop: '2%', alignItems: 'center' }}>
                                     <View style={styles.uploadImage}>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress={() =>
                                                 launchImageLibrary(
                                                     {
@@ -73,7 +92,7 @@ const Index = ({
                                                     },
                                                 )
                                             }>
-                                                <FontAwesomeIcon icon={faCamera} size={25}/>
+                                            <FontAwesomeIcon icon={faCamera} size={25} />
                                         </TouchableOpacity>
                                     </View>
                                     <Text style={styles.txtInputs}>Subir foto</Text>
@@ -81,36 +100,42 @@ const Index = ({
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Email</Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
                                     <FontAwesomeIcon icon={faEnvelope} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="signUpEmail"
                                         style={styles.inputs}
-                                        value={ email }
-                                        onChangeText={ text => changeEmail(text) }
+                                        // value={ email }
+                                        // onChangeText={ text => changeEmail(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Usuario</Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="signUpUsername"
                                         style={styles.inputs}
-                                        value={ username }
-                                        onChangeText={ text => changeUsername(text) }
+                                        // value={ username }
+                                        // onChangeText={ text => changeUsername(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Contraseña</Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
                                     <FontAwesomeIcon icon={faLock} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="signUpPassword"
                                         style={styles.inputs}
-                                        value={ password }
-                                        onChangeText={ text => changePassword(text) }
+                                        // value={ password }
+                                        // onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -118,15 +143,15 @@ const Index = ({
                             <View style={styles.bottomSignUp}>
                                 <TouchableOpacity
                                     style={styles.btnSignUp}
-                                    onPress={ () => signUp(username, password, email) }
+                                    onPress={handleSubmit(signUp)}
                                 >
                                     <Text style={styles.txtSignUp}>Registrarme</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o regístrate con</Text>
-                                <View style={{flexDirection: 'row', marginTop: 17}}>
-                                    <Image source={require('assets/google.png')} style={{width: 27, height: 27}}/>
-                                    <Image source={require('assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
-                                    <Image source={require('assets/twitter.png')} style={{width: 27, height: 27}}/>
+                                <View style={{ flexDirection: 'row', marginTop: 17 }}>
+                                    <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                    <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                    <Image source={require('assets/twitter.png')} style={{ width: 27, height: 27 }} />
                                 </View>
                             </View>
                         </View>
@@ -138,11 +163,11 @@ const Index = ({
                     </TouchableOpacity>
 
                     <Modal
-                        isVisible={isModalVisible2} 
+                        isVisible={isModalVisible2}
                         style={styles.bottomModal}
                         onBackdropPress={toggleModal2}
-                        backdropOpacity={0} 
-                        deviceWidth={deviceWidth} 
+                        backdropOpacity={0}
+                        deviceWidth={deviceWidth}
                         deviceHeight={deviceHeight}>
                         <View style={styles.LogInModal}>
                             <View style={styles.viewTxtNewAccount}>
@@ -150,26 +175,30 @@ const Index = ({
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Usuario</Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="username"
                                         style={styles.inputs}
-                                        value={ username }
-                                        onChangeText={ text => changeUsername(text) }
+                                        // value={ username }
+                                        // onChangeText={ text => changeUsername(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
                             </View>
                             <View style={styles.inputsView}>
                                 <Text style={styles.txtInputs}>Contraseña</Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
                                     <FontAwesomeIcon icon={faLock} />
-                                    <TextInput
+                                    <Field
+                                        component={FormInput}
+                                        name="password"
                                         style={styles.inputs}
-                                        value={ password }
-                                        onChangeText={ text => changePassword(text) }
+                                        // value={ password }
+                                        // onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
-                                        secureTextEntry={ true }
+                                        secureTextEntry={true}
                                     />
                                 </View>
                             </View>
@@ -178,16 +207,16 @@ const Index = ({
                             </View>
                             <View style={styles.bottomSignUp}>
                                 <TouchableOpacity
-                                    onPress={ () => login(username, password) }
+                                    onPress={handleSubmit(login)}
                                     style={styles.btnSignUp}
                                 >
                                     <Text style={styles.txtSignUp}>Iniciar sesión</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o inicia sesión con</Text>
-                                <View style={{flexDirection: 'row', marginTop: 17}}>
-                                    <Image source={require('assets/google.png')} style={{width: 27, height: 27}}/>
-                                    <Image source={require('assets/facebook.png')} style={{width: 27, height: 27, marginLeft: 15, marginRight: 15}}/>
-                                    <Image source={require('assets/twitter.png')} style={{width: 27, height: 27}}/>
+                                <View style={{ flexDirection: 'row', marginTop: 17 }}>
+                                    <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                    <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                    <Image source={require('assets/twitter.png')} style={{ width: 27, height: 27 }} />
                                 </View>
                             </View>
                         </View>
@@ -199,18 +228,25 @@ const Index = ({
 }
 
 
-export default connect(
+const componentCore = connect(
     state => ({}),
     dispatch => ({
-        login(username, password) {
+        login(props) {
+            const { username, password } = props;
             dispatch(actions.startLogin(username, password))
         },
-        signUp(username, password, email) {
-            dispatch(actionsSignUp.startSignUp(username, password, email))
+        signUp(props) {
+            const { signUpUsername, signUpPassword, signUpEmail } = props;
+            dispatch(actionsSignUp.startSignUp(signUpUsername, signUpPassword, signUpEmail))
         },
     })
 )(Index)
 
+const Component = reduxForm({
+    form: 'auth',
+})(componentCore)
+
+export default Component;
 
 const styles = StyleSheet.create({
     image: {

@@ -6,6 +6,7 @@ import signUp, * as signUpSelectors from './signUp'
 const reducer = combineReducers({
     auth,
     signUp,
+    form: formReducer,
 })
 
 export default reducer
