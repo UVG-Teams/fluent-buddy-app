@@ -246,7 +246,7 @@ export default connect(
                         console.log('Login info has error: ' + error)
                     } else {
                         const facebookCredential = auth.FacebookAuthProvider.credential(token)
-                        // Sign-in the user with the credential
+                        // Sign-in the user with the facebook credentials on Firebase
                         auth().signInWithCredential(facebookCredential)
                         dispatch(actions.startSignUp({ user, type: "third-party" }))
                     }
