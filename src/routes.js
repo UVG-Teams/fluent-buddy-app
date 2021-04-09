@@ -20,9 +20,9 @@ export const routes = [
         displayName: 'Inicio',
         component: Home,
         screenOptions: {
-            title: '',
+            title: 'Fluent Buddy',
             headerStyle: {
-                backgroundColor: layoutColors.color1
+                backgroundColor: layoutColors.seaGreen
             }
         },
         authProtection: true,

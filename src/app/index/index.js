@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     },
 
     btnSignUp: {
-        backgroundColor: layoutColors.color1,
+        backgroundColor: layoutColors.seaGreen,
         shadowColor: layoutColors.shadow,
         shadowOffset: {width: 0, height: 6},
         shadowOpacity: 0.6,
