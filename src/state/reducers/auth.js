@@ -51,6 +51,18 @@ const error = (state = null, action) => {
         case types.AUTHENTICATION_FAILED: {
             return action.payload.error
         }
+        case types.SIGN_UP_STARTED: {
+            return null
+        }
+        case types.SIGN_UP_COMPLETED: {
+            return null
+        }
+        case types.SIGN_UP_FAILED: {
+            return action.payload.error
+        }
+        default: {
+            return state
+        }
     }
     return state
 }
@@ -74,6 +86,23 @@ const decoded = (state = null, action) => {
         }
     }
     return state
+}
+
+const isSigningUp = (state = false, action) => {
+    switch(action.type) {
+        case types.SIGN_UP_STARTED: {
+            return true
+        }
+        case types.SIGN_UP_COMPLETED: {
+            return false
+        }
+        case types.SIGN_UP_FAILED: {
+            return false
+        }
+        default: {
+            return state
+        }
+    }
 }
 
 const isRefreshing = (state = false, action) => {
@@ -110,6 +139,7 @@ const refreshingError = (state = null, action) => {
 
 const auth = combineReducers({
     token,
+    isSigningUp,
     isAuthenticating,
     error,
     decoded,
@@ -127,3 +157,4 @@ export const getAuthUsername = state => state.decoded ? state.decoded.username :
 export const getAuthExpiration = state => state.decoded ? state.decoded.exp : null
 export const getIsRefreshingToken = state => state.isRefreshing
 export const getRefreshingError = state => state.refreshingError
+export const getIsSigningUp = state => state.isSigningUp

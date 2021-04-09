@@ -3,8 +3,9 @@ import { fork, all } from 'redux-saga/effects'
 import {
     watchLoginStarted,
     watchRefreshTokenStarted,
+    watchSignUpStarted,
 } from './auth'
-import { watchSignUpStarted } from './signUp'
+
 
 function* mainSaga() {
     yield all([

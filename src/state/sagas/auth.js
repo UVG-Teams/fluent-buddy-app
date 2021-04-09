@@ -94,3 +94,37 @@ export function* watchRefreshTokenStarted() {
         refreshToken,
     )
 }
+
+function* signUp(action) {
+    try {
+        const response = yield call(
+            fetch,
+            `${API_BASE_URL}/users/create_user/`,
+            {
+                method: 'POST',
+                body: JSON.stringify(action.payload),
+                headers: {
+                    'Content-type': 'application/json'
+                },
+            },
+        )
+
+        if (http.isSuccessful(response.status)) {
+            yield put(actions.completeSignUp())
+            const { token } = yield response.json()
+            yield put(actions.completeLogin(token))
+        } else {
+            const { non_field_errors } = yield response.json()
+            yield put(actions.failSignUp(non_field_errors[0]))
+        }
+    } catch(error) {
+        yield put(actions.failSignUp('Connection failed!'))
+    }
+}
+
+export function* watchSignUpStarted() {
+    yield takeEvery(
+        types.SIGN_UP_STARTED,
+        signUp,
+    )
+}
