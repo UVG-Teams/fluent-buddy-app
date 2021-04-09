@@ -112,7 +112,7 @@ function* signUp(action) {
         if (http.isSuccessful(response.status)) {
             yield put(actions.completeSignUp())
             const { token } = yield response.json()
-            // yield put(authActions.startLogin(username, password))
+            yield put(actions.completeLogin(token))
         } else {
             const { non_field_errors } = yield response.json()
             yield put(actions.failSignUp(non_field_errors[0]))
