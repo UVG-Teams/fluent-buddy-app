@@ -29,10 +29,9 @@ const Home = () => {
                     <FontAwesomeIcon icon={faSearch} size={18}/>                
                 </View>
                 <View>
-                    <Text>Hola</Text>
-                    {/* <Image source={require('assets/google.png')} style={{width: 27, height: 27}}/> */}
-                    {/* <View></View> */}
+                    <Text>Prueba</Text>
                 </View>
+                {/* <Text>Hola</Text> */}
             </View>
             
         </ImageBackground>
@@ -45,11 +44,9 @@ export default (Home)
 
 const styles = StyleSheet.create({
     background: {
-        flex: 1,
         backgroundColor: layoutColors.seaGreen,
     },
     tags: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 130,
@@ -79,12 +76,12 @@ const styles = StyleSheet.create({
     },
     body: {
         backgroundColor: layoutColors.white,
-        height: '78%',
+        height: '80%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
+        marginTop: 20
     },
     bodyHeader: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingLeft: 27,
