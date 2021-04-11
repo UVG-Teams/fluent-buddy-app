@@ -38,11 +38,41 @@ const Home = () => {
                         </View>
                     </View>
                     <View style={styles.hourConversation}>
-                        <Text style={{textAlignVertical: 'bottom',}}>13:30</Text>
+                        <Text style={styles.txtHourConversation}>13:30</Text>
+                    </View>
+                </View>
+                <View style={styles.conversation}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View>
+                            <Image source={require('assets/ITA.jpg')} style={styles.imgConversation}/>
+                        </View>
+                        <View style={styles.previewConversation}>
+                            <Text style={styles.txtConversationName}>Chiara</Text>
+                            <Text style={styles.txtConversationPreview}>Ehi là! Come va?</Text>
+                        </View>
+                    </View>
+                    <View style={styles.hourConversation}>
+                        <Text style={styles.txtHourConversation}>13:10</Text>
+                    </View>
+                </View>
+                <View style={styles.conversation}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View>
+                            <Image source={require('assets/FRA.png')} style={styles.imgConversation}/>
+                        </View>
+                        <View style={styles.previewConversation}>
+                            <Text style={styles.txtConversationName}>Antoine</Text>
+                            <Text style={styles.txtConversationPreview}>Quoi de neuf?</Text>
+                        </View>
+                    </View>
+                    <View style={styles.hourConversation}>
+                        <Text style={styles.txtHourConversation}>12:45</Text>
+                        <View style={styles.unopenMessage}>
+                            <Text style={styles.txtUnopenMessage}>1</Text>
+                        </View>
                     </View>
                 </View>
             </View>
-            
         </ImageBackground>
     )
 }
@@ -126,11 +156,29 @@ const styles = StyleSheet.create({
     },
     hourConversation: {
         // backgroundColor: 'yellow',
-        textAlignVertical: 'bottom',
         flexDirection: 'column-reverse',
         height: '100%',
-        paddingBottom: 6,
+        paddingBottom: 5,
+        alignItems: 'center'
+    },
+    txtHourConversation: {
         color: layoutColors.black,
         opacity: 0.5,
+    },
+    unopenMessage: {
+        // borderColor: layoutColors.black,
+        backgroundColor: layoutColors.black,
+        // borderWidth: 1,
+        borderRadius: 40,
+        width: 18,
+        height: 18,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 2
+    },
+    txtUnopenMessage: {
+        color: layoutColors.white,
+        fontSize: 14
     }
+
 })
