@@ -3,6 +3,7 @@ import Index from 'app_screens/index'
 import Home from 'app_screens/home'
 import Profile from 'app_screens/home/profile'
 import Settings from 'app_screens/home/settings'
+import Chat from 'app_screens/chat'
 
 
 export const routes = [
@@ -55,6 +56,21 @@ export const routes = [
             // headerStyle: {
             //     backgroundColor: layoutColors.seaGreen
             // }
+            headerTransparent: true,
+        },
+        authProtection: true,
+        icon: null,
+    },
+    {
+        name: 'chat',
+        displayName: 'Chat',
+        component: Chat,
+        screenOptions: {
+            title: 'Fluent Buddy',
+            headerTitleStyle: {
+                fontFamily: 'Poppins-Medium',
+                color: '#ffffff'
+            },
             headerTransparent: true,
         },
         authProtection: true,
