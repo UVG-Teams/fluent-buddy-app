@@ -18,7 +18,7 @@ const Home = ({navigation}) => {
                 <TouchableOpacity style={styles.btnTag}  onPress={ () => navigation.navigate('profile')}>
                     <Text style={styles.txtTag}>Perfil</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag}>
+                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('settings')}>
                     <Text style={styles.txtTag}>Ajustes</Text>
                 </TouchableOpacity>
             </View>

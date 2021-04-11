@@ -8,18 +8,18 @@ import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image }
 import { layoutColors } from 'src/settings'
 
 
-const Home = () => {
+const Home = ({navigation}) => {
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.tags}>
                 <TouchableOpacity style={styles.btnTagSelected}>
-                    <Text style={styles.txtTagSelected}>Chats</Text>
+                    <Text style={styles.txtTagSelected} onPress={ () => navigation.navigate('home')}>Chats</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnTag}>
                     <Text style={styles.txtTag}>Perfil</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnTag}>
-                    <Text style={styles.txtTag}>Ajustes</Text>
+                    <Text style={styles.txtTag} onPress={ () => navigation.navigate('settings')}>Ajustes</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.body}>
