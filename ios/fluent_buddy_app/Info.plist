@@ -45,6 +45,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Poppins-Medium.ttf</string>
 		<string>Poppins-Bold.ttf</string>
 		<string>Poppins-Regular.ttf</string>
 	</array>

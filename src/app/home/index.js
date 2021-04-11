@@ -106,12 +106,14 @@ const styles = StyleSheet.create({
     },
     txtTagSelected: {
         fontSize: 18,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Poppins-Medium'
     },
     txtTag: {
         fontSize: 18,
         textAlign: 'center',
-        color: layoutColors.white
+        color: layoutColors.white,
+        fontFamily: 'Poppins-Medium'
     },
     body: {
         backgroundColor: layoutColors.white,
@@ -129,6 +131,7 @@ const styles = StyleSheet.create({
     },
     txtAllChats: {
         fontSize: 18,
+        fontFamily: 'Poppins-Medium'
     },
     conversation: {
         flexDirection: 'row',
@@ -146,16 +149,17 @@ const styles = StyleSheet.create({
     },
     txtConversationName: {
         fontWeight: 'bold',
-        fontSize: 14
+        fontSize: 14,
+        fontFamily: 'Poppins-Medium'
     },
     txtConversationPreview: {
         fontSize: 14,
         color: layoutColors.black,
         opacity: 0.5,
-        marginTop: 3
+        marginTop: 3,
+        fontFamily: 'Poppins-Medium'
     },
     hourConversation: {
-        // backgroundColor: 'yellow',
         flexDirection: 'column-reverse',
         height: '100%',
         paddingBottom: 5,
@@ -164,11 +168,10 @@ const styles = StyleSheet.create({
     txtHourConversation: {
         color: layoutColors.black,
         opacity: 0.5,
+        fontFamily: 'Poppins-Medium'
     },
     unopenMessage: {
-        // borderColor: layoutColors.black,
         backgroundColor: layoutColors.black,
-        // borderWidth: 1,
         borderRadius: 40,
         width: 18,
         height: 18,
@@ -178,7 +181,8 @@ const styles = StyleSheet.create({
     },
     txtUnopenMessage: {
         color: layoutColors.white,
-        fontSize: 14
+        fontSize: 14,
+        fontFamily: 'Poppins-Medium'
     }
 
 })

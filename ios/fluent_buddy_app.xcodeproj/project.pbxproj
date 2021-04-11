@@ -22,6 +22,7 @@
 		51D179A2BAE19A04314C4296 /* libPods-fluent_buddy_app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296D03B0C41B074A17D71F82 /* libPods-fluent_buddy_app.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9B8DC06477E554F7F3594EB3 /* libPods-fluent_buddy_app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A63478B85A753E4582390F4E /* libPods-fluent_buddy_app-tvOSTests.a */; };
+		E904E2362623935800124480 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E904E22C262392D200124480 /* Poppins-Medium.ttf */; };
 		E90D9FD12601BAA20088A90F /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E90D9FD02601BAA20088A90F /* libRNSVG.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		A63478B85A753E4582390F4E /* libPods-fluent_buddy_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fluent_buddy_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7D13D9E63C0DAFA96C18259 /* Pods-fluent_buddy_app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fluent_buddy_app-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-fluent_buddy_app-tvOSTests/Pods-fluent_buddy_app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D74F1A8845C38948DD97D0BE /* Pods-fluent_buddy_app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fluent_buddy_app-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-fluent_buddy_app-tvOS/Pods-fluent_buddy_app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E904E22C262392D200124480 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Medium.ttf"; path = "../../../../../../../../Downloads/Poppins/Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		E90D9FD02601BAA20088A90F /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -209,6 +211,7 @@
 		E95A11D22600552E00F28352 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E904E22C262392D200124480 /* Poppins-Medium.ttf */,
 				3E0F539226069D8E0048A68E /* Poppins-Regular.ttf */,
 				3E0F538C26069D810048A68E /* Poppins-Bold.ttf */,
 			);
@@ -358,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E904E2362623935800124480 /* Poppins-Medium.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				3E0F538D26069D820048A68E /* Poppins-Bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
