@@ -8,14 +8,14 @@ import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image }
 import { layoutColors } from 'src/settings'
 
 
-const Home = ({navigation}) => {
+const Home = () => {
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.tags}>
                 <TouchableOpacity style={styles.btnTagSelected}>
                     <Text style={styles.txtTagSelected}>Chats</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag}  onPress={ () => navigation.navigate('profile')}>
+                <TouchableOpacity style={styles.btnTag}>
                     <Text style={styles.txtTag}>Perfil</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnTag}>
@@ -39,37 +39,6 @@ const Home = ({navigation}) => {
                     </View>
                     <View style={styles.hourConversation}>
                         <Text style={styles.txtHourConversation}>13:30</Text>
-                    </View>
-                </View>
-                <View style={styles.conversation}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View>
-                            <Image source={require('assets/ITA.jpg')} style={styles.imgConversation}/>
-                        </View>
-                        <View style={styles.previewConversation}>
-                            <Text style={styles.txtConversationName}>Chiara</Text>
-                            <Text style={styles.txtConversationPreview}>Ehi là! Come va?</Text>
-                        </View>
-                    </View>
-                    <View style={styles.hourConversation}>
-                        <Text style={styles.txtHourConversation}>13:10</Text>
-                    </View>
-                </View>
-                <View style={styles.conversation}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View>
-                            <Image source={require('assets/FRA.png')} style={styles.imgConversation}/>
-                        </View>
-                        <View style={styles.previewConversation}>
-                            <Text style={styles.txtConversationName}>Antoine</Text>
-                            <Text style={styles.txtConversationPreview}>Quoi de neuf?</Text>
-                        </View>
-                    </View>
-                    <View style={styles.hourConversation}>
-                        <Text style={styles.txtHourConversation}>12:45</Text>
-                        <View style={styles.unopenMessage}>
-                            <Text style={styles.txtUnopenMessage}>1</Text>
-                        </View>
                     </View>
                 </View>
             </View>
