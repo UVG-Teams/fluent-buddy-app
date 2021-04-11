@@ -5,7 +5,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
-import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
 
 
@@ -28,10 +27,20 @@ const Home = () => {
                     <Text style={styles.txtAllChats}>Todos los chats</Text>
                     <FontAwesomeIcon icon={faSearch} size={18}/>                
                 </View>
-                <View>
-                    <Text>Prueba</Text>
+                <View style={styles.conversation}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View>
+                            <Image source={require('assets/USA.jpg')} style={styles.imgConversation}/>
+                        </View>
+                        <View style={styles.previewConversation}>
+                            <Text style={styles.txtConversationName}>Harry</Text>
+                            <Text style={styles.txtConversationPreview}>Don't forget to use your ...</Text>
+                        </View>
+                    </View>
+                    <View style={styles.hourConversation}>
+                        <Text style={{textAlignVertical: 'bottom',}}>13:30</Text>
+                    </View>
                 </View>
-                {/* <Text>Hola</Text> */}
             </View>
             
         </ImageBackground>
@@ -79,16 +88,49 @@ const styles = StyleSheet.create({
         height: '80%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
-        marginTop: 20
-    },
-    bodyHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        marginTop: 20,
         paddingLeft: 27,
         paddingRight: 27,
         paddingTop: 29
     },
+    bodyHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     txtAllChats: {
         fontSize: 18,
     },
+    conversation: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 45,
+        alignItems: 'center'
+    },
+    imgConversation: {
+        width: 50,
+        height: 50,
+        borderRadius: 15
+    },
+    previewConversation: {
+        marginLeft: 19
+    },
+    txtConversationName: {
+        fontWeight: 'bold',
+        fontSize: 14
+    },
+    txtConversationPreview: {
+        fontSize: 14,
+        color: layoutColors.black,
+        opacity: 0.5,
+        marginTop: 3
+    },
+    hourConversation: {
+        // backgroundColor: 'yellow',
+        textAlignVertical: 'bottom',
+        flexDirection: 'column-reverse',
+        height: '100%',
+        paddingBottom: 6,
+        color: layoutColors.black,
+        opacity: 0.5,
+    }
 })
