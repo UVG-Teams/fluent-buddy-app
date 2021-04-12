@@ -25,9 +25,9 @@ const Home = ({navigation}) => {
             <View style={styles.body}>
                 <View style={styles.bodyHeader}>
                     <Text style={styles.txtAllChats}>Todos los chats</Text>
-                    <FontAwesomeIcon icon={faSearch} size={18}/>                
+                    <FontAwesomeIcon icon={faSearch} size={18}/>
                 </View>
-                <TouchableOpacity onPress={ () => navigation.navigate('settings')}>
+                <TouchableOpacity onPress={ () => navigation.navigate('chat')}>
                     <View style={styles.conversation}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <View>

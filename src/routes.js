@@ -29,6 +29,7 @@ export const routes = [
                 color: '#ffffff'
             },
             headerTransparent: true,
+            headerLeft: null,
         },
         authProtection: true,
         icon: null,
@@ -43,9 +44,12 @@ export const routes = [
             //     backgroundColor: layoutColors.seaGreen
             // }
             headerTransparent: true,
+            headerLeft: null,
         },
         authProtection: true,
         icon: null,
+            headerLeft: null,
+
     },
     {
         name: 'settings',
@@ -66,12 +70,7 @@ export const routes = [
         displayName: 'Chat',
         component: Chat,
         screenOptions: {
-            title: 'Fluent Buddy',
-            headerTitleStyle: {
-                fontFamily: 'Poppins-Medium',
-                color: '#ffffff'
-            },
-            headerTransparent: true,
+            headerShown: false
         },
         authProtection: true,
         icon: null,

@@ -8,46 +8,29 @@ import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image }
 import { layoutColors } from 'src/settings'
 
 
-const Home = ({navigation}) => {
+const Profile = ({navigation}) => {
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.tags}>
+                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('home')}>
+                    <Text style={styles.txtTag}>Chats</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.btnTagSelected}>
-                    <Text style={styles.txtTagSelected} onPress={ () => navigation.navigate('home')}>Chats</Text>
+                    <Text style={styles.txtTagSelected}>Perfil</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag}>
-                    <Text style={styles.txtTag}>Perfil</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag}>
-                    <Text style={styles.txtTag} onPress={ () => navigation.navigate('settings')}>Ajustes</Text>
+                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('settings')}>
+                    <Text style={styles.txtTag}>Ajustes</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.body}>
-                <View style={styles.bodyHeader}>
-                    <Text style={styles.txtAllChats}>Todos los chats</Text>
-                    <FontAwesomeIcon icon={faSearch} size={18}/>                
-                </View>
-                <View style={styles.conversation}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View>
-                            <Image source={require('assets/USA.jpg')} style={styles.imgConversation}/>
-                        </View>
-                        <View style={styles.previewConversation}>
-                            <Text style={styles.txtConversationName}>Harry</Text>
-                            <Text style={styles.txtConversationPreview}>Don't forget to use your ...</Text>
-                        </View>
-                    </View>
-                    <View style={styles.hourConversation}>
-                        <Text style={styles.txtHourConversation}>13:30</Text>
-                    </View>
-                </View>
+                 
             </View>
         </ImageBackground>
     )
 }
 
 
-export default (Home)
+export default (Profile)
 
 
 const styles = StyleSheet.create({

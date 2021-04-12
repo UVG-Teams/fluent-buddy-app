@@ -3,123 +3,60 @@ import { connect } from 'react-redux'
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 import { layoutColors } from 'src/settings'
 
 
-const Home = ({navigation}) => {
+const Chat = ({navigation}) => {
     return (
         <ImageBackground style={styles.background}>
-            <View style={styles.tags}>
-                <TouchableOpacity style={styles.btnTagSelected}>
-                    <Text style={styles.txtTagSelected}>Chats</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag}  onPress={ () => navigation.navigate('profile')}>
-                    <Text style={styles.txtTag}>Perfil</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('settings')}>
-                    <Text style={styles.txtTag}>Ajustes</Text>
-                </TouchableOpacity>
+            <View style={styles.chatHeader}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View>
+                        <FontAwesomeIcon icon={faChevronLeft} size={20} color={layoutColors.white}/>  
+                    </View>
+                    <View style={{marginLeft: 25}}>
+                        <Image source={require('assets/USA.jpg')} style={styles.imgConversation}/>
+                    </View>
+                    <View style={{marginLeft: 20}}>
+                        <Text style={styles.txtChatName}>Harry</Text>
+                    </View>
+                </View>
+                <View>
+                    <FontAwesomeIcon icon={faPhoneAlt} size={20} color={layoutColors.white}/>  
+                </View>
             </View>
             <View style={styles.body}>
-                <View style={styles.bodyHeader}>
-                    <Text style={styles.txtAllChats}>Todos los chats</Text>
-                    <FontAwesomeIcon icon={faSearch} size={18}/>                
-                </View>
-                <TouchableOpacity onPress={ () => navigation.navigate('settings')}>
-                    <View style={styles.conversation}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <View>
-                                <Image source={require('assets/USA.jpg')} style={styles.imgConversation}/>
-                            </View>
-                            <View style={styles.previewConversation}>
-                                <Text style={styles.txtConversationName}>Harry</Text>
-                                <Text style={styles.txtConversationPreview}>Don't forget to use your ...</Text>
-                            </View>
-                        </View>
-                        <View style={styles.hourConversation}>
-                            <Text style={styles.txtHourConversation}>13:30</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                <View style={styles.conversation}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View>
-                            <Image source={require('assets/ITA.jpg')} style={styles.imgConversation}/>
-                        </View>
-                        <View style={styles.previewConversation}>
-                            <Text style={styles.txtConversationName}>Chiara</Text>
-                            <Text style={styles.txtConversationPreview}>Ehi là! Come va?</Text>
-                        </View>
-                    </View>
-                    <View style={styles.hourConversation}>
-                        <Text style={styles.txtHourConversation}>13:10</Text>
-                    </View>
-                </View>
-                <View style={styles.conversation}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View>
-                            <Image source={require('assets/FRA.png')} style={styles.imgConversation}/>
-                        </View>
-                        <View style={styles.previewConversation}>
-                            <Text style={styles.txtConversationName}>Antoine</Text>
-                            <Text style={styles.txtConversationPreview}>Quoi de neuf?</Text>
-                        </View>
-                    </View>
-                    <View style={styles.hourConversation}>
-                        <Text style={styles.txtHourConversation}>12:45</Text>
-                        <View style={styles.unopenMessage}>
-                            <Text style={styles.txtUnopenMessage}>1</Text>
-                        </View>
-                    </View>
-                </View>
             </View>
         </ImageBackground>
     )
 }
 
 
-export default (Home)
+export default (Chat)
 
 
 const styles = StyleSheet.create({
     background: {
         backgroundColor: layoutColors.seaGreen,
     },
-    tags: {
+    chatHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 130,
+        marginTop: 70,
         paddingLeft: 30,
         paddingRight: 30,
+        alignItems: 'center'
     },
-    btnTagSelected: {
-        backgroundColor: layoutColors.teaGreen,
-        padding: 10,
-        borderRadius: 10,
-        width: 107
-    },
-    btnTag: {
-        padding: 10,
-        borderRadius: 10,
-        width: 107,
-        height: 47
-    },
-    txtTagSelected: {
+    txtChatName: {
+        fontFamily: 'Poppins-Medium',
         fontSize: 18,
-        textAlign: 'center',
-        fontFamily: 'Poppins-Medium'
-    },
-    txtTag: {
-        fontSize: 18,
-        textAlign: 'center',
-        color: layoutColors.white,
-        fontFamily: 'Poppins-Medium'
+        color: layoutColors.white
     },
     body: {
         backgroundColor: layoutColors.white,
-        height: '80%',
+        height: '90%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         marginTop: 20,
