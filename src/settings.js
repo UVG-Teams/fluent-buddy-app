@@ -30,4 +30,5 @@ export const layoutColors = {
     black: '#000000',
     white: '#FFFFFF',
     gray: '#CCCCCC',
+    lightGray: '#E2E2E2',
 }
