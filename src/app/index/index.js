@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     },
 
     txtSignIn: {
-        color: layoutColors.color1,
+        color: layoutColors.seaGreen,
         fontSize: 20,
         fontFamily: 'Poppins-Regular',
         textAlign: 'center',
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
 
     inputsView: {
         borderBottomWidth: 2,
-        borderBottomColor: layoutColors.color1,
+        borderBottomColor: layoutColors.seaGreen,
         marginBottom: 28.5
     },
 
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     },
 
     uploadImage: {
-        borderColor: layoutColors.color1,
+        borderColor: layoutColors.seaGreen,
         borderWidth: 1,
         borderRadius: 40,
         width: 80,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     txtForgotPassword: {
         fontFamily: 'Poppins-Regular',
         fontSize: 14,
-        color: layoutColors.color1,
+        color: layoutColors.seaGreen,
         textAlign: 'right'
     }
 })
