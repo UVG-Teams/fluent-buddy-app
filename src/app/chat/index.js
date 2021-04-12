@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft, faPhoneAlt, faMicrophone } from '@fortawesome/free-solid-svg-icons'
-import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image, ScrollView } from 'react-native'
 import { layoutColors } from 'src/settings'
 
 
@@ -14,7 +14,9 @@ const Chat = ({navigation}) => {
             <View style={styles.chatHeader}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <View>
-                        <FontAwesomeIcon icon={faChevronLeft} size={20} color={layoutColors.white}/>  
+                        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                            <FontAwesomeIcon icon={faChevronLeft} size={20} color={layoutColors.white}/>
+                        </TouchableOpacity>
                     </View>
                     <View style={{marginLeft: 25}}>
                         <Image source={require('assets/USA.jpg')} style={styles.imgConversation}/>
@@ -24,35 +26,40 @@ const Chat = ({navigation}) => {
                     </View>
                 </View>
                 <View>
-                    <FontAwesomeIcon icon={faPhoneAlt} size={20} color={layoutColors.white}/>  
+                    <FontAwesomeIcon icon={faPhoneAlt} size={20} color={layoutColors.white}/>
                 </View>
             </View>
             <View style={styles.body}>
-                <View >
-                    <Text style={styles.txtDate}>Hoy, 23/03/20</Text>
+                <View style={{height: '80%', paddingBottom: 29}}>
+                    <ScrollView>
+                        <View >
+                            <Text style={styles.txtDate}>Hoy, 23/03/20</Text>
+                        </View>
+                        <View style={{marginTop: 18}}>
+                            <View style={styles.botBubble}>
+                                {/* <Text></Text> */}
+                            </View>
+                            <View style={{marginTop: 5}}>
+                                <Text style={styles.txtMessageHourBot}>13:10 PM</Text>
+                            </View>
+                        </View>
+                        <View style={{marginTop: 18, width: '100%', alignItems: 'flex-end' }}>
+                            <View style={styles.userBubble}>
+                                {/* <Text></Text> */}
+                            </View>
+                            <View style={{marginTop: 5}}>
+                                <Text style={styles.txtMessageHourUser}>13:11 PM</Text>
+                            </View>
+                        </View>
+                    </ScrollView>
                 </View>
-                <View style={{marginTop: 18}}>
-                    <View style={styles.botBubble}>
-                        {/* <Text></Text> */}
-                    </View>
-                    <View style={{marginTop: 5}}>
-                        <Text style={styles.txtMessageHourBot}>13:10 PM</Text>
-                    </View>
-                </View>
-                <View style={{marginTop: 18, width: '100%', alignItems: 'flex-end' }}>
-                    <View style={styles.userBubble}>
-                        {/* <Text></Text> */}
-                    </View>
-                    <View style={{marginTop: 5}}>
-                        <Text style={styles.txtMessageHourUser}>13:11 PM</Text>
-                    </View>
-                </View>
-                <View>
-                    <View style={styles.iptMessage}>
 
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View>
+                        <TextInput style={styles.iptMessage} />
                     </View>
                     <View style={styles.btnVoiceNote}>
-
+                        <FontAwesomeIcon icon={faMicrophone} size={20}/>
                     </View>
                 </View>
             </View>
@@ -109,7 +116,7 @@ const styles = StyleSheet.create({
         height: 62, //Cambiar a 'Auto' a la hora de conectarlo con backend
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        borderBottomRightRadius: 15, 
+        borderBottomRightRadius: 15,
 
     },
     userBubble: {
@@ -118,7 +125,7 @@ const styles = StyleSheet.create({
         height: 62, //Cambiar a 'Auto' a la hora de conectarlo con backend
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        borderBottomLeftRadius: 15, 
+        borderBottomLeftRadius: 15,
     },
     txtMessageHourBot: {
         fontFamily: 'Poppins-Regular',
@@ -134,14 +141,19 @@ const styles = StyleSheet.create({
     },
     iptMessage: {
         backgroundColor: layoutColors.lightGray,
-        width: 275,
+        width: 320,
         height: 40,
-        borderRadius: 30
+        borderRadius: 30,
+        paddingLeft: 10,
+        paddingRight: 10,
+        fontFamily: 'Poppins-Regular'
     },
     btnVoiceNote: {
         backgroundColor: layoutColors.teaGreen,
         width: 40,
         height: 40,
-        borderRadius: 40
-    } 
+        borderRadius: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 })
