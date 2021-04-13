@@ -1,3 +1,4 @@
+import { color } from 'react-native-reanimated'
 import { LOCAL_URL } from 'src/localsettings'
 
 export const API_BASE_URL = LOCAL_URL
@@ -10,20 +11,24 @@ export const tokenReviewTime = 300 * 1000 // Seconds * 1000
 export const validTimePercentage = 0.75
 
 export const colors = {
-    darkBlue1: '#22548B',
-    darkBlue2: '#255C99',
-    lightBlue: '#86BBD8',
-    darkGreen1: '#01200F',
-    darkGreen2: '#3E885B',
-    lightGreen: '#C4FFB2',
+    bdazzledBlue: '#22548B',
+    lapisLazuli: '#255C99',
+    darkSkyBlue: '#86BBD8',
+    darkGreen: '#01200F',
+    seaGreen: '#3E885B',
+    teaGreen: '#C4FFBE',
 }
 
 export const layoutColors = {
-    color1: colors.darkGreen2,
-    color2: colors.darkGreen1,
-    color3: colors.lightGreen,
+    seaGreen: colors.seaGreen,
+    teaGreen: colors.teaGreen,
+    darkGreen: colors.darkGreen,
+    bdazzledBlue: colors.bdazzledBlue,
+    lapisLazuli: colors.lapisLazuli,
+    darkSkyBlue: colors.darkSkyBlue,
     shadow: '#161716',
     black: '#000000',
     white: '#FFFFFF',
     gray: '#CCCCCC',
+    lightGray: '#E2E2E2',
 }
