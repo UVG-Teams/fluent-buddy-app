@@ -4,6 +4,7 @@ import auth, * as authSelectors from './auth'
 
 const reducer = combineReducers({
     auth,
+    form: formReducer,
 })
 
 export default reducer
@@ -17,3 +18,4 @@ export const getAuthUsername = state => authSelectors.getAuthUsername(state.auth
 export const getAuthExpiration = state => authSelectors.getAuthExpiration(state.auth)
 export const getIsRefreshingToken = state => authSelectors.getIsRefreshingToken(state.auth)
 export const getRefreshingError = state => authSelectors.getRefreshingError(state.auth)
+export const getIsSigningUp = state => authSelectors.getIsSigningUp(state.auth)
