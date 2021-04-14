@@ -41,40 +41,25 @@ const Index = ({
     getInfoFromToken,
 }) => {
     const [isModalVisible, setModalVisible] = useState(false)
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible)
-    }
+    const toggleModal = () => setModalVisible(!isModalVisible)
 
     const [isModalVisible2, setModalVisible2] = useState(false)
-    const toggleModal2 = () => {
-        setModalVisible2(!isModalVisible2)
-    }
-
-    const [response, setResponse] = useState(null)
+    const toggleModal2 = () => setModalVisible2(!isModalVisible2)
 
     const deviceWidth = Dimensions.get("window").width
     const deviceHeight = Dimensions.get("window").height
 
-    const [username, changeUsername] = useState('')
-    const [password, changePassword] = useState('')
-    const [email, changeEmail] = useState('')
-
-    const loginWithFacebook = () => {
+    const loginWithFacebook = type => {
         // Attempt a login using the Facebook login dialog asking for default permissions.
         LoginManager.logInWithPermissions(['public_profile', 'email']).then(
             login => {
                 if (login.isCancelled) {
                     console.log('Login cancelled')
                 } else {
-                    AccessToken.getCurrentAccessToken().then(data => {
-                        const accessToken = data.accessToken.toString()
-                        getInfoFromToken(accessToken)
-                    })
+                    AccessToken.getCurrentAccessToken().then(data => getInfoFromToken(data.accessToken.toString(), type))
                 }
             },
-            error => {
-                console.log('Login fail with error: ' + error)
-            },
+            error => { console.log('Login fail with error: ' + error) },
         )
     }
 
@@ -128,8 +113,6 @@ const Index = ({
                                         component={FormInput}
                                         name="signUpEmail"
                                         style={styles.inputs}
-                                        // value={ email }
-                                        // onChangeText={ text => changeEmail(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -142,8 +125,6 @@ const Index = ({
                                         component={FormInput}
                                         name="signUpUsername"
                                         style={styles.inputs}
-                                        // value={ username }
-                                        // onChangeText={ text => changeUsername(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -156,24 +137,19 @@ const Index = ({
                                         component={FormInput}
                                         name="signUpPassword"
                                         style={styles.inputs}
-                                        // value={ password }
-                                        // onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
                                         secureTextEntry={ true }
                                     />
                                 </View>
                             </View>
                             <View style={styles.bottomSignUp}>
-                                <TouchableOpacity
-                                    style={styles.btnSignUp}
-                                    onPress={handleSubmit(signUp)}
-                                >
+                                <TouchableOpacity style={styles.btnSignUp} onPress={handleSubmit(signUp)}>
                                     <Text style={styles.txtSignUp}>Registrarme</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o regístrate con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
                                     <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
-                                    <TouchableOpacity onPress={ loginWithFacebook }>
+                                    <TouchableOpacity onPress={ () => loginWithFacebook("signup") }>
                                         <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
                                     </TouchableOpacity>
                                     <Image source={require('assets/twitter.png')} style={{ width: 27, height: 27 }} />
@@ -206,8 +182,6 @@ const Index = ({
                                         component={FormInput}
                                         name="username"
                                         style={styles.inputs}
-                                        // value={ username }
-                                        // onChangeText={ text => changeUsername(text) }
                                         autoCapitalize='none'
                                     />
                                 </View>
@@ -220,8 +194,6 @@ const Index = ({
                                         component={FormInput}
                                         name="password"
                                         style={styles.inputs}
-                                        // value={ password }
-                                        // onChangeText={ text => changePassword(text) }
                                         autoCapitalize='none'
                                         secureTextEntry={true}
                                     />
@@ -231,16 +203,15 @@ const Index = ({
                                 <Text style={styles.txtForgotPassword}>Olvidé mi contraseña</Text>
                             </View>
                             <View style={styles.bottomSignUp}>
-                                <TouchableOpacity
-                                    onPress={handleSubmit(login)}
-                                    style={styles.btnSignUp}
-                                >
+                                <TouchableOpacity onPress={handleSubmit(login)} style={styles.btnSignUp}>
                                     <Text style={styles.txtSignUp}>Iniciar sesión</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o inicia sesión con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
                                     <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
-                                    <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                    <TouchableOpacity onPress={ () => loginWithFacebook("login") }>
+                                        <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                    </TouchableOpacity>
                                     <Image source={require('assets/twitter.png')} style={{ width: 27, height: 27 }} />
                                 </View>
                             </View>
@@ -258,7 +229,7 @@ const componentCore = connect(
     dispatch => ({
         login(props) {
             const { username, password } = props;
-            dispatch(actions.startLogin(username, password))
+            dispatch(actions.startLogin({ username, password }))
         },
         signUp(props) {
             const { signUpUsername, signUpPassword, signUpEmail } = props;
@@ -269,7 +240,7 @@ const componentCore = connect(
                 type: "normal"
             }))
         },
-        getInfoFromToken(token) {
+        getInfoFromToken(token, type) {
             const PROFILE_REQUEST_PARAMS = {
                 fields: {
                     string: 'id,name,email,first_name,last_name,picture,short_name',
@@ -285,7 +256,12 @@ const componentCore = connect(
                         const facebookCredential = auth.FacebookAuthProvider.credential(token)
                         // Sign-in the user with the facebook credentials on Firebase
                         auth().signInWithCredential(facebookCredential)
-                        dispatch(actions.startSignUp({ user, type: "third-party" }))
+
+                        if (type == "signup") {
+                            dispatch(actions.startSignUp({ user, type: "third-party" }))
+                        } else {
+                            dispatch(actions.startLogin({ user, type: "third-party" }))
+                        }
                     }
                 },
             )
