@@ -3,7 +3,6 @@ import {
     takeEvery,
     put,
     // race,
-    // all,
     // delay,
     select,
 } from 'redux-saga/effects'
@@ -22,13 +21,19 @@ import {
 function* login(action) {
     try {
 
+        url_endpoint = '/token-auth/'
+
+        if (action.payload.type == 'third-party') {
+            url_endpoint = '/users/token-auth-third-party/'
+        }
+
         const response = yield call(
             fetch,
-            `${API_BASE_URL}/token-auth/`,
+            `${API_BASE_URL}${url_endpoint}`,
             {
                 method: 'POST',
                 body: JSON.stringify(action.payload),
-                headers:{
+                headers: {
                     'Content-Type': 'application/json',
                 },
             },

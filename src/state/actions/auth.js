@@ -1,9 +1,9 @@
 import * as types from 'state/types/auth'
 
 
-export const startLogin = (username, password) => ({
+export const startLogin = user => ({
     type: types.AUTHENTICATION_STARTED,
-    payload: { username, password },
+    payload: user,
 })
 
 export const completeLogin = token => ({
