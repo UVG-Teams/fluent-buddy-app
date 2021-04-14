@@ -229,7 +229,7 @@ const componentCore = connect(
     dispatch => ({
         login(props) {
             const { username, password } = props;
-            dispatch(actions.startLogin({username, password}))
+            dispatch(actions.startLogin({ username, password }))
         },
         signUp(props) {
             const { signUpUsername, signUpPassword, signUpEmail } = props;

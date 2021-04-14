@@ -2,8 +2,8 @@ import {
     call,
     takeEvery,
     put,
-    // race,
-    // delay,
+    race,
+    delay,
     select,
 } from 'redux-saga/effects'
 
@@ -27,19 +27,22 @@ function* login(action) {
             url_endpoint = '/users/token-auth-third-party/'
         }
 
-        const response = yield call(
-            fetch,
-            `${API_BASE_URL}${url_endpoint}`,
-            {
-                method: 'POST',
-                body: JSON.stringify(action.payload),
-                headers: {
-                    'Content-Type': 'application/json',
+        const { response, timeout } = yield race({
+            response: call(
+                fetch,
+                `${API_BASE_URL}${url_endpoint}`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(action.payload),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 },
-            },
-        )
+            ),
+            timeout: delay(3000),
+        })
 
-        if (http.isSuccessful(response.status)) {
+        if (response && http.isSuccessful(response.status)) {
             const { token } = yield response.json()
             yield put(actions.completeLogin(token))
         } else {
