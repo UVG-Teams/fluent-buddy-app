@@ -34,12 +34,54 @@ const Settings = (props, navigation) => {
                     </View>
                     <FontAwesomeIcon icon={faChevronRight} size={18}/>
                 </View>
-                 
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.functionIcon}>
+                            <FontAwesomeIcon icon={faBell} size={18}/>
+                        </View>
+                        <Text style={styles.txtFunction}>Notificaciones</Text>
+                    </View>
+                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.functionIcon}>
+                            <FontAwesomeIcon icon={faLanguage} size={18}/>
+                        </View>
+                        <Text style={styles.txtFunction}>Lenguaje</Text>
+                    </View>
+                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.functionIcon}>
+                            <FontAwesomeIcon icon={faKey} size={18}/>
+                        </View>
+                        <Text style={styles.txtFunction}>Cuenta</Text>
+                    </View>
+                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.functionIcon}>
+                            <FontAwesomeIcon icon={faUserFriends} size={18}/>
+                        </View>
+                        <Text style={styles.txtFunction}>Contáctanos</Text>
+                    </View>
+                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
+                </View>
+                <TouchableOpacity onPress={() => clearToken()}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={styles.functionIcon}>
+                                <FontAwesomeIcon icon={faSignOutAlt} size={18}/>
+                            </View>
+                            <Text style={styles.txtFunction}>Cerrar sesión</Text>
+                        </View>
+                        <FontAwesomeIcon icon={faChevronRight} size={18}/>
+                    </View>
+                </TouchableOpacity>
             </View>
-
-            <TouchableOpacity style={styles.buttonSignOut} onPress={() => clearToken()}>
-                <Text style={styles.txtSignOut}>Cerrar Sesión</Text>
-            </TouchableOpacity>
         </ImageBackground>
     )
 }
