@@ -4,16 +4,17 @@ import { connect } from 'react-redux'
 
 import Modal from 'react-native-modal'
 import auth from '@react-native-firebase/auth'
-import { Field, reduxForm, getFormValues } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'
 import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 
 import { layoutColors } from 'src/settings'
-import background from 'assets/index-background.jpg'
 import * as actions from 'state/actions/auth'
+import background from 'assets/index-background.jpg'
 
 
 const FormInput = props => {
@@ -38,7 +39,8 @@ const Index = ({
     handleSubmit,
     login,
     signUp,
-    getInfoFromToken,
+    getInfoFromFBToken,
+    getInfoFromGoogleToken,
 }) => {
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => setModalVisible(!isModalVisible)
@@ -49,6 +51,8 @@ const Index = ({
     const deviceWidth = Dimensions.get("window").width
     const deviceHeight = Dimensions.get("window").height
 
+    GoogleSignin.configure()
+
     const loginWithFacebook = type => {
         // Attempt a login using the Facebook login dialog asking for default permissions.
         LoginManager.logInWithPermissions(['public_profile', 'email']).then(
@@ -56,11 +60,23 @@ const Index = ({
                 if (login.isCancelled) {
                     console.log('Login cancelled')
                 } else {
-                    AccessToken.getCurrentAccessToken().then(data => getInfoFromToken(data.accessToken.toString(), type))
+                    AccessToken.getCurrentAccessToken().then(data => getInfoFromFBToken(data.accessToken.toString(), type))
                 }
             },
-            error => { console.log('Login fail with error: ' + error) },
+            error => {
+                console.log('Login fail with error: ' + error)
+            },
         )
+    }
+
+    const loginWithGoogle = async(type) => {
+        try {
+            await GoogleSignin.hasPlayServices()
+            const userInfo = await GoogleSignin.signIn()
+            getInfoFromGoogleToken(userInfo, type)
+        } catch (error) {
+            console.log('Login fail with error: ' + error)
+        }
     }
 
     return (
@@ -148,7 +164,9 @@ const Index = ({
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o regístrate con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
-                                    <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                    <TouchableOpacity onPress={ () => loginWithGoogle("signup") }>
+                                        <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                    </TouchableOpacity>
                                     <TouchableOpacity onPress={ () => loginWithFacebook("signup") }>
                                         <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
                                     </TouchableOpacity>
@@ -208,7 +226,9 @@ const Index = ({
                                 </TouchableOpacity>
                                 <Text style={styles.txtSignUpWith}>o inicia sesión con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
-                                    <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                    <TouchableOpacity onPress={ () => loginWithGoogle("login") }>
+                                        <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                    </TouchableOpacity>
                                     <TouchableOpacity onPress={ () => loginWithFacebook("login") }>
                                         <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
                                     </TouchableOpacity>
@@ -228,11 +248,11 @@ const componentCore = connect(
     state => ({}),
     dispatch => ({
         login(props) {
-            const { username, password } = props;
+            const { username, password } = props
             dispatch(actions.startLogin({ username, password }))
         },
         signUp(props) {
-            const { signUpUsername, signUpPassword, signUpEmail } = props;
+            const { signUpUsername, signUpPassword, signUpEmail } = props
             dispatch(actions.startSignUp({
                 username: signUpUsername,
                 password: signUpPassword,
@@ -240,7 +260,7 @@ const componentCore = connect(
                 type: "normal"
             }))
         },
-        getInfoFromToken(token, type) {
+        getInfoFromFBToken(token, type) {
             const PROFILE_REQUEST_PARAMS = {
                 fields: {
                     string: 'id,name,email,first_name,last_name,picture,short_name',
@@ -266,6 +286,18 @@ const componentCore = connect(
                 },
             )
             new GraphRequestManager().addRequest(profileRequest).start()
+        },
+        getInfoFromGoogleToken(userInfo, type) {
+            const googleCredential = auth.GoogleAuthProvider.credential(userInfo.idToken)
+            auth().signInWithCredential(googleCredential)
+
+            const user = userInfo.user
+
+            if (type == "signup") {
+                dispatch(actions.startSignUp({ user, type: "third-party" }))
+            } else {
+                dispatch(actions.startLogin({ user, type: "third-party" }))
+            }
         }
     })
 )(Index)
@@ -274,7 +306,7 @@ const Component = reduxForm({
     form: 'auth',
 })(componentCore)
 
-export default Component;
+export default Component
 
 const styles = StyleSheet.create({
     image: {

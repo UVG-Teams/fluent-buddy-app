@@ -17,6 +17,7 @@ target 'fluent_buddy_app' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'FBSDKLoginKit'
+  pod 'GoogleSignIn'
 
   # Enables Flipper.
   #
