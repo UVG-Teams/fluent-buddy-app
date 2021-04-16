@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
+import { faPalette, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
@@ -14,7 +14,7 @@ const Settings = (props, navigation) => {
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.tags}>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('home')}>
+                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('home') }>
                     <Text style={styles.txtTag}>Chats</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnTag}>
@@ -25,6 +25,15 @@ const Settings = (props, navigation) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.body}>
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.functionIcon}>
+                            <FontAwesomeIcon icon={faPalette} size={18}/>
+                        </View>
+                        <Text style={styles.txtFunction}>Tema</Text>
+                    </View>
+                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
+                </View>
                  
             </View>
 
@@ -89,6 +98,17 @@ const styles = StyleSheet.create({
         paddingLeft: 27,
         paddingRight: 27,
         paddingTop: 29
+    },
+    functionIcon: {
+        backgroundColor: layoutColors.teaGreen,
+        alignItems: 'center',
+        padding: 13,
+        borderRadius: 10,
+    },
+    txtFunction: {
+        fontFamily: 'Poppins-Medium',
+        fontSize: 14,
+        marginLeft: 15
     },
     buttonSignOut: {
         alignItems: 'center',
