@@ -57,10 +57,12 @@ export const routes = [
         component: Settings,
         screenOptions: {
             title: 'Fluent Buddy',
-            // headerStyle: {
-            //     backgroundColor: layoutColors.seaGreen
-            // }
+            headerTitleStyle: {
+                fontFamily: 'Poppins-Medium',
+                color: '#ffffff'
+            },
             headerTransparent: true,
+            headerLeft: null,
         },
         authProtection: true,
         icon: null,

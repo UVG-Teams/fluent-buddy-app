@@ -9,15 +9,15 @@ import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
 
 
-const Settings = (props, navigation) => {
+const Settings = (props) => {
     const { clearToken } = props;
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.tags}>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('home') }>
+                <TouchableOpacity style={styles.btnTag} onPress={ () => props.navigation.navigate('home')}>
                     <Text style={styles.txtTag}>Chats</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag}>
+                <TouchableOpacity style={styles.btnTag} onPress={ () => props.navigation.navigate('profile') }>
                     <Text style={styles.txtTag}>Perfil</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnTagSelected}>
@@ -151,25 +151,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Medium',
         fontSize: 14,
         marginLeft: 15
-    },
-    buttonSignOut: {
-        alignItems: 'center',
-        marginTop: 33
-    },
-    txtSignOut: {
-        marginTop: 50,
-        shadowColor: layoutColors.shadow,
-        shadowOffset: { width: 5, height: 6 },
-        shadowOpacity: 0.6,
-        elevation: 5,
-        zIndex: 5,
-        borderRadius: 22,
-        width: 250,
-        padding: 12,
-        backgroundColor: layoutColors.teaGreen,
-        color: layoutColors.white,
-        fontSize: 20,
-        fontFamily: 'Poppins-Regular',
-        textAlign: 'center',
     },
 })
