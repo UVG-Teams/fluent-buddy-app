@@ -6,6 +6,7 @@
 
 #import <Firebase.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <RNGoogleSignin/RNGoogleSignin.h>
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -35,7 +36,7 @@ static void InitializeFlipper(UIApplication *application) {
     openURL:url
     sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
     annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
-  ];
+  ] || [RNGoogleSignin application:application openURL:url options:options];
   return handled;
 }
 
