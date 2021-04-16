@@ -9,10 +9,25 @@ import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
 
 
-const Home = (props) => {
+const Settings = (props, navigation) => {
     const { clearToken } = props;
     return (
-        <ImageBackground style={styles.image}>
+        <ImageBackground style={styles.background}>
+            <View style={styles.tags}>
+                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('home')}>
+                    <Text style={styles.txtTag}>Chats</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btnTag}>
+                    <Text style={styles.txtTag}>Perfil</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btnTagSelected}>
+                    <Text style={styles.txtTagSelected}>Ajustes</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.body}>
+                 
+            </View>
+
             <TouchableOpacity style={styles.buttonSignOut} onPress={() => clearToken()}>
                 <Text style={styles.txtSignOut}>Cerrar Sesión</Text>
             </TouchableOpacity>
@@ -28,15 +43,52 @@ export default connect(
             dispatch(logout());
         }
     })
-)(Home)
+)(Settings)
 
 
 const styles = StyleSheet.create({
-    image: {
-        flex: 1,
+    background: {
         backgroundColor: layoutColors.seaGreen,
-        margin: 0,
-
+    },
+    tags: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 130,
+        paddingLeft: 30,
+        paddingRight: 30,
+    },
+    btnTagSelected: {
+        backgroundColor: layoutColors.teaGreen,
+        padding: 10,
+        borderRadius: 10,
+        width: 107
+    },
+    btnTag: {
+        padding: 10,
+        borderRadius: 10,
+        width: 107,
+        height: 47
+    },
+    txtTagSelected: {
+        fontSize: 18,
+        textAlign: 'center',
+        fontFamily: 'Poppins-Medium'
+    },
+    txtTag: {
+        fontSize: 18,
+        textAlign: 'center',
+        color: layoutColors.white,
+        fontFamily: 'Poppins-Medium'
+    },
+    body: {
+        backgroundColor: layoutColors.white,
+        height: '80%',
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        marginTop: 20,
+        paddingLeft: 27,
+        paddingRight: 27,
+        paddingTop: 29
     },
     buttonSignOut: {
         alignItems: 'center',
