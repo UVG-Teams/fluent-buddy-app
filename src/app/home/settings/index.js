@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faPalette, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faPalette, faChevronRight, faBell, faLanguage, faKey, faUserFriends, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
