@@ -1,16 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, setState } from 'react'
 import { connect } from 'react-redux'
 
+import Modal from 'react-native-modal'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faPalette, faChevronRight, faBell, faLanguage, faKey, faUserFriends, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPalette, faChevronRight, faBell, faLanguage, faKey, faUserFriends, faSignOutAlt, faRobot } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import RadioButtonRN from 'radio-buttons-react-native'
+
+
 import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
 
 
+
 const Settings = (props) => {
     const { clearToken } = props;
+
+    const [isModalVisible, setModalVisible] = useState(false)
+    const toggleModal = () => setModalVisible(!isModalVisible)
+
+    const [isModalVisible2, setModalVisible2] = useState(false)
+    const toggleModal2 = () => setModalVisible2(!isModalVisible2)
+
+    const deviceWidth = Dimensions.get("window").width
+    const deviceHeight = Dimensions.get("window").height
+
+    const data = [
+        {
+          label: 'data 1'
+         },
+         {
+          label: 'data 2'
+         }
+        ];
+
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.tags}>
@@ -25,15 +49,39 @@ const Settings = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.body}>
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={styles.functionIcon}>
-                            <FontAwesomeIcon icon={faPalette} size={18}/>
+                <TouchableOpacity onPress={toggleModal}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={styles.functionIcon}>
+                                <FontAwesomeIcon icon={faPalette} size={18}/>
+                            </View>
+                            <Text style={styles.txtFunction}>Tema</Text>
                         </View>
-                        <Text style={styles.txtFunction}>Tema</Text>
+                        <FontAwesomeIcon icon={faChevronRight} size={18}/>
                     </View>
-                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
-                </View>
+                </TouchableOpacity>
+                <Modal isVisible={isModalVisible}
+                    style={styles.bottomModal}
+                    onBackdropPress={toggleModal}
+                    backdropOpacity={0.7}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}>
+                    <View style={styles.confModal}>
+                        <View>
+                        <RadioButtonRN
+                            data={data}
+                            icon = {<FontAwesomeIcon icon={faRobot} size={18} color={layoutColors.seaGreen}/>}
+                            activeColor = {layoutColors.seaGreen}
+                            animationTypes = {['rotate']}
+                            selectedBtn={(e) => console.log('Hola presionaste: ',e)}
+                        />
+                        </View>
+                    </View>
+
+
+                </Modal>
+
+
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <View style={styles.functionIcon}>
@@ -151,5 +199,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Medium',
         fontSize: 14,
         marginLeft: 15
+    },
+    confModal: {
+        backgroundColor: layoutColors.white,
+        height: '50%',
+        borderRadius: 50,
+        paddingTop: 25,
+        paddingLeft: 38,
+        paddingRight: 38
     },
 })
