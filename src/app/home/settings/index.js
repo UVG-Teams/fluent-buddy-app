@@ -5,7 +5,7 @@ import Modal from 'react-native-modal'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPalette, faChevronRight, faBell, faLanguage, faKey, faUserFriends, faSignOutAlt, faRobot } from '@fortawesome/free-solid-svg-icons'
-import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import { ImageBackground, StyleSheet, Dimensions, View, Text, Switch } from 'react-native'
 import RadioButtonRN from 'radio-buttons-react-native'
 
 
@@ -37,6 +37,13 @@ const Settings = (props) => {
             label: 'Oscuro'
         }
     ];
+
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+    const [isEnabled2, setIsEnabled2] = useState(false);
+    const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
+
 
     return (
         <ImageBackground style={styles.background}>
@@ -84,20 +91,108 @@ const Settings = (props) => {
                             />
                         </View>
                     </View>
-
-
                 </Modal>
 
-
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={styles.functionIcon}>
-                            <FontAwesomeIcon icon={faBell} size={18}/>
+                <TouchableOpacity onPress={toggleModal2}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={styles.functionIcon}>
+                                <FontAwesomeIcon icon={faBell} size={18}/>
+                            </View>
+                            <Text style={styles.txtFunction}>Notificaciones</Text>
                         </View>
-                        <Text style={styles.txtFunction}>Notificaciones</Text>
+                        <FontAwesomeIcon icon={faChevronRight} size={18}/>
                     </View>
-                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
-                </View>
+                </TouchableOpacity>
+                <Modal isVisible={isModalVisible2}
+                    style={styles.bottomModal}
+                    onBackdropPress={toggleModal2}
+                    backdropOpacity={0.7}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}>
+                    <View style={styles.confModal}>
+                        <View style={{marginBottom: 20}}>
+                            <Text style={styles.txtTheme}>Notificaciones</Text>
+                        </View>
+                        <View>
+                            <View style={{marginBottom: 20}}>
+                                <Text style={styles.txtSubNotificactions}>Recordatorios</Text>
+                                <Text>Recibe recordatorios de conversaciones pendientes para que no olvides conversar</Text>
+                            </View>
+                            <View>
+                                <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <Text style={{fontFamily: 'Poppins-Medium'}}>Correo electrónico</Text>
+                                    <Switch
+                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled ?  layoutColors.teaGreen : "#f4f3f4"}
+                                        ios_backgroundColor="#3e3e3e"
+                                        onValueChange={toggleSwitch}
+                                        value={isEnabled}
+                                    />
+                                </View>
+                                <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
+                                    <Text style={{fontFamily: 'Poppins-Medium'}}>Móviles</Text>
+                                    <Switch
+                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
+                                        ios_backgroundColor="#3e3e3e"
+                                        onValueChange={toggleSwitch2}
+                                        value={isEnabled2}
+                                    />
+                                </View>
+                                <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
+                                    <Text style={{fontFamily: 'Poppins-Medium'}}>SMS</Text>
+                                    <Switch
+                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
+                                        ios_backgroundColor="#3e3e3e"
+                                        onValueChange={toggleSwitch2}
+                                        value={isEnabled2}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                        <View>
+                            <View style={{marginBottom: 20}}>
+                                <Text style={styles.txtSubNotificactions2}>Promociones y Consejos</Text>
+                                <Text>Recibe cupones, promociones, encuestas, novedades y noticias</Text>
+                            </View>
+                            <View>
+                                <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <Text style={{fontFamily: 'Poppins-Medium'}}>Correo electrónico</Text>
+                                    <Switch
+                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled ?  layoutColors.teaGreen : "#f4f3f4"}
+                                        ios_backgroundColor="#3e3e3e"
+                                        onValueChange={toggleSwitch}
+                                        value={isEnabled}
+                                    />
+                                </View>
+                                <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
+                                    <Text style={{fontFamily: 'Poppins-Medium'}}>Móviles</Text>
+                                    <Switch
+                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
+                                        ios_backgroundColor="#3e3e3e"
+                                        onValueChange={toggleSwitch2}
+                                        value={isEnabled2}
+                                    />
+                                </View>
+                                <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
+                                    <Text style={{fontFamily: 'Poppins-Medium'}}>SMS</Text>
+                                    <Switch
+                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
+                                        ios_backgroundColor="#3e3e3e"
+                                        onValueChange={toggleSwitch2}
+                                        value={isEnabled2}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <View style={styles.functionIcon}>
@@ -215,11 +310,24 @@ const styles = StyleSheet.create({
         paddingTop: 25,
         paddingLeft: 38,
         paddingRight: 38,
-        paddingBottom: 25
+        paddingBottom: 35
     },
     txtTheme: {
         color: layoutColors.black,
         fontSize: 20,
-        fontFamily: 'Poppins-Regular',
+        fontFamily: 'Poppins-Bold',
     },
+    txtSubNotificactions: {
+        color: layoutColors.black,
+        fontSize: 18,
+        fontFamily: 'Poppins-Medium',
+        marginBottom: 3
+    },
+    txtSubNotificactions2: {
+        color: layoutColors.black,
+        fontSize: 18,
+        fontFamily: 'Poppins-Medium',
+        marginBottom: 3,
+        marginTop: 30
+    }
 })
