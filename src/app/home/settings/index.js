@@ -28,12 +28,15 @@ const Settings = (props) => {
 
     const data = [
         {
-          label: 'data 1'
-         },
-         {
-          label: 'data 2'
-         }
-        ];
+            label: 'Verdes'
+        },
+        {
+            label: 'Azules'
+        },
+        {
+            label: 'Oscuro'
+        }
+    ];
 
     return (
         <ImageBackground style={styles.background}>
@@ -67,14 +70,18 @@ const Settings = (props) => {
                     deviceWidth={deviceWidth}
                     deviceHeight={deviceHeight}>
                     <View style={styles.confModal}>
+                        <View style={{marginBottom: 20}}>
+                            <Text style={styles.txtTheme}>Seleccione un tema:</Text>
+                        </View>
                         <View>
-                        <RadioButtonRN
-                            data={data}
-                            icon = {<FontAwesomeIcon icon={faRobot} size={18} color={layoutColors.seaGreen}/>}
-                            activeColor = {layoutColors.seaGreen}
-                            animationTypes = {['rotate']}
-                            selectedBtn={(e) => console.log('Hola presionaste: ',e)}
-                        />
+                            <RadioButtonRN
+                                data={data}
+                                icon = {<FontAwesomeIcon icon={faRobot} size={18} color={layoutColors.seaGreen}/>}
+                                activeColor = {layoutColors.seaGreen}
+                                textStyle = {{fontFamily: 'Poppins-Medium', fontSize: 15}}
+                                animationTypes = {['rotate']}
+                                selectedBtn={(e) => console.log('Hola presionaste: ',e)}
+                            />
                         </View>
                     </View>
 
@@ -187,7 +194,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
         paddingLeft: 27,
         paddingRight: 27,
-        paddingTop: 29
+        paddingTop: 29,
+        marginBottom: 60
     },
     functionIcon: {
         backgroundColor: layoutColors.teaGreen,
@@ -202,10 +210,16 @@ const styles = StyleSheet.create({
     },
     confModal: {
         backgroundColor: layoutColors.white,
-        height: '50%',
+        height: 'auto',
         borderRadius: 50,
         paddingTop: 25,
         paddingLeft: 38,
-        paddingRight: 38
+        paddingRight: 38,
+        paddingBottom: 25
+    },
+    txtTheme: {
+        color: layoutColors.black,
+        fontSize: 20,
+        fontFamily: 'Poppins-Regular',
     },
 })
