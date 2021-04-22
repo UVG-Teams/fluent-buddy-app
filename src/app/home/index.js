@@ -26,14 +26,12 @@ const Home = ({navigation, isModalVisible, setModalVisible}) => {
 
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
-        {label: 'North America', value: 'na', untouchable: true}, // North America
-        {label: 'United States', value: 'us', parent: 'na', icon: () => <Flag code="DE" size={32} />},
-        {label: 'Canada', value: 'canada', parent: 'na'},
-        {label: 'Mexico', value: 'mexico', parent: 'na'},
-        {label: 'Europe', value: 'eu', untouchable: true}, // Europe
-        {label: 'UK', value: 'uk', parent: 'eu'},
-        {label: 'Germany', value: 'germany', parent: 'eu'},
-        {label: 'Russia', value: 'russia', parent: 'eu'},
+        {label: 'Inglés', value: 'eng', icon: () => <Flag code="US" size={32} />},
+        {label: 'Italiano', value: 'ita', icon: () => <Flag code="IT" size={32} />},
+        {label: 'Frances', value: 'fre', icon: () => <Flag code="FR" size={32} />},
+        {label: 'Aleman', value: 'ger', icon: () => <Flag code="DE" size={32} />},
+        {label: 'Ruso', value: 'rus', icon: () => <Flag code="RU" size={32} />},
+        {label: 'Portugues', value: 'por', icon: () => <Flag code="PT" size={32} />},
      ]);
 
     const controller = useRef(null);
