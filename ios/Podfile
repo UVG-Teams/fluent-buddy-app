@@ -8,6 +8,7 @@ target 'fluent_buddy_app' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+
   target 'fluent_buddy_appTests' do
     inherit! :complete
     # Pods for testing

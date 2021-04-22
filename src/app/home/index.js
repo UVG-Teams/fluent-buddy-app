@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { connect } from 'react-redux'
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faVoicemail } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 import Modal from 'react-native-modal'
+import DropDownPicker from 'react-native-dropdown-picker'
+import Flag from 'react-native-flags'
 
 import { layoutColors } from 'src/settings'
 import * as selectors from 'state/reducers'
 import * as actions from 'state/actions/selects'
+
+
 
 
 const Home = ({navigation, isModalVisible, setModalVisible}) => {
@@ -19,23 +23,23 @@ const Home = ({navigation, isModalVisible, setModalVisible}) => {
     const deviceWidth = Dimensions.get("window").width
     const deviceHeight = Dimensions.get("window").height
 
+
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'North America', value: 'na', untouchable: true}, // North America
+        {label: 'United States', value: 'us', parent: 'na', icon: () => <Flag code="DE" size={32} />},
+        {label: 'Canada', value: 'canada', parent: 'na'},
+        {label: 'Mexico', value: 'mexico', parent: 'na'},
+        {label: 'Europe', value: 'eu', untouchable: true}, // Europe
+        {label: 'UK', value: 'uk', parent: 'eu'},
+        {label: 'Germany', value: 'germany', parent: 'eu'},
+        {label: 'Russia', value: 'russia', parent: 'eu'},
+     ]);
+
+    const controller = useRef(null);
+
     return (
         <ImageBackground style={styles.background}>
-
-            <Modal isVisible={isModalVisible}
-                style={styles.confModal}
-                onBackdropPress={toggleModal}
-                backdropOpacity={0.7}
-                deviceWidth={deviceWidth}
-                deviceHeight={deviceHeight}>
-                    
-                <View style={styles.confModal}>
-                    <View style={{marginBottom: 20}}>
-                        <Text style={styles.txtTheme}>Seleccione un tema:</Text>
-                    </View>
-                </View>
-            </Modal>
-            
             <View style={styles.tags}>
                 <TouchableOpacity style={styles.btnTagSelected}>
                     <Text style={styles.txtTagSelected}>Chats</Text>
@@ -99,6 +103,34 @@ const Home = ({navigation, isModalVisible, setModalVisible}) => {
                         </View>
                     </View>
                 </View>
+            </View>
+            <View>
+                <Modal isVisible={isModalVisible}
+                    // style={styles.newChatModal}
+                    onBackdropPress={toggleModal}
+                    backdropOpacity={0.7}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}>   
+                    <View style={styles.newChatModal}>
+                        <View style={{marginBottom: 20}}>
+                            <Text style={styles.txtNewChat}>Nuevo chat</Text>
+                        </View>
+                        <View>
+                            <DropDownPicker
+                                items={items}
+                                controller={instance => controller.current = instance}
+                                onChangeList={(items, callback) => {
+                                    Promise.resolve(setItems(items))
+                                        .then(() => callback());
+                                }}
+
+                                defaultValue={value}
+                                onChangeItem={item => setValue(item.value)}
+                                containerStyle={{height: 40}}
+                            />
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </ImageBackground>
     )
@@ -220,15 +252,18 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Poppins-Medium'
     },
-
-    confModal: {
+    newChatModal: {
         backgroundColor: layoutColors.white,
-        // height: '50%',
+        // width: 'auto',
+        height: 340,
         borderRadius: 50,
         paddingTop: 25,
         paddingLeft: 38,
         paddingRight: 38,
         paddingBottom: 35
     },
-
+    txtNewChat: {
+        fontFamily: 'Poppins-Medium',
+        fontSize: 18
+    },
 })
