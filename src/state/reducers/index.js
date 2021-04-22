@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import auth, * as authSelectors from './auth'
+import selects, * as selectsSelectors from './selects'
 
 const reducer = combineReducers({
     auth,
+    selects,
     form: formReducer,
 })
 
@@ -19,3 +21,5 @@ export const getAuthExpiration = state => authSelectors.getAuthExpiration(state.
 export const getIsRefreshingToken = state => authSelectors.getIsRefreshingToken(state.auth)
 export const getRefreshingError = state => authSelectors.getRefreshingError(state.auth)
 export const getIsSigningUp = state => authSelectors.getIsSigningUp(state.auth)
+
+export const getIsModalVisible = state => selectsSelectors.getIsModalVisible(state.selects)

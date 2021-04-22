@@ -8,11 +8,34 @@ import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image }
 import Modal from 'react-native-modal'
 
 import { layoutColors } from 'src/settings'
+import * as selectors from 'state/reducers'
+import * as actions from 'state/actions/selects'
 
 
-const Home = ({navigation}) => {
+const Home = ({navigation, isModalVisible, setModalVisible}) => {
+
+    const toggleModal = () => setModalVisible()
+
+    const deviceWidth = Dimensions.get("window").width
+    const deviceHeight = Dimensions.get("window").height
+
     return (
         <ImageBackground style={styles.background}>
+
+            <Modal isVisible={isModalVisible}
+                style={styles.confModal}
+                onBackdropPress={toggleModal}
+                backdropOpacity={0.7}
+                deviceWidth={deviceWidth}
+                deviceHeight={deviceHeight}>
+                    
+                <View style={styles.confModal}>
+                    <View style={{marginBottom: 20}}>
+                        <Text style={styles.txtTheme}>Seleccione un tema:</Text>
+                    </View>
+                </View>
+            </Modal>
+            
             <View style={styles.tags}>
                 <TouchableOpacity style={styles.btnTagSelected}>
                     <Text style={styles.txtTagSelected}>Chats</Text>
@@ -82,7 +105,16 @@ const Home = ({navigation}) => {
 }
 
 
-export default (Home)
+export default connect(
+    state => ({
+        isModalVisible: selectors.getIsModalVisible(state)
+    }),
+    dispatch => ({
+        setModalVisible(){
+            dispatch(actions.setModalVisible(false))
+        }
+    })
+)(Home)
 
 
 const styles = StyleSheet.create({
@@ -187,6 +219,16 @@ const styles = StyleSheet.create({
         color: layoutColors.white,
         fontSize: 14,
         fontFamily: 'Poppins-Medium'
-    }
+    },
+
+    confModal: {
+        backgroundColor: layoutColors.white,
+        // height: '50%',
+        borderRadius: 50,
+        paddingTop: 25,
+        paddingLeft: 38,
+        paddingRight: 38,
+        paddingBottom: 35
+    },
 
 })

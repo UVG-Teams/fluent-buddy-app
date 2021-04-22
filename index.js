@@ -9,7 +9,7 @@ import { name as appName } from './app.json'
 import { tokenReviewTime } from 'src/settings'
 import TokenRefresh from 'global_components/TokenRefresh'
 
-const store = configureStore()
+export const store = configureStore()
 
 const Root = () => (
     <Provider store={ store }>

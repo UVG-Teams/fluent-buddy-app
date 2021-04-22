@@ -10,6 +10,9 @@ import Profile from 'app_screens/home/profile'
 import Settings from 'app_screens/home/settings'
 import Chat from 'app_screens/chat'
 
+import { store } from '../index'
+import * as actions from 'state/actions/selects'
+
 
 
 
@@ -38,7 +41,7 @@ export const routes = [
             headerTransparent: true,
             headerLeft: null,
             headerRight: () => (
-                <TouchableOpacity style={{marginRight: 30}}>
+                <TouchableOpacity style={{marginRight: 30}} onPress={() => store.dispatch(actions.setModalVisible(true))}>
                     <FontAwesomeIcon icon={faPlus} size={18} color={layoutColors.white} />
                 </TouchableOpacity>
             )
