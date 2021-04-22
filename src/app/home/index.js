@@ -5,6 +5,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import Modal from 'react-native-modal'
+
 import { layoutColors } from 'src/settings'
 
 

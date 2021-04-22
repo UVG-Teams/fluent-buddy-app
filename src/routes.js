@@ -1,9 +1,16 @@
+import React, { useState, setState } from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
 import { layoutColors } from 'src/settings'
 import Index from 'app_screens/index'
 import Home from 'app_screens/home'
 import Profile from 'app_screens/home/profile'
 import Settings from 'app_screens/home/settings'
 import Chat from 'app_screens/chat'
+
+
 
 
 export const routes = [
@@ -30,6 +37,11 @@ export const routes = [
             },
             headerTransparent: true,
             headerLeft: null,
+            headerRight: () => (
+                <TouchableOpacity style={{marginRight: 30}}>
+                    <FontAwesomeIcon icon={faPlus} size={18} color={layoutColors.white} />
+                </TouchableOpacity>
+            )
         },
         authProtection: true,
         icon: null,
@@ -48,7 +60,7 @@ export const routes = [
         },
         authProtection: true,
         icon: null,
-            headerLeft: null,
+        headerLeft: null,
 
     },
     {
