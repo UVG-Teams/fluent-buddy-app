@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faSearch, faVoicemail } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faFemale, faMale } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 import Modal from 'react-native-modal'
 import DropDownPicker from 'react-native-dropdown-picker'
 import Flag from 'react-native-flags'
+import RadioGroup from 'react-native-custom-radio-group'
+// import SwitchSelector from "react-native-switch-selector"
 
 import { layoutColors } from 'src/settings'
 import * as selectors from 'state/reducers'
@@ -35,6 +37,14 @@ const Home = ({navigation, isModalVisible, setModalVisible}) => {
      ]);
 
     const controller = useRef(null);
+
+    const radioGroupList = [{
+        label: () => <FontAwesomeIcon icon={faFemale} size={40}/>,
+        value: 'female'
+      }, {
+        label: () => <FontAwesomeIcon icon={faMale} size={40} />,
+        value: 'male'
+      }];
 
     return (
         <ImageBackground style={styles.background}>
@@ -113,7 +123,7 @@ const Home = ({navigation, isModalVisible, setModalVisible}) => {
                         <View style={{marginBottom: 20}}>
                             <Text style={styles.txtNewChat}>Nuevo chat</Text>
                         </View>
-                        <View>
+                        <View style={{zIndex: 1}}>
                             <DropDownPicker
                                 items={items}
                                 controller={instance => controller.current = instance}
@@ -124,8 +134,43 @@ const Home = ({navigation, isModalVisible, setModalVisible}) => {
 
                                 defaultValue={value}
                                 onChangeItem={item => setValue(item.value)}
-                                containerStyle={{height: 40}}
+                                containerStyle={{height: 50}}
+                                labelStyle={{
+                                    fontFamily: 'Poppins-Medium', 
+                                    alignSelf: 'center', 
+                                    fontSize: 16
+                                }}
+                                style={{
+                                    borderColor: layoutColors.black, 
+                                    borderTopLeftRadius: 10, 
+                                    borderTopRightRadius: 10, 
+                                    borderBottomLeftRadius: 10, 
+                                    borderBottomRightRadius: 10,
+                                }}
+                                dropDownStyle={{
+                                    borderBottomLeftRadius: 20, 
+                                    borderBottomRightRadius: 20,
+                                    borderColor: layoutColors.black
+                                }}
                             />
+                        </View>
+                        <View style={{width: '100%', marginTop: 35}}>
+                            <RadioGroup 
+                                radioGroupList={radioGroupList}
+                                buttonContainerStyle={{borderWidth: 1, borderColor: 'black', width: '48%'}}
+                                buttonContainerActiveStyle={{backgroundColor: layoutColors.teaGreen}}
+                            />
+                        </View>
+                        <View style={{width: '100%', marginTop: 35}}>
+                                <TextInput 
+                                    style={styles.iptBotName}
+                                    placeholder='Nombre (Opcional)'
+                                />
+                        </View>
+                        <View>
+                            <TouchableOpacity style={styles.btnStart}>
+                                <Text style={styles.txtStart}>¡Comenzar!</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
@@ -253,7 +298,7 @@ const styles = StyleSheet.create({
     newChatModal: {
         backgroundColor: layoutColors.white,
         // width: 'auto',
-        height: 340,
+        height: 'auto',
         borderRadius: 50,
         paddingTop: 25,
         paddingLeft: 38,
@@ -262,6 +307,29 @@ const styles = StyleSheet.create({
     },
     txtNewChat: {
         fontFamily: 'Poppins-Medium',
-        fontSize: 18
+        fontSize: 20
     },
+    btnStart: {
+        backgroundColor: layoutColors.teaGreen,
+        borderRadius: 10,
+        paddingBottom: 14,
+        paddingTop: 14,
+        marginTop: 40
+    },
+    txtStart: {
+        fontFamily: 'Poppins-Medium',
+        fontSize: 18,
+        textAlign: 'center'
+    },
+    iptBotName: {
+        fontSize: 16,
+        fontFamily: 'Poppins-Medium',
+        borderColor: layoutColors.black,
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 10,
+        paddingRight: 10
+    }
 })
