@@ -134,6 +134,7 @@ const Home = ({navigation, isModalVisible, setModalVisible}) => {
 
                                 defaultValue={value}
                                 onChangeItem={item => setValue(item.value)}
+                                placeholder='Seleccionar idioma'
                                 containerStyle={{height: 50}}
                                 labelStyle={{
                                     fontFamily: 'Poppins-Medium', 
@@ -297,7 +298,6 @@ const styles = StyleSheet.create({
     },
     newChatModal: {
         backgroundColor: layoutColors.white,
-        // width: 'auto',
         height: 'auto',
         borderRadius: 50,
         paddingTop: 25,
@@ -327,8 +327,8 @@ const styles = StyleSheet.create({
         borderColor: layoutColors.black,
         borderWidth: 1,
         borderRadius: 10,
-        paddingTop: 8,
-        paddingBottom: 8,
+        paddingTop: 11,
+        paddingBottom: 11,
         paddingLeft: 10,
         paddingRight: 10
     }
