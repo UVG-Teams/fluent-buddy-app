@@ -1,14 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { connect } from 'react-redux'
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faFemale, faMale } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import Modal from 'react-native-modal'
+import DropDownPicker from 'react-native-dropdown-picker'
+import Flag from 'react-native-flags'
+import RadioGroup from 'react-native-custom-radio-group'
+// import SwitchSelector from "react-native-switch-selector"
+
 import { layoutColors } from 'src/settings'
+import * as selectors from 'state/reducers'
+import * as actions from 'state/actions/selects'
 
 
-const Home = ({navigation}) => {
+
+
+const Home = ({navigation, isModalVisible, setModalVisible}) => {
+
+    const toggleModal = () => setModalVisible()
+
+    const deviceWidth = Dimensions.get("window").width
+    const deviceHeight = Dimensions.get("window").height
+
+
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'Inglés', value: 'eng', icon: () => <Flag code="US" size={32} />},
+        {label: 'Italiano', value: 'ita', icon: () => <Flag code="IT" size={32} />},
+        {label: 'Frances', value: 'fre', icon: () => <Flag code="FR" size={32} />},
+        {label: 'Aleman', value: 'ger', icon: () => <Flag code="DE" size={32} />},
+        {label: 'Ruso', value: 'rus', icon: () => <Flag code="RU" size={32} />},
+        {label: 'Portugues', value: 'por', icon: () => <Flag code="PT" size={32} />},
+     ]);
+
+    const controller = useRef(null);
+
+    const radioGroupList = [{
+        label: () => <FontAwesomeIcon icon={faFemale} size={40}/>,
+        value: 'female'
+      }, {
+        label: () => <FontAwesomeIcon icon={faMale} size={40} />,
+        value: 'male'
+      }];
+
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.tags}>
@@ -75,12 +112,85 @@ const Home = ({navigation}) => {
                     </View>
                 </View>
             </View>
+            <View>
+                <Modal isVisible={isModalVisible}
+                    // style={styles.newChatModal}
+                    onBackdropPress={toggleModal}
+                    backdropOpacity={0.7}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}>   
+                    <View style={styles.newChatModal}>
+                        <View style={{marginBottom: 20}}>
+                            <Text style={styles.txtNewChat}>Nuevo chat</Text>
+                        </View>
+                        <View style={{zIndex: 1}}>
+                            <DropDownPicker
+                                items={items}
+                                controller={instance => controller.current = instance}
+                                onChangeList={(items, callback) => {
+                                    Promise.resolve(setItems(items))
+                                        .then(() => callback());
+                                }}
+
+                                defaultValue={value}
+                                onChangeItem={item => setValue(item.value)}
+                                placeholder='Seleccionar idioma'
+                                containerStyle={{height: 50}}
+                                labelStyle={{
+                                    fontFamily: 'Poppins-Medium', 
+                                    alignSelf: 'center', 
+                                    fontSize: 16
+                                }}
+                                style={{
+                                    borderColor: layoutColors.black, 
+                                    borderTopLeftRadius: 10, 
+                                    borderTopRightRadius: 10, 
+                                    borderBottomLeftRadius: 10, 
+                                    borderBottomRightRadius: 10,
+                                }}
+                                dropDownStyle={{
+                                    borderBottomLeftRadius: 20, 
+                                    borderBottomRightRadius: 20,
+                                    borderColor: layoutColors.black
+                                }}
+                            />
+                        </View>
+                        <View style={{width: '100%', marginTop: 35}}>
+                            <RadioGroup 
+                                radioGroupList={radioGroupList}
+                                buttonContainerStyle={{borderWidth: 1, borderColor: 'black', width: '48%'}}
+                                buttonContainerActiveStyle={{backgroundColor: layoutColors.teaGreen}}
+                            />
+                        </View>
+                        <View style={{width: '100%', marginTop: 35}}>
+                                <TextInput 
+                                    style={styles.iptBotName}
+                                    placeholder='Nombre (Opcional)'
+                                />
+                        </View>
+                        <View>
+                            <TouchableOpacity style={styles.btnStart}>
+                                <Text style={styles.txtStart}>¡Comenzar!</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
         </ImageBackground>
     )
 }
 
 
-export default (Home)
+export default connect(
+    state => ({
+        isModalVisible: selectors.getIsModalVisible(state)
+    }),
+    dispatch => ({
+        setModalVisible(){
+            dispatch(actions.setModalVisible(false))
+        }
+    })
+)(Home)
 
 
 const styles = StyleSheet.create({
@@ -185,6 +295,41 @@ const styles = StyleSheet.create({
         color: layoutColors.white,
         fontSize: 14,
         fontFamily: 'Poppins-Medium'
+    },
+    newChatModal: {
+        backgroundColor: layoutColors.white,
+        height: 'auto',
+        borderRadius: 50,
+        paddingTop: 25,
+        paddingLeft: 38,
+        paddingRight: 38,
+        paddingBottom: 35
+    },
+    txtNewChat: {
+        fontFamily: 'Poppins-Medium',
+        fontSize: 20
+    },
+    btnStart: {
+        backgroundColor: layoutColors.teaGreen,
+        borderRadius: 10,
+        paddingBottom: 14,
+        paddingTop: 14,
+        marginTop: 40
+    },
+    txtStart: {
+        fontFamily: 'Poppins-Medium',
+        fontSize: 18,
+        textAlign: 'center'
+    },
+    iptBotName: {
+        fontSize: 16,
+        fontFamily: 'Poppins-Medium',
+        borderColor: layoutColors.black,
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingTop: 11,
+        paddingBottom: 11,
+        paddingLeft: 10,
+        paddingRight: 10
     }
-
 })
