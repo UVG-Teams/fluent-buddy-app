@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
+
 import auth, * as authSelectors from './auth'
 import selects, * as selectsSelectors from './selects'
+import chatrooms, * as chatroomsSelectors from './chatrooms'
 
 const reducer = combineReducers({
     auth,
     selects,
+    chatrooms,
     form: formReducer,
 })
 
@@ -23,3 +26,8 @@ export const getRefreshingError = state => authSelectors.getRefreshingError(stat
 export const getIsSigningUp = state => authSelectors.getIsSigningUp(state.auth)
 
 export const getIsModalVisible = state => selectsSelectors.getIsModalVisible(state.selects)
+
+export const getChatroom = (state, id) =>  chatroomsSelectors.getChatroom(state.chatrooms, id)
+export const getChatrooms = state => chatroomsSelectors.getChatrooms(state.chatrooms)
+export const isFetchingChatrooms = state => chatroomsSelectors.isFetchingChatrooms(state.chatrooms)
+export const getChatroomError = state => chatroomsSelectors.getChatroomError(state.chatrooms)

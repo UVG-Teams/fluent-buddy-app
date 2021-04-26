@@ -6,12 +6,17 @@ import {
     watchSignUpStarted,
 } from './auth'
 
+import {
+    watchFetchChatroomsStarted,
+} from './chatrooms'
+
 
 function* mainSaga() {
     yield all([
         fork(watchLoginStarted),
         fork(watchRefreshTokenStarted),
         fork(watchSignUpStarted),
+        fork(watchFetchChatroomsStarted),
     ])
 }
 
