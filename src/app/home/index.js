@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
 import Flag from 'react-native-flags'
 import Modal from 'react-native-modal'
@@ -12,9 +12,12 @@ import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image }
 import { layoutColors } from 'src/settings'
 import * as selectors from 'state/reducers'
 import * as actions from 'state/actions/selects'
+import * as chatroomsActions from 'state/actions/chatrooms'
 
 
-const Home = ({ navigation, isModalVisible, setModalVisible }) => {
+const Home = ({ navigation, isModalVisible, setModalVisible, onLoad }) => {
+
+    useEffect(onLoad, [])
 
     const toggleModal = () => setModalVisible()
 
@@ -153,6 +156,9 @@ export default connect(
     dispatch => ({
         setModalVisible() {
             dispatch(actions.setModalVisible(false))
+        },
+        onLoad() {
+            dispatch(chatroomsActions.startFetchChatrooms())
         }
     })
 )(Home)
