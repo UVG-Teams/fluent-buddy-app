@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
+
+import firebase from "firebase/app"
+import "firebase/auth"
+import "firebase/firestore"
 import Flag from 'react-native-flags'
 import Modal from 'react-native-modal'
 import RadioGroup from 'react-native-custom-radio-group'
@@ -12,17 +16,31 @@ import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image }
 import { layoutColors } from 'src/settings'
 import * as selectors from 'state/reducers'
 import * as actions from 'state/actions/selects'
-import * as chatroomsActions from 'state/actions/chatrooms'
 
 
-const Home = ({ navigation, isModalVisible, setModalVisible, onLoad }) => {
 
-    useEffect(onLoad, [])
+const Home = ({ navigation, isModalVisible, setModalVisible }) => {
+    const [chatrooms, setChatrooms] = useState([])
+
+    useEffect(() => {
+        firebase.firestore().collection("chatrooms").onSnapshot((querySnapshot) => {
+            const temp = []
+            querySnapshot.forEach(doc => {
+                if (doc.exists) {
+                    temp.push({
+                        id: doc.id,
+                        ...doc.data()
+                    })
+                }
+            })
+            setChatrooms(currentChatrooms => temp)
+        })
+    }, [])
 
     const toggleModal = () => setModalVisible()
 
-    const deviceWidth = Dimensions.get("window").width
-    const deviceHeight = Dimensions.get("window").height
+    const deviceWidth = Dimensions.get('window').width
+    const deviceHeight = Dimensions.get('window').height
 
     const [value, setValue] = useState(null)
 
@@ -58,27 +76,31 @@ const Home = ({ navigation, isModalVisible, setModalVisible, onLoad }) => {
                     <Text style={styles.txtTag}>Ajustes</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.body}>
-                <View style={styles.bodyHeader}>
-                    <Text style={styles.txtAllChats}>Todos los chats</Text>
-                    <FontAwesomeIcon icon={faSearch} size={18} />
+            <View style={ styles.body }>
+                <View style={ styles.bodyHeader }>
+                    <Text style={ styles.txtAllChats }>Todos los chats</Text>
+                    <FontAwesomeIcon icon={ faSearch } size={ 18 } />
                 </View>
-                <TouchableOpacity onPress={ () => navigation.navigate('chat')}>
-                    <View style={styles.conversation}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <View>
-                                <Image source={require('assets/USA.jpg')} style={styles.imgConversation} />
+                {
+                    chatrooms.map(chatroom => (
+                        <TouchableOpacity key={ chatroom.id } onPress={ () => navigation.navigate('chat', { chatroom: chatroom }) }>
+                            <View style={ styles.conversation }>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <View>
+                                        <Image source={ require('assets/USA.jpg') } style={ styles.imgConversation } />
+                                    </View>
+                                    <View style={ styles.previewConversation }>
+                                        <Text style={ styles.txtConversationName }>{ "NAME" }</Text>
+                                        <Text style={ styles.txtConversationPreview }>{ chatroom.last_message && chatroom.last_message.text }</Text>
+                                    </View>
+                                </View>
+                                <View style={ styles.hourConversation }>
+                                    <Text style={ styles.txtHourConversation }>{ chatroom.last_message && new Date(chatroom.last_message.sent_at.seconds * 1000).toLocaleTimeString() }</Text>
+                                </View>
                             </View>
-                            <View style={styles.previewConversation}>
-                                <Text style={styles.txtConversationName}>Harry</Text>
-                                <Text style={styles.txtConversationPreview}>Don't forget to use your ...</Text>
-                            </View>
-                        </View>
-                        <View style={styles.hourConversation}>
-                            <Text style={styles.txtHourConversation}>13:30</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
+                        </TouchableOpacity>
+                    ))
+                }
             </View>
             <View>
                 <Modal isVisible={isModalVisible}
@@ -151,15 +173,12 @@ const Home = ({ navigation, isModalVisible, setModalVisible, onLoad }) => {
 
 export default connect(
     state => ({
-        isModalVisible: selectors.getIsModalVisible(state)
+        isModalVisible: selectors.getIsModalVisible(state),
     }),
     dispatch => ({
         setModalVisible() {
             dispatch(actions.setModalVisible(false))
         },
-        onLoad() {
-            dispatch(chatroomsActions.startFetchChatrooms())
-        }
     })
 )(Home)
 

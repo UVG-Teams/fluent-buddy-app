@@ -4,12 +4,14 @@ import { connect } from 'react-redux'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft, faPhoneAlt, faMicrophone } from '@fortawesome/free-solid-svg-icons'
-import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image, ScrollView } from 'react-native'
+import { ImageBackground, StyleSheet, View, Text, TextInput, Image, ScrollView } from 'react-native'
 
 import { layoutColors } from 'src/settings'
 
 
-const Chat = ({navigation}) => {
+const Chat = ({ navigation, chatroom }) => {
+
+    console.log("HOLA: ", chatroom.id)
     return (
         <ImageBackground style={styles.background}>
             <View style={styles.chatHeader}>
@@ -69,7 +71,12 @@ const Chat = ({navigation}) => {
 }
 
 
-export default (Chat)
+export default connect(
+    (state, { route }) => ({
+        chatroom: route.params.chatroom
+    }),
+    dispatch => ({})
+)(Chat)
 
 
 const styles = StyleSheet.create({
