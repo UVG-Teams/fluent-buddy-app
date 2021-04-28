@@ -23,7 +23,7 @@ const Home = ({ navigation, isModalVisible, setModalVisible }) => {
     const [chatrooms, setChatrooms] = useState([])
 
     useEffect(() => {
-        firebase.firestore().collection("chatrooms").onSnapshot((querySnapshot) => {
+        firebase.firestore().collection("chatrooms").onSnapshot(querySnapshot => {
             const temp = []
             querySnapshot.forEach(doc => {
                 if (doc.exists) {

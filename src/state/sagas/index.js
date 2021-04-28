@@ -6,9 +6,7 @@ import {
     watchSignUpStarted,
 } from './auth'
 
-import {
-    watchFetchChatroomsStarted,
-} from './chatrooms'
+// import {} from './chatrooms'
 
 
 function* mainSaga() {
@@ -16,7 +14,6 @@ function* mainSaga() {
         fork(watchLoginStarted),
         fork(watchRefreshTokenStarted),
         fork(watchSignUpStarted),
-        fork(watchFetchChatroomsStarted),
     ])
 }
 
