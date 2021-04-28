@@ -1,30 +1,37 @@
 import React, { useState, setState } from 'react'
 import { connect } from 'react-redux'
-
 import Modal from 'react-native-modal'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity, TextInput} from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPalette, faChevronRight, faBell, faLanguage, faKey, faUserFriends, faSignOutAlt, faRobot } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, Switch } from 'react-native'
 import RadioButtonRN from 'radio-buttons-react-native'
-
+import { faEnvelope} from '@fortawesome/free-solid-svg-icons'
 
 import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
+import { Field, reduxForm } from 'redux-form'
 
-
+import * as selectors from 'state/reducers'
+import * as actions from 'state/actions/contact'
+import * as themeActions from 'state/actions/tema'
+import { saveContactMessage } from '../../../state/actions/contact'
 
 const Settings = (props) => {
     const { clearToken } = props;
-
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => setModalVisible(!isModalVisible)
 
     const [isModalVisible2, setModalVisible2] = useState(false)
     const toggleModal2 = () => setModalVisible2(!isModalVisible2)
 
+    const [isModalVisible3, setModalVisible3] = useState(false)
+    const toggleModal3 = () => setModalVisible3(!isModalVisible3)
+
     const deviceWidth = Dimensions.get("window").width
     const deviceHeight = Dimensions.get("window").height
+
+    const [message, chageMessage] = useState('')
 
     const data = [
         {
@@ -87,7 +94,7 @@ const Settings = (props) => {
                                 activeColor = {layoutColors.seaGreen}
                                 textStyle = {{fontFamily: 'Poppins-Medium', fontSize: 15}}
                                 animationTypes = {['rotate']}
-                                selectedBtn={(e) => console.log('Hola presionaste: ',e)}
+                                selectedBtn={(e) => props.setTheme(props.userId, e.label)}
                             />
                         </View>
                     </View>
@@ -211,15 +218,46 @@ const Settings = (props) => {
                     </View>
                     <FontAwesomeIcon icon={faChevronRight} size={18}/>
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={styles.functionIcon}>
-                            <FontAwesomeIcon icon={faUserFriends} size={18}/>
+                <TouchableOpacity onPress={toggleModal3}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={styles.functionIcon}>
+                                <FontAwesomeIcon icon={faUserFriends} size={18}/>
+                            </View>
+                            <Text style={styles.txtFunction}>Contáctanos</Text>
                         </View>
-                        <Text style={styles.txtFunction}>Contáctanos</Text>
+                        <FontAwesomeIcon icon={faChevronRight} size={18}/>
                     </View>
-                    <FontAwesomeIcon icon={faChevronRight} size={18}/>
-                </View>
+                </TouchableOpacity>
+                <Modal isVisible={isModalVisible3}
+                    style={styles.bottomModal}
+                    onBackdropPress={toggleModal3}
+                    backdropOpacity={0.7}
+                    deviceWidth={deviceWidth}
+                    deviceHeight={deviceHeight}>
+                    <View style={styles.confModal}>
+                        <View style={{marginBottom: 20}}>
+                            <Text style={styles.txtTheme}>Escriba su mensaje</Text>
+                        </View>
+                        <View style={styles.inputsView}>
+                            <Text style={styles.txtInputs}>Message</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+                                <FontAwesomeIcon icon={faEnvelope} />
+                                <TextInput
+                                    style={styles.inputs}
+                                    value={message}
+                                    onChangeText={text => chageMessage(text)}
+                                    autoCapitalize='none'
+                                />
+                            </View>
+                        </View>
+                        <View style={styles.bottomSignUp}>
+                            <TouchableOpacity style={styles.btnSignUp} onPress={()=>props.saveContactMessage(props.userId, message)} >
+                                <Text style={styles.txtSignUp}>Enviar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <TouchableOpacity onPress={() => clearToken()}>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -238,13 +276,23 @@ const Settings = (props) => {
 
 
 export default connect(
-    state => ({}),
+    state => ({
+        userId : selectors.getAuthUserID(state),
+        theme: selectors.getTheme(state),
+    }),
     dispatch => ({
         clearToken() {
             dispatch(logout());
+        },
+        saveContactMessage(userId, message) {
+            dispatch(actions.saveContactMessage(userId, message))
+        },
+        setTheme(userId, theme) {
+            dispatch(themeActions.startSetTheme(userId, theme))
         }
     })
 )(Settings)
+
 
 
 const styles = StyleSheet.create({
@@ -329,5 +377,39 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Medium',
         marginBottom: 3,
         marginTop: 30
-    }
+    },
+    inputsView: {
+        borderBottomWidth: 2,
+        borderBottomColor: layoutColors.seaGreen,
+        marginBottom: 28.5
+    },
+
+    inputs: {
+        width: '95%',
+        fontFamily: 'Poppins-Regular',
+        fontSize: 14,
+        paddingLeft: 5
+    },
+    txtInputs: {
+        color: layoutColors.black,
+        opacity: 0.5,
+        fontSize: 14,
+        fontFamily: 'Poppins-Regular'
+    },
+    btnSignUp: {
+        backgroundColor: layoutColors.seaGreen,
+        shadowColor: layoutColors.shadow,
+        shadowOffset: {width: 0, height: 6},
+        shadowOpacity: 0.6,
+        borderRadius: 22,
+        width: 200,
+        padding: 12,
+    },
+
+    txtSignUp: {
+        color: layoutColors.white,
+        fontSize: 20,
+        fontFamily: 'Poppins-Regular',
+        textAlign: 'center',
+    },
 })

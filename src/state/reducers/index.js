@@ -2,10 +2,12 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import auth, * as authSelectors from './auth'
 import selects, * as selectsSelectors from './selects'
+import themeReducer, * as themeSelectors from './tema'
 
 const reducer = combineReducers({
     auth,
     selects,
+    themeReducer,
     form: formReducer,
 })
 
@@ -23,3 +25,8 @@ export const getRefreshingError = state => authSelectors.getRefreshingError(stat
 export const getIsSigningUp = state => authSelectors.getIsSigningUp(state.auth)
 
 export const getIsModalVisible = state => selectsSelectors.getIsModalVisible(state.selects)
+
+export const getTheme = state => themeSelectors.getTheme(state.themeReducer)
+export const isFetchingTheme = state => themeSelectors.isFetchingTheme(state.themeReducer)
+export const isUpdatingTheme = state => themeSelectors.isUpdatingTheme(state.themeReducer)
+export const getThemeError = state => themeSelectors.getThemeError(state.themeReducer)

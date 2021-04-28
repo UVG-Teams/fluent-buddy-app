@@ -9,6 +9,7 @@ import {
 
 import * as selectors from 'state/reducers'
 import * as actions from 'state/actions/auth'
+import * as themeActions from 'state/actions/tema'
 import * as types from 'state/types/auth'
 import * as http from 'state/utils/http'
 
@@ -20,7 +21,6 @@ import {
 
 function* login(action) {
     try {
-
         url_endpoint = '/token-auth/'
 
         if (action.payload.type == 'third-party') {
@@ -45,6 +45,8 @@ function* login(action) {
         if (response && http.isSuccessful(response.status)) {
             const { token } = yield response.json()
             yield put(actions.completeLogin(token))
+            const user = yield select(selectors.getAuthUserID)
+            yield put(themeActions.startGetTheme(user))
         } else {
             const { non_field_errors } = yield response.json()
             yield put(actions.failLogin(non_field_errors[0]))
