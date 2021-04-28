@@ -12,7 +12,7 @@ import { ImageBackground, StyleSheet, View, Text, TextInput, Image, ScrollView }
 import { layoutColors } from 'src/settings'
 
 
-const Chat = ({ navigation, chatroom, sendMessage }) => {
+const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState()
 
@@ -57,28 +57,14 @@ const Chat = ({ navigation, chatroom, sendMessage }) => {
                         <View >
                             <Text style={ styles.txtDate }>Hoy, 23/03/20</Text>
                         </View>
-                        {/* <View style={{marginTop: 18}}>
-                            <View style={styles.botBubble}>
-                            </View>
-                            <View style={{marginTop: 5}}>
-                                <Text style={styles.txtMessageHourBot}>13:10 PM</Text>
-                            </View>
-                        </View>
-                        <View style={{marginTop: 18, width: '100%', alignItems: 'flex-end' }}>
-                            <View style={styles.userBubble}>
-                            </View>
-                            <View style={{marginTop: 5}}>
-                                <Text style={styles.txtMessageHourUser}>13:11 PM</Text>
-                            </View>
-                        </View> */}
                         {
                             messages.map(message => (
-                                <View key={ message.id } style={{ marginTop: 18, width: '100%', alignItems: 'flex-end' }}>
-                                    <View style={ styles.userBubble }>
+                                <View key={ message.id } style={ (message.sent_by == current_user_uid) ? styles.userMessageBox : styles.botMessageBox }>
+                                    <View style={ (message.sent_by == current_user_uid) ? styles.userBubble : styles.botBubble }>
                                         <Text>{ message.text }</Text>
                                     </View>
                                     <View style={{ marginTop: 5 }}>
-                                        <Text style={ styles.txtMessageHourUser }>{ new Date(message.sent_at.seconds * 1000).toLocaleTimeString() }</Text>
+                                        <Text style={ (message.sent_by == current_user_uid) ? styles.txtMessageHourUser : styles.txtMessageHourBot }>{ new Date(message.sent_at.seconds * 1000).toLocaleTimeString() }</Text>
                                     </View>
                                 </View>
                             ))
@@ -95,7 +81,7 @@ const Chat = ({ navigation, chatroom, sendMessage }) => {
                         />
                     </View>
                     <View style={ styles.btnVoiceNote }>
-                        <TouchableOpacity onPress={ () => sendMessage(chatroom.id, newMessage) }>
+                        <TouchableOpacity onPress={ () => sendMessage(current_user_uid, chatroom.id, newMessage) }>
                             <FontAwesomeIcon icon={ faMicrophone } size={ 20 }/>
                         </TouchableOpacity>
                     </View>
@@ -108,15 +94,24 @@ const Chat = ({ navigation, chatroom, sendMessage }) => {
 
 export default connect(
     (state, { route }) => ({
-        chatroom: route.params.chatroom
+        current_user_uid: 'uid1', // TODO
+        chatroom: route.params.chatroom,
     }),
     dispatch => ({
-        sendMessage( chatroom_id, message) {
+        sendMessage(current_user_uid, chatroom_id, message) {
             firebase.firestore().collection("chatrooms").doc(chatroom_id).collection("messages").add({
                 text: message,
                 sent_at: new Date(),
-                sent_by: 'uid1'
+                sent_by: current_user_uid
             })
+
+            // firebase.firestore().collection("chatrooms").doc(chatroom_id).update({
+            //     last_message: {
+            //         text: message,
+            //         sent_at: new Date(),
+            //         sent_by: current_user_uid
+            //     }
+            // })
         }
     })
 )(Chat)
@@ -160,6 +155,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: layoutColors.black,
         opacity: 0.5
+    },
+    userMessageBox: {
+        marginTop: 18,
+        width: '100%',
+        alignItems: 'flex-end'
+    },
+    botMessageBox: {
+        marginTop: 18
     },
     botBubble: {
         backgroundColor: layoutColors.lightGray,
