@@ -1,7 +1,8 @@
 import { color } from 'react-native-reanimated'
-import { LOCAL_URL } from 'src/localsettings'
+import { LOCAL_URL, firebaseConfigCredentials } from 'src/localsettings'
 
 export const API_BASE_URL = LOCAL_URL
+export const FIREBASE_CREDENTIALS = firebaseConfigCredentials
 
 // Django token expiration = 1800 seconds
 export const tokenReviewTime = 300 * 1000 // Seconds * 1000

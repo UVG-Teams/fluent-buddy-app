@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
+
 import auth, * as authSelectors from './auth'
 import selects, * as selectsSelectors from './selects'
 

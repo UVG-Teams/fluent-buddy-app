@@ -11,6 +11,7 @@ import TokenRefresh from 'global_components/TokenRefresh'
 
 export const store = configureStore()
 
+
 const Root = () => (
     <Provider store={ store }>
         <TokenRefresh reviewTime={ tokenReviewTime } />
