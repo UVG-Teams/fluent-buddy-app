@@ -5,6 +5,11 @@ import {
     watchRefreshTokenStarted,
     watchSignUpStarted,
 } from './auth'
+import { watchContactMessageStarted } from './contact'
+import {
+    watchGetTheme,
+    watchSetTheme,
+} from './tema'
 
 
 function* mainSaga() {
@@ -12,6 +17,9 @@ function* mainSaga() {
         fork(watchLoginStarted),
         fork(watchRefreshTokenStarted),
         fork(watchSignUpStarted),
+        fork(watchContactMessageStarted),
+        fork(watchGetTheme),
+        fork(watchSetTheme),
     ])
 }
 
