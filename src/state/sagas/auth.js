@@ -6,6 +6,7 @@ import {
     delay,
     select,
 } from 'redux-saga/effects'
+import auth from '@react-native-firebase/auth'
 
 import * as selectors from 'state/reducers'
 import * as actions from 'state/actions/auth'
@@ -85,12 +86,10 @@ function* refreshToken(action) {
                 const jsonResult = yield response.json()
                 yield put(actions.completeTokenRefresh(jsonResult.token))
             } else {
-                // TODO: poner un redirect al home (login)
                 const { non_field_errors } = yield response.json()
                 yield put(actions.failTokenRefresh(non_field_errors[0]))
             }
         } catch (error) {
-            // TODO: poner un redirect al home (login)
             yield put(actions.failTokenRefresh('Connection failed!'))
         }
     }
@@ -119,8 +118,13 @@ function* signUp(action) {
 
         if (http.isSuccessful(response.status)) {
             yield put(actions.completeSignUp())
-            const { token } = yield response.json()
+            const { token, firebase_uid } = yield response.json()
             yield put(actions.completeLogin(token))
+
+            if (action.payload.type == 'normal') {
+                yield put(actions.setFirebaseUserUID(firebase_uid))
+                auth().signInWithEmailAndPassword(action.payload.email, action.payload.password)
+            }
         } else {
             const { non_field_errors } = yield response.json()
             yield put(actions.failSignUp(non_field_errors[0]))
