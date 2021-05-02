@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
+
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+import { ImageBackground, StyleSheet, View, Text } from 'react-native'
+
+
 import { layoutColors } from 'src/settings'
 
 

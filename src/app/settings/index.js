@@ -1,5 +1,6 @@
-import React, { useState, setState } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
+
 
 import Modal from 'react-native-modal'
 import auth from '@react-native-firebase/auth'
@@ -14,7 +15,6 @@ import { logout } from 'state/actions/auth'
 import { layoutColors } from 'src/settings'
 
 
-
 const Settings = (props) => {
     const { clearToken } = props;
 
@@ -24,8 +24,8 @@ const Settings = (props) => {
     const [isModalVisible2, setModalVisible2] = useState(false)
     const toggleModal2 = () => setModalVisible2(!isModalVisible2)
 
-    const deviceWidth = Dimensions.get("window").width
-    const deviceHeight = Dimensions.get("window").height
+    const deviceWidth = Dimensions.get('window').width
+    const deviceHeight = Dimensions.get('window').height
 
     const data = [
         {
@@ -124,9 +124,9 @@ const Settings = (props) => {
                                 <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <Text style={{fontFamily: 'Poppins-Medium'}}>Correo electrónico</Text>
                                     <Switch
-                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
-                                        thumbColor={isEnabled ?  layoutColors.teaGreen : "#f4f3f4"}
-                                        ios_backgroundColor="#3e3e3e"
+                                        trackColor={{ false: '#767577', true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled ?  layoutColors.teaGreen : '#f4f3f4'}
+                                        ios_backgroundColor='#3e3e3e'
                                         onValueChange={toggleSwitch}
                                         value={isEnabled}
                                     />
@@ -134,9 +134,9 @@ const Settings = (props) => {
                                 <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
                                     <Text style={{fontFamily: 'Poppins-Medium'}}>Móviles</Text>
                                     <Switch
-                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
-                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
-                                        ios_backgroundColor="#3e3e3e"
+                                        trackColor={{ false: '#767577', true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : '#f4f3f4'}
+                                        ios_backgroundColor='#3e3e3e'
                                         onValueChange={toggleSwitch2}
                                         value={isEnabled2}
                                     />
@@ -144,9 +144,9 @@ const Settings = (props) => {
                                 <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
                                     <Text style={{fontFamily: 'Poppins-Medium'}}>SMS</Text>
                                     <Switch
-                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
-                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
-                                        ios_backgroundColor="#3e3e3e"
+                                        trackColor={{ false: '#767577', true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : '#f4f3f4'}
+                                        ios_backgroundColor='#3e3e3e'
                                         onValueChange={toggleSwitch2}
                                         value={isEnabled2}
                                     />
@@ -162,9 +162,9 @@ const Settings = (props) => {
                                 <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <Text style={{fontFamily: 'Poppins-Medium'}}>Correo electrónico</Text>
                                     <Switch
-                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
-                                        thumbColor={isEnabled ?  layoutColors.teaGreen : "#f4f3f4"}
-                                        ios_backgroundColor="#3e3e3e"
+                                        trackColor={{ false: '#767577', true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled ?  layoutColors.teaGreen : '#f4f3f4'}
+                                        ios_backgroundColor='#3e3e3e'
                                         onValueChange={toggleSwitch}
                                         value={isEnabled}
                                     />
@@ -172,9 +172,9 @@ const Settings = (props) => {
                                 <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
                                     <Text style={{fontFamily: 'Poppins-Medium'}}>Móviles</Text>
                                     <Switch
-                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
-                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
-                                        ios_backgroundColor="#3e3e3e"
+                                        trackColor={{ false: '#767577', true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : '#f4f3f4'}
+                                        ios_backgroundColor='#3e3e3e'
                                         onValueChange={toggleSwitch2}
                                         value={isEnabled2}
                                     />
@@ -182,9 +182,9 @@ const Settings = (props) => {
                                 <View style={{flexDirection:'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
                                     <Text style={{fontFamily: 'Poppins-Medium'}}>SMS</Text>
                                     <Switch
-                                        trackColor={{ false: "#767577", true:  layoutColors.seaGreen}}
-                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : "#f4f3f4"}
-                                        ios_backgroundColor="#3e3e3e"
+                                        trackColor={{ false: '#767577', true:  layoutColors.seaGreen}}
+                                        thumbColor={isEnabled2 ?  layoutColors.teaGreen : '#f4f3f4'}
+                                        ios_backgroundColor='#3e3e3e'
                                         onValueChange={toggleSwitch2}
                                         value={isEnabled2}
                                     />

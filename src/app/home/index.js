@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import firebase from "firebase/app"
-import "firebase/auth"
-import "firebase/firestore"
+
+import 'firebase/auth'
+import 'firebase/firestore'
+import firebase from 'firebase/app'
 import Flag from 'react-native-flags'
 import Modal from 'react-native-modal'
 import RadioGroup from 'react-native-custom-radio-group'
@@ -13,17 +14,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faSearch, faFemale, faMale } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
 
+
 import { layoutColors } from 'src/settings'
 import * as selectors from 'state/reducers'
 import * as actions from 'state/actions/selects'
-
 
 
 const Home = ({ navigation, isModalVisible, setModalVisible }) => {
     const [chatrooms, setChatrooms] = useState([])
 
     useEffect(() => {
-        firebase.firestore().collection("chatrooms").onSnapshot(querySnapshot => {
+        firebase.firestore().collection('chatrooms').onSnapshot(querySnapshot => {
             const temp = []
             querySnapshot.forEach(doc => {
                 if (doc.exists) {
@@ -45,12 +46,12 @@ const Home = ({ navigation, isModalVisible, setModalVisible }) => {
     const [value, setValue] = useState(null)
 
     const [items, setItems] = useState([
-        {label: 'Ruso', value: 'rus', icon: () => <Flag code="RU" size={32} />},
-        {label: 'Inglés', value: 'eng', icon: () => <Flag code="US" size={32} />},
-        {label: 'Aleman', value: 'ger', icon: () => <Flag code="DE" size={32} />},
-        {label: 'Frances', value: 'fre', icon: () => <Flag code="FR" size={32} />},
-        {label: 'Italiano', value: 'ita', icon: () => <Flag code="IT" size={32} />},
-        {label: 'Portugues', value: 'por', icon: () => <Flag code="PT" size={32} />},
+        {label: 'Ruso', value: 'rus', icon: () => <Flag code='RU' size={32} />},
+        {label: 'Inglés', value: 'eng', icon: () => <Flag code='US' size={32} />},
+        {label: 'Aleman', value: 'ger', icon: () => <Flag code='DE' size={32} />},
+        {label: 'Frances', value: 'fre', icon: () => <Flag code='FR' size={32} />},
+        {label: 'Italiano', value: 'ita', icon: () => <Flag code='IT' size={32} />},
+        {label: 'Portugues', value: 'por', icon: () => <Flag code='PT' size={32} />},
     ])
 
     const controller = useRef(null)
@@ -90,7 +91,7 @@ const Home = ({ navigation, isModalVisible, setModalVisible }) => {
                                         <Image source={ require('assets/USA.jpg') } style={ styles.imgConversation } />
                                     </View>
                                     <View style={ styles.previewConversation }>
-                                        <Text style={ styles.txtConversationName }>{ "NAME" }</Text>
+                                        <Text style={ styles.txtConversationName }>{ 'NAME' }</Text>
                                         <Text style={ styles.txtConversationPreview }>{ chatroom.last_message && chatroom.last_message.text }</Text>
                                     </View>
                                 </View>

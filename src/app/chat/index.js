@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import firebase from "firebase/app"
-import "firebase/auth"
-import "firebase/firestore"
+
+import 'firebase/auth'
+import 'firebase/firestore'
+import firebase from 'firebase/app'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faChevronLeft, faPhoneAlt, faMicrophone } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, View, Text, TextInput, Image, ScrollView } from 'react-native'
+
 
 import { layoutColors } from 'src/settings'
 
@@ -17,7 +19,7 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
     const [newMessage, setNewMessage] = useState()
 
     useEffect(() => {
-        firebase.firestore().collection("chatrooms").doc(chatroom.id).collection("messages").orderBy("sent_at").limit(50).onSnapshot(querySnapshot => {
+        firebase.firestore().collection('chatrooms').doc(chatroom.id).collection('messages').orderBy('sent_at').limit(50).onSnapshot(querySnapshot => {
             const chatroomMessages = []
             querySnapshot.forEach(doc => {
                 if (doc.exists) {
@@ -99,13 +101,13 @@ export default connect(
     }),
     dispatch => ({
         sendMessage(current_user_uid, chatroom_id, message) {
-            firebase.firestore().collection("chatrooms").doc(chatroom_id).collection("messages").add({
+            firebase.firestore().collection('chatrooms').doc(chatroom_id).collection('messages').add({
                 text: message,
                 sent_at: new Date(),
                 sent_by: current_user_uid
             })
 
-            // firebase.firestore().collection("chatrooms").doc(chatroom_id).update({
+            // firebase.firestore().collection('chatrooms').doc(chatroom_id).update({
             //     last_message: {
             //         text: message,
             //         sent_at: new Date(),

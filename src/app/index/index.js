@@ -2,15 +2,17 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
+
 import Modal from 'react-native-modal'
-import auth from '@react-native-firebase/auth'
 import { Field, reduxForm } from 'redux-form'
+import auth from '@react-native-firebase/auth'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { faEnvelope, faUser, faLock, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'
 import { TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image } from 'react-native'
+
 
 import { layoutColors } from 'src/settings'
 import * as actions from 'state/actions/auth'
@@ -48,8 +50,8 @@ const Index = ({
     const [isModalVisible2, setModalVisible2] = useState(false)
     const toggleModal2 = () => setModalVisible2(!isModalVisible2)
 
-    const deviceWidth = Dimensions.get("window").width
-    const deviceHeight = Dimensions.get("window").height
+    const deviceWidth = Dimensions.get('window').width
+    const deviceHeight = Dimensions.get('window').height
 
     GoogleSignin.configure()
 
@@ -127,7 +129,7 @@ const Index = ({
                                     <FontAwesomeIcon icon={ faEnvelope } />
                                     <Field
                                         component={ FormInput }
-                                        name="signUpEmail"
+                                        name='signUpEmail'
                                         style={ styles.inputs }
                                         autoCapitalize='none'
                                     />
@@ -139,7 +141,7 @@ const Index = ({
                                     <FontAwesomeIcon icon={ faUser } />
                                     <Field
                                         component={ FormInput }
-                                        name="signUpUsername"
+                                        name='signUpUsername'
                                         style={ styles.inputs }
                                         autoCapitalize='none'
                                     />
@@ -151,7 +153,7 @@ const Index = ({
                                     <FontAwesomeIcon icon={ faLock } />
                                     <Field
                                         component={ FormInput }
-                                        name="signUpPassword"
+                                        name='signUpPassword'
                                         style={ styles.inputs }
                                         autoCapitalize='none'
                                         secureTextEntry={ true }
@@ -164,10 +166,10 @@ const Index = ({
                                 </TouchableOpacity>
                                 <Text style={ styles.txtSignUpWith }>o regístrate con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
-                                    <TouchableOpacity onPress={ () => loginWithGoogle("signup") }>
+                                    <TouchableOpacity onPress={ () => loginWithGoogle('signup') }>
                                         <Image source={ require('assets/google.png') } style={{ width: 27, height: 27 }} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={ () => loginWithFacebook("signup") }>
+                                    <TouchableOpacity onPress={ () => loginWithFacebook('signup') }>
                                         <Image source={ require('assets/facebook.png') } style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
                                     </TouchableOpacity>
                                     <Image source={ require('assets/twitter.png') } style={{ width: 27, height: 27 }} />
@@ -198,7 +200,7 @@ const Index = ({
                                     <FontAwesomeIcon icon={ faUser } />
                                     <Field
                                         component={ FormInput }
-                                        name="username"
+                                        name='username'
                                         style={ styles.inputs }
                                         autoCapitalize='none'
                                     />
@@ -210,7 +212,7 @@ const Index = ({
                                     <FontAwesomeIcon icon={ faLock } />
                                     <Field
                                         component={ FormInput }
-                                        name="password"
+                                        name='password'
                                         style={ styles.inputs }
                                         autoCapitalize='none'
                                         secureTextEntry={ true }
@@ -226,10 +228,10 @@ const Index = ({
                                 </TouchableOpacity>
                                 <Text style={ styles.txtSignUpWith }>o inicia sesión con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
-                                    <TouchableOpacity onPress={ () => loginWithGoogle("login") }>
+                                    <TouchableOpacity onPress={ () => loginWithGoogle('login') }>
                                         <Image source={ require('assets/google.png') } style={{ width: 27, height: 27 }} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={ () => loginWithFacebook("login") }>
+                                    <TouchableOpacity onPress={ () => loginWithFacebook('login') }>
                                         <Image source={ require('assets/facebook.png') } style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
                                     </TouchableOpacity>
                                     <Image source={ require('assets/twitter.png') } style={{ width: 27, height: 27 }} />
@@ -262,7 +264,7 @@ export default reduxForm({
                 username: signUpUsername,
                 password: signUpPassword,
                 email: signUpEmail,
-                type: "normal"
+                type: 'normal'
             }))
         },
         getInfoFromFBToken(token, type) {
@@ -285,10 +287,10 @@ export default reduxForm({
                             dispatch(actions.setFirebaseUserUID(auth().currentUser.uid))
                         })
 
-                        if (type == "signup") {
-                            dispatch(actions.startSignUp({ user, type: "third-party" }))
+                        if (type == 'signup') {
+                            dispatch(actions.startSignUp({ user, type: 'third-party' }))
                         } else {
-                            dispatch(actions.startLogin({ user, type: "third-party" }))
+                            dispatch(actions.startLogin({ user, type: 'third-party' }))
                         }
                     }
                 },
@@ -304,10 +306,10 @@ export default reduxForm({
 
             const user = userInfo.user
 
-            if (type == "signup") {
-                dispatch(actions.startSignUp({ user, type: "third-party" }))
+            if (type == 'signup') {
+                dispatch(actions.startSignUp({ user, type: 'third-party' }))
             } else {
-                dispatch(actions.startLogin({ user, type: "third-party" }))
+                dispatch(actions.startLogin({ user, type: 'third-party' }))
             }
         }
     })
