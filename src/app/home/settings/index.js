@@ -2,11 +2,12 @@ import React, { useState, setState } from 'react'
 import { connect } from 'react-redux'
 
 import Modal from 'react-native-modal'
+import auth from '@react-native-firebase/auth'
+import RadioButtonRN from 'radio-buttons-react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faPalette, faChevronRight, faBell, faLanguage, faKey, faUserFriends, faSignOutAlt, faRobot } from '@fortawesome/free-solid-svg-icons'
 import { ImageBackground, StyleSheet, Dimensions, View, Text, Switch } from 'react-native'
-import RadioButtonRN from 'radio-buttons-react-native'
+import { faPalette, faChevronRight, faBell, faLanguage, faKey, faUserFriends, faSignOutAlt, faRobot } from '@fortawesome/free-solid-svg-icons'
 
 
 import { logout } from 'state/actions/auth'
@@ -241,7 +242,13 @@ export default connect(
     state => ({}),
     dispatch => ({
         clearToken() {
-            dispatch(logout());
+            if (auth().currentUser) {
+                auth().signOut().then(() => {
+                    dispatch(logout())
+                })
+            } else {
+                dispatch(logout())
+            }
         }
     })
 )(Settings)

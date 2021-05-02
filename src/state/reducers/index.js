@@ -22,5 +22,6 @@ export const getAuthExpiration = state => authSelectors.getAuthExpiration(state.
 export const getIsRefreshingToken = state => authSelectors.getIsRefreshingToken(state.auth)
 export const getRefreshingError = state => authSelectors.getRefreshingError(state.auth)
 export const getIsSigningUp = state => authSelectors.getIsSigningUp(state.auth)
+export const getFirebaseUserUID = state => authSelectors.getFirebaseUserUID(state.auth)
 
 export const getIsModalVisible = state => selectsSelectors.getIsModalVisible(state.selects)

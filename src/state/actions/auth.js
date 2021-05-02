@@ -47,3 +47,8 @@ export const failSignUp = error => ({
     type: types.SIGN_UP_FAILED,
     payload: { error },
 })
+
+export const setFirebaseUserUID = uid => ({
+    type: types.FIREBASE_USER_UID_SETTED,
+    payload: { uid }
+})

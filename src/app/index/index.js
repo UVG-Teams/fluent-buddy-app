@@ -274,8 +274,11 @@ const componentCore = connect(
                         console.log('Login info has error: ' + error)
                     } else {
                         const facebookCredential = auth.FacebookAuthProvider.credential(token)
+
                         // Sign-in the user with the facebook credentials on Firebase
-                        auth().signInWithCredential(facebookCredential)
+                        auth().signInWithCredential(facebookCredential).then(() => {
+                            dispatch(actions.setFirebaseUserUID(auth().currentUser.uid))
+                        })
 
                         if (type == "signup") {
                             dispatch(actions.startSignUp({ user, type: "third-party" }))
@@ -289,7 +292,10 @@ const componentCore = connect(
         },
         getInfoFromGoogleToken(userInfo, type) {
             const googleCredential = auth.GoogleAuthProvider.credential(userInfo.idToken)
-            auth().signInWithCredential(googleCredential)
+
+            auth().signInWithCredential(googleCredential).then(() => {
+                dispatch(actions.setFirebaseUserUID(auth().currentUser.uid))
+            })
 
             const user = userInfo.user
 
