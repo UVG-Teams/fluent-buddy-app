@@ -27,10 +27,10 @@ const FormInput = props => {
 
     return (
         <TextInput
-            onChangeText={onChange}
-            {...restInput}
-            style={style}
-            {...restProps}
+            onChangeText={ onChange }
+            { ...restInput }
+            style={ style }
+            { ...restProps }
         />
     )
 }
@@ -80,27 +80,27 @@ const Index = ({
     }
 
     return (
-        <ImageBackground source={background} style={styles.image}>
-            <View style={styles.bottom}>
+        <ImageBackground source={ background } style={ styles.image }>
+            <View style={ styles.bottom }>
                 <View>
-                    <TouchableOpacity style={styles.btnSignUp} onPress={toggleModal}>
-                        <Text style={styles.txtSignUp}>Registrarme</Text>
+                    <TouchableOpacity style={ styles.btnSignUp } onPress={ toggleModal }>
+                        <Text style={ styles.txtSignUp }>Registrarme</Text>
                     </TouchableOpacity>
 
                     <Modal
-                        isVisible={isModalVisible}
-                        style={styles.bottomModal}
-                        onBackdropPress={toggleModal}
-                        backdropOpacity={0}
-                        deviceWidth={deviceWidth}
-                        deviceHeight={deviceHeight}>
-                        <View style={styles.signUpModal}>
+                        isVisible={ isModalVisible }
+                        style={ styles.bottomModal }
+                        onBackdropPress={ toggleModal }
+                        backdropOpacity={ 0 }
+                        deviceWidth={ deviceWidth }
+                        deviceHeight={ deviceHeight }>
+                        <View style={ styles.signUpModal }>
                             <View style={{ flexDirection: 'row' }}>
-                                <View style={styles.viewTxtNewAccount}>
-                                    <Text style={styles.txtNewAccount}>Nueva Cuenta</Text>
+                                <View style={ styles.viewTxtNewAccount }>
+                                    <Text style={ styles.txtNewAccount }>Nueva Cuenta</Text>
                                 </View>
                                 <View style={{ width: '40%', marginLeft: '10%', marginTop: '2%', alignItems: 'center' }}>
-                                    <View style={styles.uploadImage}>
+                                    <View style={ styles.uploadImage }>
                                         <TouchableOpacity
                                             onPress={() =>
                                                 launchImageLibrary(
@@ -115,124 +115,124 @@ const Index = ({
                                                     },
                                                 )
                                             }>
-                                            <FontAwesomeIcon icon={faCamera} size={25} />
+                                            <FontAwesomeIcon icon={ faCamera } size={ 25 } />
                                         </TouchableOpacity>
                                     </View>
-                                    <Text style={styles.txtInputs}>Subir foto</Text>
+                                    <Text style={ styles.txtInputs }>Subir foto</Text>
                                 </View>
                             </View>
-                            <View style={styles.inputsView}>
-                                <Text style={styles.txtInputs}>Email</Text>
+                            <View style={ styles.inputsView }>
+                                <Text style={ styles.txtInputs }>Email</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                                    <FontAwesomeIcon icon={faEnvelope} />
+                                    <FontAwesomeIcon icon={ faEnvelope } />
                                     <Field
-                                        component={FormInput}
+                                        component={ FormInput }
                                         name="signUpEmail"
-                                        style={styles.inputs}
+                                        style={ styles.inputs }
                                         autoCapitalize='none'
                                     />
                                 </View>
                             </View>
-                            <View style={styles.inputsView}>
-                                <Text style={styles.txtInputs}>Usuario</Text>
+                            <View style={ styles.inputsView }>
+                                <Text style={ styles.txtInputs }>Usuario</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                                    <FontAwesomeIcon icon={faUser} />
+                                    <FontAwesomeIcon icon={ faUser } />
                                     <Field
-                                        component={FormInput}
+                                        component={ FormInput }
                                         name="signUpUsername"
-                                        style={styles.inputs}
+                                        style={ styles.inputs }
                                         autoCapitalize='none'
                                     />
                                 </View>
                             </View>
-                            <View style={styles.inputsView}>
-                                <Text style={styles.txtInputs}>Contraseña</Text>
+                            <View style={ styles.inputsView }>
+                                <Text style={ styles.txtInputs }>Contraseña</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                                    <FontAwesomeIcon icon={faLock} />
+                                    <FontAwesomeIcon icon={ faLock } />
                                     <Field
-                                        component={FormInput}
+                                        component={ FormInput }
                                         name="signUpPassword"
-                                        style={styles.inputs}
+                                        style={ styles.inputs }
                                         autoCapitalize='none'
                                         secureTextEntry={ true }
                                     />
                                 </View>
                             </View>
-                            <View style={styles.bottomSignUp}>
-                                <TouchableOpacity style={styles.btnSignUp} onPress={handleSubmit(signUp)}>
-                                    <Text style={styles.txtSignUp}>Registrarme</Text>
+                            <View style={ styles.bottomSignUp }>
+                                <TouchableOpacity style={ styles.btnSignUp } onPress={ handleSubmit(signUp) }>
+                                    <Text style={ styles.txtSignUp }>Registrarme</Text>
                                 </TouchableOpacity>
-                                <Text style={styles.txtSignUpWith}>o regístrate con</Text>
+                                <Text style={ styles.txtSignUpWith }>o regístrate con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
                                     <TouchableOpacity onPress={ () => loginWithGoogle("signup") }>
-                                        <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                        <Image source={ require('assets/google.png') } style={{ width: 27, height: 27 }} />
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={ () => loginWithFacebook("signup") }>
-                                        <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                        <Image source={ require('assets/facebook.png') } style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
                                     </TouchableOpacity>
-                                    <Image source={require('assets/twitter.png')} style={{ width: 27, height: 27 }} />
+                                    <Image source={ require('assets/twitter.png') } style={{ width: 27, height: 27 }} />
                                 </View>
                             </View>
                         </View>
                     </Modal>
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.btnSignIn} onPress={toggleModal2}>
-                        <Text style={styles.txtSignIn}>Iniciar sesión</Text>
+                    <TouchableOpacity style={ styles.btnSignIn } onPress={ toggleModal2 }>
+                        <Text style={ styles.txtSignIn }>Iniciar sesión</Text>
                     </TouchableOpacity>
 
                     <Modal
-                        isVisible={isModalVisible2}
-                        style={styles.bottomModal}
-                        onBackdropPress={toggleModal2}
-                        backdropOpacity={0}
-                        deviceWidth={deviceWidth}
-                        deviceHeight={deviceHeight}>
-                        <View style={styles.LogInModal}>
-                            <View style={styles.viewTxtNewAccount}>
-                                <Text style={styles.txtWelcomeBack}>Bienvenido de vuelta</Text>
+                        isVisible={ isModalVisible2 }
+                        style={ styles.bottomModal }
+                        onBackdropPress={ toggleModal2 }
+                        backdropOpacity={ 0 }
+                        deviceWidth={ deviceWidth }
+                        deviceHeight={ deviceHeight }>
+                        <View style={ styles.LogInModal }>
+                            <View style={ styles.viewTxtNewAccount }>
+                                <Text style={ styles.txtWelcomeBack }>Bienvenido de vuelta</Text>
                             </View>
-                            <View style={styles.inputsView}>
-                                <Text style={styles.txtInputs}>Email</Text>
+                            <View style={ styles.inputsView }>
+                                <Text style={ styles.txtInputs }>Email</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                                    <FontAwesomeIcon icon={faUser} />
+                                    <FontAwesomeIcon icon={ faUser } />
                                     <Field
-                                        component={FormInput}
+                                        component={ FormInput }
                                         name="username"
-                                        style={styles.inputs}
+                                        style={ styles.inputs }
                                         autoCapitalize='none'
                                     />
                                 </View>
                             </View>
-                            <View style={styles.inputsView}>
-                                <Text style={styles.txtInputs}>Contraseña</Text>
+                            <View style={ styles.inputsView }>
+                                <Text style={ styles.txtInputs }>Contraseña</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
-                                    <FontAwesomeIcon icon={faLock} />
+                                    <FontAwesomeIcon icon={ faLock } />
                                     <Field
-                                        component={FormInput}
+                                        component={ FormInput }
                                         name="password"
-                                        style={styles.inputs}
+                                        style={ styles.inputs }
                                         autoCapitalize='none'
-                                        secureTextEntry={true}
+                                        secureTextEntry={ true }
                                     />
                                 </View>
                             </View>
                             <View>
-                                <Text style={styles.txtForgotPassword}>Olvidé mi contraseña</Text>
+                                <Text style={ styles.txtForgotPassword }>Olvidé mi contraseña</Text>
                             </View>
-                            <View style={styles.bottomSignUp}>
-                                <TouchableOpacity onPress={handleSubmit(login)} style={styles.btnSignUp}>
-                                    <Text style={styles.txtSignUp}>Iniciar sesión</Text>
+                            <View style={ styles.bottomSignUp }>
+                                <TouchableOpacity onPress={ handleSubmit(login) } style={ styles.btnSignUp }>
+                                    <Text style={ styles.txtSignUp }>Iniciar sesión</Text>
                                 </TouchableOpacity>
-                                <Text style={styles.txtSignUpWith}>o inicia sesión con</Text>
+                                <Text style={ styles.txtSignUpWith }>o inicia sesión con</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 17 }}>
                                     <TouchableOpacity onPress={ () => loginWithGoogle("login") }>
-                                        <Image source={require('assets/google.png')} style={{ width: 27, height: 27 }} />
+                                        <Image source={ require('assets/google.png') } style={{ width: 27, height: 27 }} />
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={ () => loginWithFacebook("login") }>
-                                        <Image source={require('assets/facebook.png')} style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
+                                        <Image source={ require('assets/facebook.png') } style={{ width: 27, height: 27, marginLeft: 15, marginRight: 15 }} />
                                     </TouchableOpacity>
-                                    <Image source={require('assets/twitter.png')} style={{ width: 27, height: 27 }} />
+                                    <Image source={ require('assets/twitter.png') } style={{ width: 27, height: 27 }} />
                                 </View>
                             </View>
                         </View>
@@ -244,12 +244,17 @@ const Index = ({
 }
 
 
-const componentCore = connect(
+export default reduxForm({
+    form: 'auth',
+})(connect(
     state => ({}),
     dispatch => ({
         login(props) {
             const { username, password } = props
             dispatch(actions.startLogin({ username, password }))
+            auth().signInWithEmailAndPassword(username, password).then(() => {
+                dispatch(actions.setFirebaseUserUID(auth().currentUser.uid))
+            })
         },
         signUp(props) {
             const { signUpUsername, signUpPassword, signUpEmail } = props
@@ -274,8 +279,11 @@ const componentCore = connect(
                         console.log('Login info has error: ' + error)
                     } else {
                         const facebookCredential = auth.FacebookAuthProvider.credential(token)
+
                         // Sign-in the user with the facebook credentials on Firebase
-                        auth().signInWithCredential(facebookCredential)
+                        auth().signInWithCredential(facebookCredential).then(() => {
+                            dispatch(actions.setFirebaseUserUID(auth().currentUser.uid))
+                        })
 
                         if (type == "signup") {
                             dispatch(actions.startSignUp({ user, type: "third-party" }))
@@ -289,7 +297,10 @@ const componentCore = connect(
         },
         getInfoFromGoogleToken(userInfo, type) {
             const googleCredential = auth.GoogleAuthProvider.credential(userInfo.idToken)
-            auth().signInWithCredential(googleCredential)
+
+            auth().signInWithCredential(googleCredential).then(() => {
+                dispatch(actions.setFirebaseUserUID(auth().currentUser.uid))
+            })
 
             const user = userInfo.user
 
@@ -300,13 +311,8 @@ const componentCore = connect(
             }
         }
     })
-)(Index)
+)(Index))
 
-const Component = reduxForm({
-    form: 'auth',
-})(componentCore)
-
-export default Component
 
 const styles = StyleSheet.create({
     image: {
