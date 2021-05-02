@@ -16,7 +16,7 @@ import { layoutColors } from 'src/settings'
 
 
 const Settings = (props) => {
-    const { clearToken } = props;
+    const { clearToken } = props
 
     const [isModalVisible, setModalVisible] = useState(false)
     const toggleModal = () => setModalVisible(!isModalVisible)
@@ -37,49 +37,49 @@ const Settings = (props) => {
         {
             label: 'Oscuro'
         }
-    ];
+    ]
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const [isEnabled, setIsEnabled] = useState(false)
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
-    const [isEnabled2, setIsEnabled2] = useState(false);
-    const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
+    const [isEnabled2, setIsEnabled2] = useState(false)
+    const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState)
 
 
     return (
-        <ImageBackground style={styles.background}>
-            <View style={styles.tags}>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => props.navigation.navigate('home')}>
-                    <Text style={styles.txtTag}>Chats</Text>
+        <ImageBackground style={ styles.background }>
+            <View style={ styles.tags }>
+                <TouchableOpacity style={ styles.btnTag } onPress={ () => props.navigation.navigate('home')}>
+                    <Text style={ styles.txtTag }>Chats</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => props.navigation.navigate('profile') }>
-                    <Text style={styles.txtTag}>Perfil</Text>
+                <TouchableOpacity style={ styles.btnTag } onPress={ () => props.navigation.navigate('profile') }>
+                    <Text style={ styles.txtTag }>Perfil</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTagSelected}>
-                    <Text style={styles.txtTagSelected}>Ajustes</Text>
+                <TouchableOpacity style={ styles.btnTagSelected }>
+                    <Text style={ styles.txtTagSelected }>Ajustes</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.body}>
+            <View style={ styles.body }>
                 <TouchableOpacity onPress={toggleModal}>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <View style={styles.functionIcon}>
+                            <View style={ styles.functionIcon }>
                                 <FontAwesomeIcon icon={faPalette} size={18}/>
                             </View>
-                            <Text style={styles.txtFunction}>Tema</Text>
+                            <Text style={ styles.txtFunction }>Tema</Text>
                         </View>
                         <FontAwesomeIcon icon={faChevronRight} size={18}/>
                     </View>
                 </TouchableOpacity>
                 <Modal isVisible={isModalVisible}
-                    style={styles.bottomModal}
+                    style={ styles.bottomModal }
                     onBackdropPress={toggleModal}
                     backdropOpacity={0.7}
                     deviceWidth={deviceWidth}
                     deviceHeight={deviceHeight}>
-                    <View style={styles.confModal}>
+                    <View style={ styles.confModal }>
                         <View style={{marginBottom: 20}}>
-                            <Text style={styles.txtTheme}>Seleccione un tema:</Text>
+                            <Text style={ styles.txtTheme }>Seleccione un tema:</Text>
                         </View>
                         <View>
                             <RadioButtonRN
@@ -97,27 +97,27 @@ const Settings = (props) => {
                 <TouchableOpacity onPress={toggleModal2}>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <View style={styles.functionIcon}>
+                            <View style={ styles.functionIcon }>
                                 <FontAwesomeIcon icon={faBell} size={18}/>
                             </View>
-                            <Text style={styles.txtFunction}>Notificaciones</Text>
+                            <Text style={ styles.txtFunction }>Notificaciones</Text>
                         </View>
                         <FontAwesomeIcon icon={faChevronRight} size={18}/>
                     </View>
                 </TouchableOpacity>
                 <Modal isVisible={isModalVisible2}
-                    style={styles.bottomModal}
+                    style={ styles.bottomModal }
                     onBackdropPress={toggleModal2}
                     backdropOpacity={0.7}
                     deviceWidth={deviceWidth}
                     deviceHeight={deviceHeight}>
-                    <View style={styles.confModal}>
+                    <View style={ styles.confModal }>
                         <View style={{marginBottom: 20}}>
-                            <Text style={styles.txtTheme}>Notificaciones</Text>
+                            <Text style={ styles.txtTheme }>Notificaciones</Text>
                         </View>
                         <View>
                             <View style={{marginBottom: 20}}>
-                                <Text style={styles.txtSubNotificactions}>Recordatorios</Text>
+                                <Text style={ styles.txtSubNotificactions }>Recordatorios</Text>
                                 <Text>Recibe recordatorios de conversaciones pendientes para que no olvides conversar</Text>
                             </View>
                             <View>
@@ -155,7 +155,7 @@ const Settings = (props) => {
                         </View>
                         <View>
                             <View style={{marginBottom: 20}}>
-                                <Text style={styles.txtSubNotificactions2}>Promociones y Consejos</Text>
+                                <Text style={ styles.txtSubNotificactions2 }>Promociones y Consejos</Text>
                                 <Text>Recibe cupones, promociones, encuestas, novedades y noticias</Text>
                             </View>
                             <View>
@@ -196,38 +196,38 @@ const Settings = (props) => {
 
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={styles.functionIcon}>
+                        <View style={ styles.functionIcon }>
                             <FontAwesomeIcon icon={faLanguage} size={18}/>
                         </View>
-                        <Text style={styles.txtFunction}>Lenguaje</Text>
+                        <Text style={ styles.txtFunction }>Lenguaje</Text>
                     </View>
                     <FontAwesomeIcon icon={faChevronRight} size={18}/>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={styles.functionIcon}>
+                        <View style={ styles.functionIcon }>
                             <FontAwesomeIcon icon={faKey} size={18}/>
                         </View>
-                        <Text style={styles.txtFunction}>Cuenta</Text>
+                        <Text style={ styles.txtFunction }>Cuenta</Text>
                     </View>
                     <FontAwesomeIcon icon={faChevronRight} size={18}/>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={styles.functionIcon}>
+                        <View style={ styles.functionIcon }>
                             <FontAwesomeIcon icon={faUserFriends} size={18}/>
                         </View>
-                        <Text style={styles.txtFunction}>Contáctanos</Text>
+                        <Text style={ styles.txtFunction }>Contáctanos</Text>
                     </View>
                     <FontAwesomeIcon icon={faChevronRight} size={18}/>
                 </View>
                 <TouchableOpacity onPress={() => clearToken()}>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 35}}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <View style={styles.functionIcon}>
+                            <View style={ styles.functionIcon }>
                                 <FontAwesomeIcon icon={faSignOutAlt} size={18}/>
                             </View>
-                            <Text style={styles.txtFunction}>Cerrar sesión</Text>
+                            <Text style={ styles.txtFunction }>Cerrar sesión</Text>
                         </View>
                         <FontAwesomeIcon icon={faChevronRight} size={18}/>
                     </View>

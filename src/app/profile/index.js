@@ -10,19 +10,19 @@ import { layoutColors } from 'src/settings'
 
 const Profile = ({navigation}) => {
     return (
-        <ImageBackground style={styles.background}>
-            <View style={styles.tags}>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('home')}>
-                    <Text style={styles.txtTag}>Chats</Text>
+        <ImageBackground style={ styles.background }>
+            <View style={ styles.tags }>
+                <TouchableOpacity style={ styles.btnTag } onPress={ () => navigation.navigate('home') }>
+                    <Text style={ styles.txtTag }>Chats</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTagSelected}>
-                    <Text style={styles.txtTagSelected}>Perfil</Text>
+                <TouchableOpacity style={ styles.btnTagSelected }>
+                    <Text style={ styles.txtTagSelected }>Perfil</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('settings')}>
-                    <Text style={styles.txtTag}>Ajustes</Text>
+                <TouchableOpacity style={ styles.btnTag } onPress={ () => navigation.navigate('settings') }>
+                    <Text style={ styles.txtTag }>Ajustes</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.body}>
+            <View style={ styles.body }>
                  
             </View>
         </ImageBackground>
