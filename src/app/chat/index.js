@@ -38,12 +38,12 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
             <View style={ styles.chatHeader }>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View>
-                        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+                        <TouchableOpacity onPress={ () => navigation.navigate('home') }>
                             <FontAwesomeIcon icon={ faChevronLeft } size={ 20 } color={ layoutColors.white } />
                         </TouchableOpacity>
                     </View>
                     <View style={{ marginLeft: 25 }}>
-                        <Image source={require('assets/USA.jpg')} style={ styles.imgConversation } />
+                        <Image source={ require('assets/USA.jpg') } style={ styles.imgConversation } />
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={ styles.txtChatName }>{ 'NAME' }</Text>

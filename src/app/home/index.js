@@ -18,9 +18,10 @@ import { ImageBackground, StyleSheet, Dimensions, View, Text, TextInput, Image }
 import { layoutColors } from 'src/settings'
 import * as selectors from 'state/reducers'
 import * as actions from 'state/actions/selects'
+import * as chatroomActions from 'state/actions/chatrooms'
 
 
-const Home = ({ navigation, isModalVisible, setModalVisible }) => {
+const Home = ({ navigation, isModalVisible, setModalVisible, createChat }) => {
     const [chatrooms, setChatrooms] = useState([])
 
     useEffect(() => {
@@ -43,38 +44,41 @@ const Home = ({ navigation, isModalVisible, setModalVisible }) => {
     const deviceWidth = Dimensions.get('window').width
     const deviceHeight = Dimensions.get('window').height
 
-    const [value, setValue] = useState(null)
+    const radioGroupList = [{
+        // label: () => <FontAwesomeIcon icon={ faFemale } size={ 40 } />,
+        label: "She",
+        value: 'female'
+    }, {
+        // label: () => <FontAwesomeIcon icon={ faMale } size={ 40 } />,
+        label: "He",
+        value: 'male'
+    }]
 
-    const [items, setItems] = useState([
-        {label: 'Ruso', value: 'rus', icon: () => <Flag code='RU' size={32} />},
-        {label: 'Inglés', value: 'eng', icon: () => <Flag code='US' size={32} />},
-        {label: 'Aleman', value: 'ger', icon: () => <Flag code='DE' size={32} />},
-        {label: 'Frances', value: 'fre', icon: () => <Flag code='FR' size={32} />},
-        {label: 'Italiano', value: 'ita', icon: () => <Flag code='IT' size={32} />},
-        {label: 'Portugues', value: 'por', icon: () => <Flag code='PT' size={32} />},
+    const [language, setLanguage] = useState('us')
+    const [gender, setGender] = useState('male')
+    const [name, setName] = useState('Luca')
+
+    const [languages, setLanguages] = useState([
+        { label: 'Ruso',        value: 'ru', icon: () => <Flag code='RU' size={ 32 } /> },
+        { label: 'Inglés',      value: 'us', icon: () => <Flag code='US' size={ 32 } /> },
+        { label: 'Aleman',      value: 'de', icon: () => <Flag code='DE' size={ 32 } /> },
+        { label: 'Frances',     value: 'fr', icon: () => <Flag code='FR' size={ 32 } /> },
+        { label: 'Italiano',    value: 'it', icon: () => <Flag code='IT' size={ 32 } /> },
     ])
 
     const controller = useRef(null)
 
-    const radioGroupList = [{
-        label: () => <FontAwesomeIcon icon={faFemale} size={40} />,
-        value: 'female'
-    }, {
-        label: () => <FontAwesomeIcon icon={faMale} size={40} />,
-        value: 'male'
-    }]
-
     return (
-        <ImageBackground style={styles.background}>
-            <View style={styles.tags}>
-                <TouchableOpacity style={styles.btnTagSelected}>
-                    <Text style={styles.txtTagSelected}>Chats</Text>
+        <ImageBackground style={ styles.background }>
+            <View style={ styles.tags }>
+                <TouchableOpacity style={ styles.btnTagSelected }>
+                    <Text style={ styles.txtTagSelected }>Chats</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag}  onPress={ () => navigation.navigate('profile')}>
-                    <Text style={styles.txtTag}>Perfil</Text>
+                <TouchableOpacity style={ styles.btnTag }  onPress={ () => navigation.navigate('profile') }>
+                    <Text style={ styles.txtTag }>Perfil</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnTag} onPress={ () => navigation.navigate('settings')}>
-                    <Text style={styles.txtTag}>Ajustes</Text>
+                <TouchableOpacity style={ styles.btnTag } onPress={ () => navigation.navigate('settings') }>
+                    <Text style={ styles.txtTag }>Ajustes</Text>
                 </TouchableOpacity>
             </View>
             <View style={ styles.body }>
@@ -104,29 +108,29 @@ const Home = ({ navigation, isModalVisible, setModalVisible }) => {
                 }
             </View>
             <View>
-                <Modal isVisible={isModalVisible}
-                    // style={styles.newChatModal}
-                    onBackdropPress={toggleModal}
-                    backdropOpacity={0.7}
-                    deviceWidth={deviceWidth}
-                    deviceHeight={deviceHeight}
+                <Modal
+                    isVisible={ isModalVisible }
+                    // style={ styles.newChatModal }
+                    onBackdropPress={ toggleModal }
+                    backdropOpacity={ 0.7 }
+                    deviceWidth={ deviceWidth }
+                    deviceHeight={ deviceHeight }
                 >
-                    <View style={styles.newChatModal}>
-                        <View style={{marginBottom: 20}}>
-                            <Text style={styles.txtNewChat}>Nuevo chat</Text>
+                    <View style={ styles.newChatModal }>
+                        <View style={{ marginBottom: 20 }}>
+                            <Text style={ styles.txtNewChat }>Nuevo chat</Text>
                         </View>
-                        <View style={{zIndex: 1}}>
+                        <View style={{ zIndex: 1 }}>
                             <DropDownPicker
-                                items={items}
-                                controller={instance => controller.current = instance}
-                                onChangeList={(items, callback) => {
-                                    Promise.resolve(setItems(items))
-                                        .then(() => callback())
+                                items={ languages }
+                                controller={ instance => controller.current = instance }
+                                onChangeList={(languages, callback) => {
+                                    Promise.resolve(setLanguages(languages)).then(() => callback())
                                 }}
-                                defaultValue={value}
-                                onChangeItem={item => setValue(item.value)}
+                                defaultValue={ language }
+                                onChangeItem={ item => setLanguage(item.value) }
                                 placeholder='Seleccionar idioma'
-                                containerStyle={{height: 50}}
+                                containerStyle={{ height: 50 }}
                                 labelStyle={{
                                     fontFamily: 'Poppins-Medium',
                                     alignSelf: 'center',
@@ -146,22 +150,24 @@ const Home = ({ navigation, isModalVisible, setModalVisible }) => {
                                 }}
                             />
                         </View>
-                        <View style={{width: '100%', marginTop: 35}}>
+                        <View style={{ width: '100%', marginTop: 35 }}>
                             <RadioGroup
-                                radioGroupList={radioGroupList}
-                                buttonContainerStyle={{borderWidth: 1, borderColor: 'black', width: '48%'}}
-                                buttonContainerActiveStyle={{backgroundColor: layoutColors.teaGreen}}
+                                radioGroupList={ radioGroupList }
+                                buttonContainerStyle={{ borderWidth: 1, borderColor: 'black', width: '48%' }}
+                                buttonContainerActiveStyle={{ backgroundColor: layoutColors.teaGreen }}
                             />
                         </View>
-                        <View style={{width: '100%', marginTop: 35}}>
+                        <View style={{ width: '100%', marginTop: 35 }}>
                             <TextInput
-                                style={styles.iptBotName}
-                                placeholder='Nombre (Opcional)'
+                                style={ styles.iptBotName }
+                                placeholder='Nombre'
+                                value={ name }
+                                onChangeText={ text => setName(text) }
                             />
                         </View>
                         <View>
-                            <TouchableOpacity style={styles.btnStart}>
-                                <Text style={styles.txtStart}>¡Comenzar!</Text>
+                            <TouchableOpacity style={ styles.btnStart } onPress={ () => createChat(language, gender, name) }>
+                                <Text style={ styles.txtStart }>¡Comenzar!</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -180,6 +186,10 @@ export default connect(
         setModalVisible() {
             dispatch(actions.setModalVisible(false))
         },
+        createChat(language, gender, name) {
+            dispatch(chatroomActions.startCreateChatroom({ language, gender, name }))
+            dispatch(actions.setModalVisible(false))
+        }
     })
 )(Home)
 
