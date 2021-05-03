@@ -12,6 +12,8 @@ import { ImageBackground, StyleSheet, View, Text, TextInput, Image, ScrollView }
 
 
 import { layoutColors } from 'src/settings'
+import * as selectors from 'state/reducers'
+
 
 
 const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
@@ -19,7 +21,10 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
     const [newMessage, setNewMessage] = useState()
 
     useEffect(() => {
-        firebase.firestore().collection('chatrooms').doc(chatroom.id).collection('messages').orderBy('sent_at').limit(50).onSnapshot(querySnapshot => {
+        firebase.firestore().collection('chatrooms').doc(chatroom.id)
+        .collection('messages')
+        .orderBy('sent_at').limit(50)
+        .onSnapshot(querySnapshot => {
             const chatroomMessages = []
             querySnapshot.forEach(doc => {
                 if (doc.exists) {
@@ -32,6 +37,14 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
             setMessages(chatroomMessages)
         })
     }, [])
+
+    const getOtherUserName = chatroom => {
+        return chatroom.members_uids.map(member_uid => {
+            if (member_uid != current_user_uid && chatroom.members[member_uid]) {
+                return chatroom.members[member_uid].full_name
+            }
+        })
+    }
 
     return (
         <ImageBackground style={ styles.background }>
@@ -46,7 +59,7 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
                         <Image source={ require('assets/USA.jpg') } style={ styles.imgConversation } />
                     </View>
                     <View style={{ marginLeft: 20 }}>
-                        <Text style={ styles.txtChatName }>{ 'NAME' }</Text>
+                        <Text style={ styles.txtChatName }>{ getOtherUserName(chatroom) }</Text>
                     </View>
                 </View>
                 <View>
@@ -83,7 +96,12 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
                         />
                     </View>
                     <View style={ styles.btnVoiceNote }>
-                        <TouchableOpacity onPress={ () => sendMessage(current_user_uid, chatroom.id, newMessage) }>
+                        <TouchableOpacity
+                            onPress={() => {
+                                sendMessage(current_user_uid, chatroom.id, newMessage)
+                                setNewMessage('')
+                            }}
+                        >
                             <FontAwesomeIcon icon={ faMicrophone } size={ 20 }/>
                         </TouchableOpacity>
                     </View>
@@ -96,24 +114,26 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
 
 export default connect(
     (state, { route }) => ({
-        current_user_uid: 'uid1', // TODO
+        current_user_uid: selectors.getFirebaseUserUID(state),
         chatroom: route.params.chatroom,
     }),
     dispatch => ({
         sendMessage(current_user_uid, chatroom_id, message) {
+            // Send message
             firebase.firestore().collection('chatrooms').doc(chatroom_id).collection('messages').add({
                 text: message,
                 sent_at: new Date(),
                 sent_by: current_user_uid
+            }).then(() => {
+                // Add last message
+                firebase.firestore().collection('chatrooms').doc(chatroom_id).update({
+                    last_message: {
+                        text: message,
+                        sent_at: new Date(),
+                        sent_by: current_user_uid
+                    }
+                })
             })
-
-            // firebase.firestore().collection('chatrooms').doc(chatroom_id).update({
-            //     last_message: {
-            //         text: message,
-            //         sent_at: new Date(),
-            //         sent_by: current_user_uid
-            //     }
-            // })
         }
     })
 )(Chat)

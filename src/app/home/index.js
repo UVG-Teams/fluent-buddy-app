@@ -21,11 +21,13 @@ import * as actions from 'state/actions/selects'
 import * as chatroomActions from 'state/actions/chatrooms'
 
 
-const Home = ({ navigation, isModalVisible, setModalVisible, createChat }) => {
+const Home = ({ navigation, isModalVisible, setModalVisible, createChat, current_user_uid }) => {
     const [chatrooms, setChatrooms] = useState([])
 
     useEffect(() => {
-        firebase.firestore().collection('chatrooms').onSnapshot(querySnapshot => {
+        firebase.firestore().collection('chatrooms')
+        .where('members_uids', 'array-contains', current_user_uid)
+        .onSnapshot(querySnapshot => {
             const temp = []
             querySnapshot.forEach(doc => {
                 if (doc.exists) {
@@ -46,11 +48,11 @@ const Home = ({ navigation, isModalVisible, setModalVisible, createChat }) => {
 
     const radioGroupList = [{
         // label: () => <FontAwesomeIcon icon={ faFemale } size={ 40 } />,
-        label: "She",
+        label: 'She',
         value: 'female'
     }, {
         // label: () => <FontAwesomeIcon icon={ faMale } size={ 40 } />,
-        label: "He",
+        label: 'He',
         value: 'male'
     }]
 
@@ -67,6 +69,14 @@ const Home = ({ navigation, isModalVisible, setModalVisible, createChat }) => {
     ])
 
     const controller = useRef(null)
+
+    const getOtherUserName = chatroom => {
+        return chatroom.members_uids.map(member_uid => {
+            if (member_uid != current_user_uid && chatroom.members[member_uid]) {
+                return chatroom.members[member_uid].full_name
+            }
+        })
+    }
 
     return (
         <ImageBackground style={ styles.background }>
@@ -95,7 +105,7 @@ const Home = ({ navigation, isModalVisible, setModalVisible, createChat }) => {
                                         <Image source={ require('assets/USA.jpg') } style={ styles.imgConversation } />
                                     </View>
                                     <View style={ styles.previewConversation }>
-                                        <Text style={ styles.txtConversationName }>{ 'NAME' }</Text>
+                                        <Text style={ styles.txtConversationName }>{ getOtherUserName(chatroom) }</Text>
                                         <Text style={ styles.txtConversationPreview }>{ chatroom.last_message && chatroom.last_message.text }</Text>
                                     </View>
                                 </View>
@@ -180,6 +190,7 @@ const Home = ({ navigation, isModalVisible, setModalVisible, createChat }) => {
 
 export default connect(
     state => ({
+        current_user_uid: selectors.getFirebaseUserUID(state),
         isModalVisible: selectors.getIsModalVisible(state),
     }),
     dispatch => ({
