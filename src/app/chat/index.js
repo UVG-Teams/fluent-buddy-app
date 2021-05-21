@@ -56,7 +56,13 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ marginLeft: 25 }}>
-                        <Image source={ require('assets/USA.jpg') } style={ styles.imgConversation } />
+                        {
+                            chatroom.language == 'us' && <Image source={ require(`assets/us.jpg`) } style={ styles.imgConversation } /> ||
+                            chatroom.language == 'ru' && <Image source={ require(`assets/ru.jpg`) } style={ styles.imgConversation } /> ||
+                            chatroom.language == 'it' && <Image source={ require(`assets/it.jpg`) } style={ styles.imgConversation } /> ||
+                            chatroom.language == 'fr' && <Image source={ require(`assets/fr.jpg`) } style={ styles.imgConversation } /> ||
+                            chatroom.language == 'de' && <Image source={ require(`assets/de.jpg`) } style={ styles.imgConversation } />
+                        }
                     </View>
                     <View style={{ marginLeft: 20 }}>
                         <Text style={ styles.txtChatName }>{ getOtherUserName(chatroom) }</Text>
@@ -187,6 +193,7 @@ const styles = StyleSheet.create({
         marginTop: 18
     },
     botBubble: {
+        padding: 10,
         backgroundColor: layoutColors.lightGray,
         width: 255,
         height: 62, //Cambiar a 'Auto' a la hora de conectarlo con backend
@@ -195,6 +202,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 15,
     },
     userBubble: {
+        padding: 10,
         backgroundColor: layoutColors.teaGreen,
         width: 255,
         height: 62, //Cambiar a 'Auto' a la hora de conectarlo con backend
