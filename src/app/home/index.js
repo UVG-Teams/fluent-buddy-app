@@ -26,7 +26,7 @@ const Home = ({ navigation, isModalVisible, setModalVisible, createChat, current
 
     useEffect(() => {
         firebase.firestore().collection('chatrooms')
-        .where('members_uids', 'array-contains', current_user_uid)
+        // .where('members_uids', 'array-contains', current_user_uid)
         .onSnapshot(querySnapshot => {
             const temp = []
             querySnapshot.forEach(doc => {
@@ -102,7 +102,13 @@ const Home = ({ navigation, isModalVisible, setModalVisible, createChat, current
                             <View style={ styles.conversation }>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <View>
-                                        <Image source={ require('assets/USA.jpg') } style={ styles.imgConversation } />
+                                        {
+                                            chatroom.language == 'us' && <Image source={ require(`assets/us.jpg`) } style={ styles.imgConversation } /> ||
+                                            chatroom.language == 'ru' && <Image source={ require(`assets/ru.jpg`) } style={ styles.imgConversation } /> ||
+                                            chatroom.language == 'it' && <Image source={ require(`assets/it.jpg`) } style={ styles.imgConversation } /> ||
+                                            chatroom.language == 'fr' && <Image source={ require(`assets/fr.jpg`) } style={ styles.imgConversation } /> ||
+                                            chatroom.language == 'de' && <Image source={ require(`assets/de.jpg`) } style={ styles.imgConversation } />
+                                        }
                                     </View>
                                     <View style={ styles.previewConversation }>
                                         <Text style={ styles.txtConversationName }>{ getOtherUserName(chatroom) }</Text>

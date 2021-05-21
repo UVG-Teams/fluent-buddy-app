@@ -31,6 +31,7 @@ function* createChatroom(action) {
                 current_user_firebase_uid,
                 bot_uid,
             ],
+            language: action.payload.language,
             members: members,
             last_message: null,
         }
