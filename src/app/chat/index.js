@@ -82,7 +82,7 @@ const Chat = ({ navigation, chatroom, current_user_uid, sendMessage }) => {
                             messages.map(message => (
                                 <View key={ message.id } style={ (message.sent_by == current_user_uid) ? styles.userMessageBox : styles.botMessageBox }>
                                     <View style={ (message.sent_by == current_user_uid) ? styles.userBubble : styles.botBubble }>
-                                        <Text>{ message.text }</Text>
+                                        <Text style={styles.txtMessage}>{ message.text }</Text>
                                     </View>
                                     <View style={{ marginTop: 5 }}>
                                         <Text style={ (message.sent_by == current_user_uid) ? styles.txtMessageHourUser : styles.txtMessageHourBot }>{ new Date(message.sent_at.seconds * 1000).toLocaleTimeString() }</Text>
@@ -193,10 +193,12 @@ const styles = StyleSheet.create({
         marginTop: 18
     },
     botBubble: {
+        alignSelf: 'flex-start',
         padding: 10,
         backgroundColor: layoutColors.lightGray,
-        width: 255,
-        height: 62, //Cambiar a 'Auto' a la hora de conectarlo con backend
+        // maxWidth: 255,
+        width: 'auto',
+        height: 'auto',
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         borderBottomRightRadius: 15,
@@ -204,8 +206,9 @@ const styles = StyleSheet.create({
     userBubble: {
         padding: 10,
         backgroundColor: layoutColors.teaGreen,
-        width: 255,
-        height: 62, //Cambiar a 'Auto' a la hora de conectarlo con backend
+        maxWidth: 255,
+        width: 'auto',
+        height: 'auto',
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         borderBottomLeftRadius: 15,
@@ -238,5 +241,9 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    txtMessage: {
+        fontFamily: 'Poppins-Medium',
+
     }
 })
