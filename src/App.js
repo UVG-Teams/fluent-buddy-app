@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
+import firebase from 'firebase/app'
+import { LogBox } from 'react-native'
 import 'react-native-gesture-handler'
 import SplashScreen from 'react-native-splash-screen'
-import firebase from "firebase/app"
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -20,10 +21,12 @@ const App = ({ isAuthenticated }) => {
         SplashScreen.hide()
     }, [])
 
+    // LogBox.ignoreAllLogs()
+
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName="index"
+                initialRouteName='index'
             >
                 {
                     routes.filter(
